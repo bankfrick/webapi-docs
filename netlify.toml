@@ -1,8 +1,0 @@
-[build]
-  base    = "docs"
-  publish = "docs/public"
-  command = "bundle exec middleman build --clean"
-
-[[redirects]]
-  from = "/*"
-  to = "/docs/:splat"
