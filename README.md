@@ -1,4 +1,4 @@
-Bank Frick webAPI Documentation
+:bank: :rocket: Bank Frick webAPI Documentation
 ==================================
 [Family-run enterprising bank serving intermediaries with a strong expertise in funds and emissions and a focus on blockchain banking.](https://bankfrick.li)
 
