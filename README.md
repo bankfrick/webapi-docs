@@ -1,8 +1,8 @@
 :bank: :rocket: Bank Frick webAPI Documentation
 ==================================
-[Family-run enterprising bank serving intermediaries with a strong expertise in funds and emissions and a focus on blockchain banking.](https://bankfrick.li){:target="_blank"}
+[Family-run enterprising bank serving intermediaries with a strong expertise in funds and emissions and a focus on blockchain banking.](https://bankfrick.li)
 
-This is the public repo for the [Bank Frick webAPI Documentation](https://bankfrick.github.io/webapi-docs){:target="_blank"} built with [Slate](https://github.com/lord/slate).
+This is the public repo for the [Bank Frick webAPI Documentation](https://bankfrick.github.io/webapi-docs) built with [Slate](https://github.com/lord/slate).
 
 :question: :boom: Found a bug or need help?
 ----------------------------------
