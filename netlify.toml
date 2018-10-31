@@ -3,4 +3,5 @@
   publish = "docs/public"
   command = "bundle exec middleman build --clean"
 
+[[redirects]]
 /docs/* /docs/:splat 200!
