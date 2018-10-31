@@ -2,3 +2,5 @@
   base    = "docs"
   publish = "docs/public"
   command = "bundle exec middleman build --clean"
+
+/docs/* /docs/:splat 200!
