@@ -10,8 +10,11 @@ toc_footers:
   - <a href='https://github.com/bankfrick/webapi-docs' target='_blank'>Edit on GitHub</a>
 
 includes:
-  - resources
-  - errors
+  - accounts
+  - authorize
+  - info
+  - requesttan
+  - datatypes
 
 search: true
 ---

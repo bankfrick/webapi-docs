@@ -169,7 +169,7 @@ html, body {
 
   .toc-h2 {
     padding-left: $nav-padding + $nav-indent;
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .toc-footer {
@@ -396,6 +396,7 @@ html, body {
   }
 
   table {
+    padding-bottom: 30px;
     margin-bottom: 1em;
     overflow: auto;
     th,td {
@@ -411,14 +412,11 @@ html, body {
       padding: 5px 10px;
       border-bottom: 1px solid #ccc;
       vertical-align: bottom;
+      background-color: #f5f5f5;
     }
 
     td {
       padding: 10px;
-    }
-
-    tr:last-child {
-      border-bottom: 1px solid #ccc;
     }
 
     tr:nth-child(odd)>td {
@@ -426,7 +424,7 @@ html, body {
     }
 
     tr:nth-child(even)>td {
-      background-color: lighten($main-bg,2.4%);
+      background-color: #f5f5f5;
     }
   }
 
