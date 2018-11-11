@@ -258,7 +258,7 @@ algorithm: ...
 }
 ```
 
-Get the list of payment orders for a given account. This will forward to the transactions resource. Returns only orders that were created within the context of the online banking. Booked and external transactions must be retrieved using the CAMT.052/CAMT.053 services.
+Get the list of payment orders for a given account. This will forward to the transactions resource. Returns only orders that were created within the context of the online banking. Booked and external transactions must be retrieved using the camt.052/camt.053 services.
 
 If a combination of filter parameters are applied, only orders that match all of the conditions are returned.
 
@@ -294,7 +294,7 @@ If a combination of filter parameters are applied, only orders that match all of
 
 | code | condition | type |
 | ---- | --------- | ---- |
-| 200 | Request successful | Accounts (JSON) |
+| 200 | Request successful | [Accounts](#data-types-accounts) (JSON) |
 | 400 | Validation of input parameters failed | Errors (JSON) |
 | 401 | If no JWT was provided or JWT is invalid | Errors (JSON) |
 | 403 | API key is invalid or any other condition hinders the login | Errors (JSON) |

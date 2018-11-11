@@ -21,6 +21,14 @@ search: true
 
 # Introduction
 
+```nginx
+  _   _      _ _        __        __         _     _ _ 
+ | | | | ___| | | ___   \ \      / /__  _ __| | __| | |
+ | |_| |/ _ \ | |/ _ \   \ \ /\ / / _ \| '__| |/ _` | |
+ |  _  |  __/ | | (_) |   \ V  V / (_) | |  | | (_| |_|
+ |_| |_|\___|_|_|\___/     \_/\_/ \___/|_|  |_|\__,_(_)                  
+```
+
 This is the Bank Frick online banking webAPI documentation. In this documentation the client can see what requirements must be fulfilled, which functionalities Bank Frick's online banking webAPI must have and how it must be set up.
 
 The online banking webAPI enables to create and approve payment orders and receive account information in a simplified JSON format or standardized camt report without the requirement of logging in into the online banking frontend.
