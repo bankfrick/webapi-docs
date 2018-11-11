@@ -125,7 +125,7 @@ Delete payment orders that are not yet fully approved, only payment orders in th
 > Request
 
 ```shell--sandbox
-GET https://olbtest.bankfrick.li/webapi//transactions
+GET https://olbtest.bankfrick.li/webapi/transactions
 Content-Type: */*
 Accept: application/json
 Authentication: ...
@@ -134,7 +134,7 @@ Authentication: ...
 ```
 
 ```shell--production
-GET https://olb.bankfrick.li/webapi//transactions
+GET https://olb.bankfrick.li/webapi/transactions
 Content-Type: */*
 Accept: application/json
 Authentication: ...
@@ -236,18 +236,103 @@ If a combination of filter parameters are applied, only orders that match all of
 > Request
 
 ```shell--sandbox 
+PUT https://olbtest.bankfrick.li/webapi/transactions
+Content-Type: application/json
+Accept: application/json
+Authentication: ...
+Signature: ...
+algorithm: ...
 
+                
+{
+  "transactions" : [ {
+    "customId" : "4711",
+    "type" : "SEPA",
+    "amount" : "1.000,00",
+    "currency" : "EUR",
+    "express" : false,
+    "reference" : "Invoice number 123",
+    "debitor" : {
+      "iban" : "LI6808811000000001234"
+    },
+    "creditor" : {
+      "name" : "Max Muster",
+      "iban" : "DE12500105170648489890",
+      "bic" : "INGDDEFFXXX",
+      "creditInsitution" : "ING-DiBa GERMANY"
+    }
+  } ]
+}
 ```
 
 ```shell--production
+PUT https://olb.bankfrick.li/webapi/transactions
+Content-Type: application/json
+Accept: application/json
+Authentication: ...
+Signature: ...
+algorithm: ...
 
+                
+{
+  "transactions" : [ {
+    "customId" : "4711",
+    "type" : "SEPA",
+    "amount" : "1.000,00",
+    "currency" : "EUR",
+    "express" : false,
+    "reference" : "Invoice number 123",
+    "debitor" : {
+      "iban" : "LI6808811000000001234"
+    },
+    "creditor" : {
+      "name" : "Max Muster",
+      "iban" : "DE12500105170648489890",
+      "bic" : "INGDDEFFXXX",
+      "creditInsitution" : "ING-DiBa GERMANY"
+    }
+  } ]
+}
 ```
 
 > Response
 
 ```shell
+HTTP/1.1 200 OK
+Content-Type: application/json
+Signature: ...
+algorithm: ...
 
-
+                
+{
+  "moreResults" : false,
+  "resultSetSize" : 1,
+  "transactions" : [ {
+    "orderId" : 20771,
+    "customId" : "4711",
+    "type" : "SEPA",
+    "state" : "PREPARED",
+    "amount" : "1.000,00",
+    "currency" : "EUR",
+    "valuta" : "2018-08-02",
+    "express" : false,
+    "reference" : "Invoice number 123",
+    "debitor" : {
+      "accountNumber" : "00012345/001.000.001",
+      "iban" : "LI6808811000000001234"
+    },
+    "creditor" : {
+      "name" : "Max Muster",
+      "iban" : "DE12500105170648489890",
+      "bic" : "INGDDEFFXXX",
+      "creditInsitution" : "ING-DiBa GERMANY"
+    },
+    "creator" : "6789 Max Muster",
+    "right" : "Bevollmächtigter kollektiv zu 2",
+    "groupPolicy" : "Group intern",
+    "group" : 1
+  } ]
+}
 ```
 
 Create new payment orders similar to the create payment order dialogs within the online banking frontend. The required fields and field validation for each payment order depends on the order type. The frontend dialog and pain001 mapping rules apply for field validation. New payment orders can only be created for accounts with proper write privileges for the customers account. Created payment orders will be added to the system in the PREPARED state and can be approved using the “signTransaction” methods. The application must assign an idempotent customId to allow the system to identify duplicate requests. The server will then assign a unique orderId which is used to identify the transaction later for approval or deletion.
