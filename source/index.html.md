@@ -16,6 +16,7 @@ includes:
   - requesttan
   - signtxwithtan
   - transactions
+  - camt052
   - errors
   - datatypes
 
