@@ -72,17 +72,13 @@ Get the list of accounts that are visible for the user.
 
 | code | condition | type |
 | ---- | --------- | ---- |
-| 200 | Request successful | Accounts (JSON) |
-| 400 | Validation of input parameters failed | Errors (JSON) |
-| 401 | If no JWT was provided or JWT is invalid | Errors (JSON) |
-| 403 | API key is invalid or any other condition hinders the login | Errors (JSON) |
-| 423 | The authentication is valid but the user account is locked and cannot be accessed | Errors (JSON) |
+| 200 | Request successful | [Accounts](#data-types-accounts) (JSON) |
 
 **Response Body**
 
 | media type | data type | description |
 | ---------- | --------- | ----------- |
-| application/json | Accounts (JSON) | The list accounts according to the filter parameters as json object. |
+| application/json | [Accounts](#data-types-accounts) (JSON) | The list accounts according to the filter parameters as json object. |
 
 **Response Headers**
 
@@ -167,17 +163,13 @@ If a combination of filter parameters are applied, only accounts that match both
 
 | code | condition | type |
 | ---- | --------- | ---- |
-| 200 | Request successful | Accounts (JSON) |
-| 400 | Validation of input parameters failed | Errors (JSON) |
-| 401 | If no JWT was provided or JWT is invalid | Errors (JSON) |
-| 403 | API key is invalid or any other condition hinders the login | Errors (JSON) |
-| 423 | The authentication is valid but the user account is locked and cannot be accessed | Errors (JSON) |
+| 200 | Request successful | [Accounts](#data-types-accounts) (JSON) |
 
 **Response Body**
 
 | media type | data type | description |
 | ---------- | --------- | ----------- |
-| application/json | Accounts (JSON) | The list accounts according to the filter parameters as json object. |
+| application/json | [Accounts](#data-types-accounts) (JSON) | The list accounts according to the filter parameters as json object. |
 
 **Response Headers**
 
@@ -295,10 +287,6 @@ If a combination of filter parameters are applied, only orders that match all of
 | code | condition | type |
 | ---- | --------- | ---- |
 | 200 | Request successful | [Accounts](#data-types-accounts) (JSON) |
-| 400 | Validation of input parameters failed | Errors (JSON) |
-| 401 | If no JWT was provided or JWT is invalid | Errors (JSON) |
-| 403 | API key is invalid or any other condition hinders the login | Errors (JSON) |
-| 423 | The authentication is valid but the user account is locked and cannot be accessed | Errors (JSON) |
 
 **Response Body**
 

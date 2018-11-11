@@ -61,22 +61,19 @@ Perform a login to receive the JWT. For the login an API-Key must be generated w
 
 | media type | data type | description |
 | ---------- | --------- | ----------- |
-| application/json | Authorize (JSON) | The authorization request body |
+| application/json | [Authorize](#data-types-authorize) (JSON) | The authorization request body |
 
 **Response Codes**
 
 | code | condition | type |
 | ---- | --------- | ---- |
-| 200 | Request successful | AuthorizeResponse (JSON) |
-| 400 | Validation of input parameters failed | Errors (JSON) |
-| 403 | API key is invalid or any other condition hinders the login | Errors (JSON) |
-| 423 | The authentication is valid but the user account is locked and cannot be accessed | Errors (JSON) |
+| 200 | Request successful | [AuthorizeResponse](#data-types-authorizeresponse) (JSON) |
 
 **Response Body**
 
 | media type | data type | description |
 | ---------- | --------- | ----------- |
-| application/json | AuthorizeResponse (JSON) | The authorize response message which contains the JWT as json object. |
+| application/json | [AuthorizeResponse](#data-types-authorizeresponse) (JSON) | The authorize response message which contains the JWT as json object. |
 
 **Response Headers**
 

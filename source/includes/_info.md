@@ -46,13 +46,13 @@ Get the server status information. This includes the current version number of t
 
 | code | condition | type |
 | ---- | --------- | ---- |
-| 200 | Request successful | Info (JSON) |
+| 200 | Request successful | [Info](#data-types-info) (JSON) |
 
 **Response Body**
 
 | media type | data type | description |
 | ---------- | --------- | ----------- |
-| application/json | Info (JSON) | The status information as json object |
+| application/json | [Info](#data-types-info) (JSON) | The status information as json object |
 
 **Response Headers**
 

@@ -14,6 +14,9 @@ includes:
   - authorize
   - info
   - requesttan
+  - signtxwithtan
+  - transactions
+  - errors
   - datatypes
 
 search: true

@@ -61,17 +61,13 @@ Delete a ongoing TAN request challenge.
 
 | media type | data type | description |
 | ---------- | --------- | ----------- |
-| application/json | DeleteRequestTan (JSON) | The request TAN delete body |
+| application/json | [DeleteRequestTan](#data-types-deleterequesttan) (JSON) | The request TAN delete body |
 
 **Response Codes**
 
 | code | condition | type |
 | ---- | --------- | ---- |
 | 204 | Request successful
-| 400 | Validation of input parameters failed or parameter is missing | Errors (JSON) |
-| 401 | If no JWT was provided or JWT is invalid | Errors (JSON) |
-| 403 | API key is invalid or any other condition hinders the login | Errors (JSON) |
-| 423 | The authentication is valid but the user account is locked and cannot be accessed | Errors (JSON) |
 
 **Response Body**
 
@@ -151,23 +147,19 @@ algorithm: ...
 
 | media type | data type | description |
 | ---------- | --------- | ----------- |
-| application/json | RequestTan (JSON) | The request TAN body |
+| application/json | [RequestTan](#data-types-requesttan) (JSON) | The request TAN body |
 
 **Response Codes**
 
 | code | condition | type |
 | ---- | --------- | ---- |
-| 200 | Request successful | RequestTanResponse (JSON) |
-| 400 | Validation of input parameters failed or parameter is missing | Errors (JSON) |
-| 401 | If no JWT was provided or JWT is invalid | Errors (JSON) |
-| 403 | API key is invalid or any other condition hinders the login | Errors (JSON) |
-| 423 | The authentication is valid but the user account is locked and cannot be accessed | Errors (JSON) |
+| 200 | Request successful | [RequestTanResponse](#data-types-requesttanresponse) (JSON) |
 
 **Response Body**
 
 | media type | data type | description |
 | ---------- | --------- | ----------- |
-| application/json | RequestTanResponse (JSON) | The request TAN response message as json object |
+| application/json | [RequestTanResponse](#data-types-requesttanresponse) (JSON) | The request TAN response message as json object |
 
 **Response Headers**
 
