@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <!-- NOTE: change the last number to reupload the file -->
+      <MsgId>za6-IBAN-1</MsgId>
+      <CreDtTm>2009-09-28T14:07:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>123.45</CtrlSum>
+      <InitgPty>
+        <Nm>John Doe</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>1</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <BtchBookg>true</BtchBookg>
+      <ReqdExctnDt>2022-01-31</ReqdExctnDt>
+      <Dbtr>
+        <Nm>John Doe</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>LI50088110604657K000C</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BIC>BFRILI22</BIC>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>1-1</InstrId>
+          <EndToEndId>1-1</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="GBR">123.45</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <!-- BIC ausland -->
+            <BIC>BYLADEM1ASA</BIC>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>Some guy</Nm>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <!-- IBAN -->
+            <IBAN>
+              <Id>LI51234510604657K000C</Id>
+            </IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

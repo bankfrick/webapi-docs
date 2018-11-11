@@ -17,6 +17,7 @@ includes:
   - signtxwithtan
   - transactions
   - camt052
+  - pain001
   - errors
   - datatypes
 

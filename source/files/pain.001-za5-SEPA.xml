@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <!-- NOTE: change the last number to reupload the file -->
+      <MsgId>za01-01</MsgId>
+      <CreDtTm>2009-09-28T14:07:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>123.45</CtrlSum>
+      <InitgPty>
+        <Nm>Test Company(remitter)</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>1</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <BtchBookg>true</BtchBookg>
+      <PmtTpInf>
+        <SvcLvl>
+          <Cd>SEPA</Cd>
+        </SvcLvl>
+      </PmtTpInf>
+      <ReqdExctnDt>2022-01-31</ReqdExctnDt>
+      <Dbtr>
+        <Nm>Test Company(remitter)</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>LI44088110609197K000C</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BIC>BFRILI22</BIC>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>1-1</InstrId>
+			<!-- Payment reference -->
+			<EndToEndId>Payment reference and Purpose of use</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">123.45</InstdAmt>
+        </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <!-- BIC Foreign Country -->
+            <BIC>BYLADEM1ASA</BIC>
+          </FinInstnId>
+        </CdtrAgt>
+        <Cdtr>
+          <Nm>BENEFICIARY_NAME</Nm>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <!-- IBAN -->
+            <IBAN>AT026000000001349870</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

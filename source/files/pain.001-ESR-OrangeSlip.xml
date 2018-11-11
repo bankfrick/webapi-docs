@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <!-- NOTE: change the last number to reupload the file -->
+      <MsgId>za1-1</MsgId>
+      <CreDtTm>2009-09-28T14:07:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>123.45</CtrlSum>
+      <InitgPty>
+        <Nm>Test Company</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>1</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <BtchBookg>true</BtchBookg>
+      <ReqdExctnDt>2022-01-31</ReqdExctnDt>
+      <Dbtr>
+        <Nm>Test Company</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+		<!-- NOTE: here is your iban -->
+          <IBAN>LI50088110111111K000C</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+		<!-- NOTE: always the same Bank Frick IBAN -->
+          <BIC>BFRILI22</BIC>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>1-1</InstrId>
+          <EndToEndId>1-1</EndToEndId>
+        </PmtId>
+        <PmtTpInf>
+          <LclInstrm>
+            <Prtry>CH01</Prtry>
+          </LclInstrm>
+        </PmtTpInf>
+        <Amt>
+          <InstdAmt Ccy="CHF">123.45</InstdAmt>
+        </Amt>
+        <Cdtr>
+		<!-- NOTE: Name of the receiver -->
+          <Nm>Some guy</Nm>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <Othr>
+              <!-- ESR-TNR -->
+              <Id>01-39139-1</Id>
+            </Othr>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <!-- ESR-Reference -->
+              <Ref>210000000003139471430009017</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

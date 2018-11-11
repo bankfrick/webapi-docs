@@ -472,8 +472,8 @@ A single transaction instance to be created.
 | express |	boolean |	required |	Information if it is a express transaction |
 | reference |	string |	max size: 140, min size: 0 |	The reference text or individual note |
 | charge |	[Charge](#data-types-charge)	| | 	The charging type |
-| debitor |	[TransactionDebitorAccount](#data-types-TransactionDebitorAccount) |	required |	The client information about the transaction |
-| creditor |	[TransactionCreditorAccount](#data-types-TransactionCreditorAccount) |	required |	The beneficiary information about the transaction |
+| debitor |	[TransactionDebitorAccount](#data-types-transactiondebitoraccount) |	required |	The client information about the transaction |
+| creditor |	[TransactionCreditorAccount](#data-types-transactioncreditoraccount) |	required |	The beneficiary information about the transaction |
 
 ## Transaction (existing instance)
 

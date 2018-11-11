@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <!-- NOTE: change the last number to reupload the file -->
+      <MsgId>za_2_2-IBAN-1</MsgId>
+      <CreDtTm>2009-09-28T14:07:00</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>123.45</CtrlSum>
+      <InitgPty>
+        <Nm>Test Company(remitter)</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>1</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <BtchBookg>true</BtchBookg>
+      <ReqdExctnDt>2022-01-31</ReqdExctnDt>
+      <Dbtr>
+        <Nm>Test Company (remitter)</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <IBAN>LI50088110111111K000C</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <BIC>BFRILI22</BIC>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>1-1</InstrId>
+		  	<!-- Payment reference -->
+			<EndToEndId>Payment </EndToEndId>
+        </PmtId>
+        <PmtTpInf>
+          <LclInstrm>
+            <Prtry>CH03</Prtry>
+          </LclInstrm>
+        </PmtTpInf>
+        <Amt>
+          <InstdAmt Ccy="DKK">123.45</InstdAmt>
+        </Amt>
+        <!-- No need of Agt with IBAN -->
+        <!--
+          <CdtrAgt>
+          <FinInstnId>
+          <Nm>TEST Bank</Nm>
+          <Othr>
+          <Id>80-22-2</Id>
+          </Othr>
+          </FinInstnId>
+          </CdtrAgt>
+        -->
+        <Cdtr>
+          <Nm>BENEFICIARY_Name</Nm>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <!-- IBAN -->
+            <IBAN>AT026000000001349870</IBAN>
+          </Id>
+        </CdtrAcct>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>
