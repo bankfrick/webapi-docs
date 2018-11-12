@@ -334,7 +334,7 @@ ValDt	||	no |	valuta date
 ValDt/Dt |	YYYY-MM-DD |	yes (or DtTm) |	date
 AcctSvcrRef |	1 to 35 characters (if available) |	no |	Account Servicer Reference
 BkTxCd	||	yes	||
-BkTxCd/Domn	||	no |	Domäne (Geschäftsfall/Buchungsart)
+BkTxCd/Domn	||	no |	Domaine
 BkTxCd/Domn/Cd |	1-4 characters |	yes	||
 BkTxCd/Domn/Fmly	||	yes	||
 BkTxCd/Domn/Fmly/Cd |	1-4 characters |	yes	||
