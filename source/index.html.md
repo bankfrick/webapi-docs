@@ -79,6 +79,8 @@ A public/private key pair can be created using various tools, e.g. via openssl c
 
 `$ openssl rsa -in private.key -outform PEM -pubout -out public.pem`
 
+![Upload API Keys](/images/documentation/bank-frick-webapi-upload-ssh-keys.png "Upload API Keys")
+
 ## Manage API Keys
 
 Now, you are able to generate a personal API-Key for an application which uses the webAPI. The API-Key replaces the user contact number for requesting a JWT from the authorization server, however for each further request it is still required that the user account is still active and accessible. If the you lock the account e.g. via the “Lock Password” function or by entering false passwords at the login, all client JWTs will lose access privileges temporarily until the user is unlocked again from an advisor in the backend.
@@ -87,6 +89,10 @@ An API-Key is a personalized access token which will be generated once by the se
 
 A generated access token will be displayed after a successful entered TAN challenge for a limited amount of time. After that, the token cannot be accessed again. Changing a token would require to delete the old token and create a new one. You are responsible to save and handle the access key securely. 
 Additionally, you can limit the access to the WebAPI of your account to a specific IP address or subnet. For that, the firewall must be configured accordingly so that your IP address is passed to the application server (transparent proxy) in the “X-FORWARDED-FOR” or any other suitable request header field.
+
+![Manage API Keys](/images/documentation/bank-frick-webapi-manage-api-keys.png "Manage API Keys")
+
+![Manage API Keys Notification](/images/documentation/bank-frick-webapi-api-key-notification.png "Manage API Keys Notification")
 
 ## WebHooks
 
@@ -100,3 +106,6 @@ The server will send a JSON message containing the relevant information about th
 
 If the message cannot be delivered, e.g. because the client server is not responding, the event will be discarded and not be send again until the notification condition is triggered again. The request is asynchronous meaning the server does not wait for a client response.
 
+![WebHooks](/images/documentation/bank-frick-webapi-webhooks.png "WebHooks")
+
+![WebHooks Details](/images/documentation/bank-frick-webapi-webhooks-details.png "WebHooks Details")

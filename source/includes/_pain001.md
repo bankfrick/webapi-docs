@@ -51,6 +51,8 @@ Upload a pain.001 message. Note that errors respectively the status regarding pa
 
 ## Response
 
+<aside class="notice">Please note that the following parameters are required for all pain.001 responses, but depending on the payment method used, additional parameters may be required. These can be found in the following chapter <a href="#pain-001-case-specific-attributes">Case-Specific Attributes</a></aside>
+
 **Header**
 
 | Path | Format | Mandatory | Description |
