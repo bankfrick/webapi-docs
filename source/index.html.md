@@ -7,7 +7,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
 
 toc_footers:
   #- <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/bankfrick/webapi-docs' target='_blank'>Edit on GitHub</a>
+  - <a href='https://github.com/bankfrick/webapi-docs' target='_blank' rel='noopener'>Edit on GitHub</a>
 
 includes:
   - accounts
@@ -55,8 +55,8 @@ If you subsequently have an active Bank Frick account, you can start webAPI with
 
 Currently 2 environments are available
 
-  * Production: <a href="https://olb.bankfrick.li/" target="_blank">https://olb.bankfrick.li</a>
-  * Sandbox: <a href="https://olbtest.bankfrick.li/" target="_blank">https://olbtest.bankfrick.li</a>
+  * Production: <a href="https://olb.bankfrick.li/" target="_blank" rel="noopener">https://olb.bankfrick.li</a>
+  * Sandbox: <a href="https://olbtest.bankfrick.li/" target="_blank" rel="noopener">https://olbtest.bankfrick.li</a>
 
 The API will be available under the following path:<br>
 BaseURL = \<Environment URL\>/webapi/
