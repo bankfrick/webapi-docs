@@ -6,7 +6,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - shell--production: production
 
 toc_footers:
-  #- <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='https://developers.bankfrick.li/signup'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/bankfrick/webapi-docs' target='_blank' rel='noopener'>Edit on GitHub</a>
 
 includes:
