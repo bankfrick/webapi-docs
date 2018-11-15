@@ -92,8 +92,6 @@ Additionally, you can limit the access to the WebAPI of your account to a specif
 
 ![Manage API Keys](/images/documentation/bank-frick-webapi-manage-api-keys.png "Manage API Keys")
 
-![Manage API Keys Notification](/images/documentation/bank-frick-webapi-api-key-notification.png "Manage API Keys Notification")
-
 ## WebHooks
 
 This dialog shows an overview of all created and active notification rules. You are able to define notification rules to be informed when a criteria matches, e.g. a charge or credit entry on an account or an executed payment order. New rules can be created, edited or deleted at any time. 
