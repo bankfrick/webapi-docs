@@ -43,7 +43,7 @@ We have examples for the sandbox as well as for the production environment. You 
 
 # Getting Started
 
-In order to use the online banking webAPI (Sandbox & Production), the client requires having an active account which allows him to access one or multiple customers depending on the user privileges and contact to customer assignments. Here you can set up your account: Sign up
+In order to use the online banking webAPI (Sandbox & Production), the client requires having an active account which allows him to access one or multiple customers depending on the user privileges and contact to customer assignments. Here you can set up your account: <a href="https://developers.bankfrick.li/signup" target="_blank" rel="noopener">Sign up</a>
 
 After the Sign Up, you will receive the following three pieces of information by post to access your account and use the webAPI.
 
