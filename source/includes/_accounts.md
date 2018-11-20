@@ -221,7 +221,7 @@ algorithm: ...
     "customId" : "4711",
     "type" : "SEPA",
     "state" : "PREPARED",
-    "amount" : "1.000,00",
+    "amount" : "1000.00",
     "currency" : "EUR",
     "valuta" : "2018-08-02",
     "express" : false,
