@@ -6,8 +6,8 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - shell--production: production
 
 toc_footers:
-  - <a href='https://developers.bankfrick.li/signup' target='_blank' rel='noopener'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/bankfrick/webapi-docs' target='_blank' rel='noopener'>Edit on GitHub</a>
+  - <a href='https://developers.bankfrick.li/signup' target='_blank' rel='noopener noreferrer'>Sign Up for a Developer Key</a>
+  - <a href='https://github.com/bankfrick/webapi-docs' target='_blank' rel='noopener noreferrer'>Edit on GitHub</a>
 
 includes:
   - accounts
@@ -43,7 +43,7 @@ We have examples for the sandbox as well as for the production environment. You 
 
 # Getting Started
 
-In order to use the online banking webAPI (Sandbox & Production), the client requires having an active account which allows him to access one or multiple customers depending on the user privileges and contact to customer assignments. Here you can set up your account: <a href="https://developers.bankfrick.li/signup" target="_blank" rel="noopener">Sign up</a>
+In order to use the online banking webAPI (Sandbox & Production), the client requires having an active account which allows him to access one or multiple customers depending on the user privileges and contact to customer assignments. Here you can set up your account: <a href="https://developers.bankfrick.li/signup" target="_blank" rel="noopener noreferrer">Sign up</a>
 
 After the Sign Up, you will receive the following three pieces of information by post to access your account and use the webAPI.
 
@@ -55,8 +55,8 @@ If you subsequently have an active Bank Frick account, you can start webAPI with
 
 Currently 2 environments are available
 
-  * Production: <a href="https://olb.bankfrick.li/" target="_blank" rel="noopener">https://olb.bankfrick.li</a>
-  * Sandbox: <a href="https://olbtest.bankfrick.li/" target="_blank" rel="noopener">https://olbtest.bankfrick.li</a>
+  * Production: <a href="https://olb.bankfrick.li/" target="_blank" rel="noopener noreferrer">https://olb.bankfrick.li</a>
+  * Sandbox: <a href="https://olbtest.bankfrick.li/" target="_blank" rel="noopener noreferrer">https://olbtest.bankfrick.li</a>
 
 The API will be available under the following path:<br>
 BaseURL = \<Environment URL\>/webapi/
