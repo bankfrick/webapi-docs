@@ -53,7 +53,7 @@ algorithm: ...
     "customId" : "4711",
     "type" : "SEPA",
     "state" : "DELETED",
-    "amount" : "1.000,00",
+    "amount" : "1000.00",
     "currency" : "EUR",
     "valuta" : "2018-08-02",
     "express" : false,
@@ -66,7 +66,7 @@ algorithm: ...
       "name" : "Max Muster",
       "iban" : "DE12500105170648489890",
       "bic" : "INGDDEFFXXX",
-      "creditInsitution" : "ING-DiBa GERMANY"
+      "creditInstitution" : "ING-DiBa GERMANY"
     },
     "creator" : "6789 Max Muster",
     "right" : "Bevollmächtigter kollektiv zu 2",
@@ -126,7 +126,7 @@ Delete payment orders that are not yet fully approved, only payment orders in th
 
 ```shell--sandbox
 GET https://olbtest.bankfrick.li/webapi/transactions
-Content-Type: */*
+Content-Type: application/json
 Accept: application/json
 Authentication: ...
       
@@ -135,7 +135,7 @@ Authentication: ...
 
 ```shell--production
 GET https://olb.bankfrick.li/webapi/transactions
-Content-Type: */*
+Content-Type: application/json
 Accept: application/json
 Authentication: ...
       
@@ -159,7 +159,7 @@ algorithm: ...
     "customId" : "4711",
     "type" : "SEPA",
     "state" : "PREPARED",
-    "amount" : "1.000,00",
+    "amount" : "1000.00",
     "currency" : "EUR",
     "valuta" : "2018-08-02",
     "express" : false,
@@ -172,7 +172,7 @@ algorithm: ...
       "name" : "Max Muster",
       "iban" : "DE12500105170648489890",
       "bic" : "INGDDEFFXXX",
-      "creditInsitution" : "ING-DiBa GERMANY"
+      "creditInstitution" : "ING-DiBa GERMANY"
     },
     "creator" : "6789 Max Muster",
     "right" : "Bevollmächtigter kollektiv zu 2",
@@ -248,7 +248,7 @@ algorithm: ...
   "transactions" : [ {
     "customId" : "4711",
     "type" : "SEPA",
-    "amount" : "1.000,00",
+    "amount" : "1000.00",
     "currency" : "EUR",
     "express" : false,
     "reference" : "Invoice number 123",
@@ -259,7 +259,7 @@ algorithm: ...
       "name" : "Max Muster",
       "iban" : "DE12500105170648489890",
       "bic" : "INGDDEFFXXX",
-      "creditInsitution" : "ING-DiBa GERMANY"
+      "creditInstitution" : "ING-DiBa GERMANY"
     }
   } ]
 }
@@ -278,7 +278,7 @@ algorithm: ...
   "transactions" : [ {
     "customId" : "4711",
     "type" : "SEPA",
-    "amount" : "1.000,00",
+    "amount" : "1000.00",
     "currency" : "EUR",
     "express" : false,
     "reference" : "Invoice number 123",
@@ -289,7 +289,7 @@ algorithm: ...
       "name" : "Max Muster",
       "iban" : "DE12500105170648489890",
       "bic" : "INGDDEFFXXX",
-      "creditInsitution" : "ING-DiBa GERMANY"
+      "creditInstitution" : "ING-DiBa GERMANY"
     }
   } ]
 }
@@ -312,7 +312,7 @@ algorithm: ...
     "customId" : "4711",
     "type" : "SEPA",
     "state" : "PREPARED",
-    "amount" : "1.000,00",
+    "amount" : "1000.00",
     "currency" : "EUR",
     "valuta" : "2018-08-02",
     "express" : false,
@@ -325,7 +325,7 @@ algorithm: ...
       "name" : "Max Muster",
       "iban" : "DE12500105170648489890",
       "bic" : "INGDDEFFXXX",
-      "creditInsitution" : "ING-DiBa GERMANY"
+      "creditInstitution" : "ING-DiBa GERMANY"
     },
     "creator" : "6789 Max Muster",
     "right" : "Bevollmächtigter kollektiv zu 2",
