@@ -16,7 +16,7 @@
       <BtchBookg>true</BtchBookg>
       <ReqdExctnDt>2022-01-31</ReqdExctnDt>
       <Dbtr>
-        <Nm>John Doe</Nm>
+        <Nm>ABC Corporation</Nm>
       </Dbtr>
       <DbtrAcct>
         <Id>
@@ -34,7 +34,7 @@
           <EndToEndId>1-1</EndToEndId>
         </PmtId>
         <Amt>
-          <InstdAmt Ccy="CHF">123.45</InstdAmt>
+          <InstdAmt Ccy="USD">123.45</InstdAmt>
         </Amt>
         <CdtrAgt>
           <FinInstnId>

@@ -10,7 +10,7 @@ Upload a pain.001 message. Note that errors respectively the status regarding pa
 
 | name | type | description |
 | ---- | ---- | ----------- |
-| Authentication | header | Bearer \<**token**\> |
+| Authorization | header | Bearer \<**token**\> |
 | Signature | header | \<**signature**\> |
 | algorithm | header | The used signing algorithm, e.g. rsa-sha512 |
 
@@ -40,14 +40,16 @@ Upload a pain.001 message. Note that errors respectively the status regarding pa
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-**Example Files**
+**Payment Types and Example Files**
 
-* <a href="/files/pain.001-ESR-OrangeSlip.xml" download>Domestic Payment (Switzerland) - ESR (Orange payment slip)</a>
-* <a href="/files/pain.001-za2_2-SWIFTwitIhBAN.xml" download>Domestic Payment (Switzerland) - SWIFT with IBAN</a>
-* <a href="/files/pain.001-za3-InlandWithIBAN.xml" download>Domestic Payment (Switzerland) - with IBAN</a>
-* <a href="/files/pain.001-za5-SEPA.xml" download>Foreign Payments - SEPA</a>
-* <a href="/files/pain.001-za6a-SWIFTwithIBAN.xml" download>Foreign Payments not SEPA - SWIFT with IBAN</a>
-* <a href="/files/pain.001-za6b-SWIFTwithAccountNr.xml" download>Foreign Payments not SEPA - SWIFT with BIC International</a>
+| Description | Local Instrument | Creditor Account |  Creditor Agent | Currency |
+| ---- | ------ | --------- | ----------- | ----------- |
+| <a href="/files/pain.001-ESR-OrangeSlip.xml" download>Domestic Payment (CH/LI) - ESR (Orange payment slip)</a> | CH01 |   |   | CHF |
+| <a href="/files/pain.001-za2_2-SWIFTwitIhBAN.xml" download>Domestic Payment (CH/LI) - with IBAN</a> |  | IBAN in CH/LI |    | CHF/EUR |
+| <a href="/files/pain.001-za3-InlandWithIBAN.xml" download>Domestic Payment (CH/LI) - with IBAN</a> |  | IBAN in CH/LI |   | All except CHF/EUR |
+| <a href="/files/pain.001-za5-SEPA.xml" download>Foreign Payment - SEPA</a> |  | IBAN in Europe |   | EUR |
+| <a href="/files/pain.001-za6a-SWIFTwithIBAN.xml" download>Foreign Payment not SEPA - SWIFT</a> |  | IBAN | BIC | Any Currency |
+| <a href="/files/pain.001-za6b-SWIFTwithAccountNr.xml" download>Foreign Payment not SEPA - SWIFT</a> |  | Account Number | BIC | Any Currency |
 
 ## Response
 

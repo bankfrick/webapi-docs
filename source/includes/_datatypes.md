@@ -103,7 +103,7 @@ A approval of a transaction.
 }
 ```
 
-Authentication message body
+Authorization message body
 
 **Properties**
 

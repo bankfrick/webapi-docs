@@ -32,6 +32,7 @@
       <CdtTrfTxInf>
         <PmtId>
           <InstrId>1-1</InstrId>
+          <EndToEndId>1-1</EndToEndId>
 		  	<!-- Payment reference -->
 			<EndToEndId>Payment </EndToEndId>
         </PmtId>
@@ -41,7 +42,7 @@
           </LclInstrm>
         </PmtTpInf>
         <Amt>
-          <InstdAmt Ccy="DKK">123.45</InstdAmt>
+          <InstdAmt Ccy="CHF">123.45</InstdAmt>
         </Amt>
         <!-- No need of Agt with IBAN -->
         <!--

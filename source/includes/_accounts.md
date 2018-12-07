@@ -12,7 +12,7 @@ Listing of accounts, similar to the financial overview within the online banking
 GET https://olbtest.bankfrick.li/webapi/accounts
 Content-Type: */*
 Accept: application/json
-Authentication: ...
+Authorization: ...
            
 ...    
 ```
@@ -21,7 +21,7 @@ Authentication: ...
 GET https://olb.bankfrick.li/webapi/accounts
 Content-Type: */*
 Accept: application/json
-Authentication: ...
+Authorization: ...
            
 ...    
 ```
@@ -63,7 +63,7 @@ Get the list of accounts that are visible for the user.
 
 | name | type | description | default | constraints |
 | ---- | ---- | ----------- | ------- | ----------- |
-| Authentication | header | Bearer \<**token**\>
+| Authorization | header | Bearer \<**token**\>
 | firstPosition | query | (optional) Set the position of the first result to retrieve (offset), defaults to 0 | 0 | int |
 | maxResults | query | 	(optional) Set the maximum number of results to retrieve (row_count), defaults to 100, max. 500 | 100 | int |
 | order | query | (optional) Defines the ordering (by customer_number and account_number) of the result where order is one of (desc, asc), defaults to asc | asc
@@ -97,7 +97,7 @@ Get the list of accounts that are visible for the user.
 GET https://olbtest.bankfrick.li/webapi/accounts/0001234/001.000.001
 Content-Type: */*
 Accept: application/json
-Authentication: ...
+Authorization: ...
 
                 
 ...
@@ -107,7 +107,7 @@ Authentication: ...
 GET https://olb.bankfrick.li/webapi/accounts/0001234/001.000.001
 Content-Type: */*
 Accept: application/json
-Authentication: ...
+Authorization: ...
 
                 
 ...
@@ -152,7 +152,7 @@ If a combination of filter parameters are applied, only accounts that match both
 
 | name | type | description | default | constraints |
 | ---- | ---- | ----------- | ------- | ----------- |
-| Authentication | header | Bearer \<**token**\>
+| Authorization | header | Bearer \<**token**\>
 | account | path | (optional) The account to receive information for
 | p | path | optional) Path separator between customer and account, for searching for an account number without filtering for a customer /accounts//\<account_number\> must be given.
 | firstPosition | query | (optional) Set the position of the first result to retrieve (offset), defaults to 0 | 0 | int |
@@ -190,7 +190,7 @@ If a combination of filter parameters are applied, only accounts that match both
 GET https://olbtest.bankfrick.li/webapi/accounts/0001234/001.000.001/transactions
 Content-Type: */*
 Accept: application/json
-Authentication: ...
+Authorization: ...
                 
 ...
 ```
@@ -199,7 +199,7 @@ Authentication: ...
 GET https://olb.bankfrick.li/webapi/accounts/0001234/001.000.001/transactions
 Content-Type: */*
 Accept: application/json
-Authentication: ...
+Authorization: ...
                 
 ...
 ```
@@ -258,7 +258,7 @@ If a combination of filter parameters are applied, only orders that match all of
 
 | name | type | description | default | constraints |
 | ---- | ---- | ----------- | ------- | ----------- |
-| Authentication | header | Bearer \<**token**\>
+| Authorization | header | Bearer \<**token**\>
 | account | path | (optional) The account to receive information for
 | customer | path | (optional) The customer number to filter the list of transactions for
 | p | path | optional) Path separator between customer and account, for searching for an account number without filtering for a customer /accounts//\<account_number\> must be given.
