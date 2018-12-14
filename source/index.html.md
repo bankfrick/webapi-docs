@@ -68,17 +68,55 @@ Schemes: https
 
 Message payloads must be signed by the sender of the message and be verified by the receiver. The signature will be transmitted in the ‘Signature’ header field of the HTTP Request/Response. The signature is a Base64-encoded binary SHA signature of the content of the message-body. The 'algorithm' header parameter is used to specify the digital signature algorithm to use when generating the signature. Valid values for this parameter are [rsa-sha512, rsa-sha384, rsa-sha256]. If ‘algorithm’ is not provided by the client the server will assume rsa-sha512.
 
-## Upload SSH Keys
+## SSH-Key-Management
 
-The public key must be uploaded to the server using the online banking GUI manage SSH Key dialog and assigned to an access token. You must give a unique title respectively a name to the public key. The public key itself can be copied into the input field and added with the "Add SSH-Key" button. The following formats for the public key are accepted:
+The public key of the client must be uploaded to the server using the online banking gui manage ssh key dialog and assigned to an access token. The user must give a unique title respectively a name to the public key. The public key itself can be copied into the input field and added with the "Add SSH-Key" button. The following formats for the public key are accepted:
 
-X.509 SubjectPublicKeyInfo (PEM header: BEGIN PUBLIC KEY)
+  * X.509 SubjectPublicKeyInfo (PEM header: BEGIN PUBLIC KEY)
 
 A public/private key pair can be created using various tools, e.g. via openssl command line
 
 `$ openssl genrsa -out private.key 4096`
 
 `$ openssl rsa -in private.key -outform PEM -pubout -out public.pem`
+
+Or via Java:
+
+`KeyPairGenerator instance = KeyPairGenerator.getInstance("RSA");`
+ `instance.initialize(4096, secureRandom);`
+ `KeyPair generateKeyPair = instance.generateKeyPair();`
+
+ Note: Private keys must be stored safely and never shared.
+
+## Sample signing with openssl
+
+`$ openssl dgst –sha512 –sign private.key –out request.body.sha512 request.body`
+`$ openssl base64 -A –in request.body.sha512 -out request.signature`
+
+## Sample signature verification using openssl
+
+`$ openssl base64 -A –d –in response.signature -out response.body.sha512`
+`$ openssl dgst –sha512 –verify public.pem –signature response.body.sha512 response.body`
+
+##Sample signing with Java
+
+ `public String getSignature(byte[] body, PrivateKey privateKey) throws Exception {`
+     `Signature privateSignature = Signature.getInstance("SHA512withRSA");`
+     `privateSignature.initSign(privateKey);`
+     `privateSignature.update(body);`
+     `byte[] signature = privateSignature.sign();`
+     `return Base64.getEncoder().encodeToString(signature);`
+ `}`
+
+ ##Sample signature verification using Java
+
+`public boolean isValid(byte[] body, String signature, PublicKey publicKey) throws Exception {`
+     `Signature publicSignature = Signature.getInstance("SHA512withRSA");`
+     `publicSignature.initVerify(publicKey);`
+     `publicSignature.update(body);`
+     `byte[] signatureBytes = Base64.getDecoder().decode(signature);`
+     `return publicSignature.verify(signatureBytes);`
+ `}`
 
 ![Upload API Keys](/images/documentation/bank-frick-webapi-upload-ssh-keys.png "Upload API Keys")
 
