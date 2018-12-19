@@ -7,7 +7,7 @@ This message is used to download a camt.052 report. This export format only cont
 > Request
 
 ```xml--sandbox
-GET https://olbtest.bankfrick.li/webapi/camt052?accountnumber=0001234/001.000.001
+GET https://olbtest.bankfrick.li/webapi/camt052?iban=LI11188110101101K001E
 Content-Type: */*
 Accept: application/xml
 Authorization: ...
@@ -16,7 +16,7 @@ algorithm: ...
 ```
 
 ```xml--production
-DELETE https://olb.bankfrick.li/webapi/camt052?accountnumber=0001234/001.000.001
+DELETE https://olb.bankfrick.li/webapi/camt052?iban=LI11188110101101K001E
 Content-Type: */*
 Accept: application/xml
 Authorization: ...
