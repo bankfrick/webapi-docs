@@ -53,7 +53,7 @@ algorithm: ...
     "customId" : "4711",
     "type" : "SEPA",
     "state" : "DELETED",
-    "amount" : "1000.00",
+    "amount" : 1000.00,
     "currency" : "EUR",
     "valuta" : "2018-08-02",
     "express" : false,
@@ -71,10 +71,8 @@ algorithm: ...
     "creator" : "6789 Max Muster",
     "right" : "Bevollmächtigter kollektiv zu 2",
     "groupPolicy" : "Group intern",
-    "group" : 1,
     "approvals" : [ {
-      "contact" : "6789 Max Muster",
-      "group" : 1
+      "contact" : "6789 Max Muster"
     } ]
   } ]
 }
@@ -159,7 +157,7 @@ algorithm: ...
     "customId" : "4711",
     "type" : "SEPA",
     "state" : "PREPARED",
-    "amount" : "1000.00",
+    "amount" : 1000.00,
     "currency" : "EUR",
     "valuta" : "2018-08-02",
     "express" : false,
@@ -177,11 +175,9 @@ algorithm: ...
     "creator" : "6789 Max Muster",
     "right" : "Bevollmächtigter kollektiv zu 2",
     "groupPolicy" : "Group intern",
-    "group" : 1,
     "quorum" : 2,
     "approvals" : [ {
       "contact" : "6789 Max Muster",
-      "group" : 1,
       "dateOfApproval" : "2018-08-22T10:07:02"
     } ]
   } ]
@@ -248,7 +244,7 @@ algorithm: ...
   "transactions" : [ {
     "customId" : "4711",
     "type" : "SEPA",
-    "amount" : "1000.00",
+    "amount" : 1000.00,
     "currency" : "EUR",
     "express" : false,
     "reference" : "Invoice number 123",
@@ -278,7 +274,7 @@ algorithm: ...
   "transactions" : [ {
     "customId" : "4711",
     "type" : "SEPA",
-    "amount" : "1000.00",
+    "amount" : 1000.00,
     "currency" : "EUR",
     "express" : false,
     "reference" : "Invoice number 123",
@@ -312,7 +308,7 @@ algorithm: ...
     "customId" : "4711",
     "type" : "SEPA",
     "state" : "PREPARED",
-    "amount" : "1000.00",
+    "amount" : 1000.00,
     "currency" : "EUR",
     "valuta" : "2018-08-02",
     "express" : false,
@@ -329,8 +325,7 @@ algorithm: ...
     },
     "creator" : "6789 Max Muster",
     "right" : "Bevollmächtigter kollektiv zu 2",
-    "groupPolicy" : "Group intern",
-    "group" : 1
+    "groupPolicy" : "Group intern"
   } ]
 }
 ```

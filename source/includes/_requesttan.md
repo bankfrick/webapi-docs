@@ -62,6 +62,8 @@ Delete a ongoing TAN request challenge.
 | media type | data type | description |
 | ---------- | --------- | ----------- |
 | application/json | [DeleteRequestTan](#data-types-deleterequesttan) (JSON) | The request TAN delete body |
+| orderIds | array of number | The order ids (as assigned from the server) to request a tan for. Either orderIds, customIds or combination of both must be given. |
+| customIds | array of string | The custom ids (as assigned from the client) to request a tan for. Either orderIds, customIds or combination of both must be given. |
 
 **Response Codes**
 

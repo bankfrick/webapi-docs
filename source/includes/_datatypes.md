@@ -164,7 +164,7 @@ Enum values for the 'charge' field.
 
 ## CreateTransaction
 
-> Response
+> Request
 
 ```json          
 {
@@ -355,6 +355,7 @@ Enum values for the 'method' field
 | value | description |
 | ----- | ----------- |
 | SMS_TAN |	TAN send by SMS |
+| PUSH_TAN | TAN send by PushTAN App |
 
 ## RequestTan
 
@@ -373,7 +374,8 @@ The request tan request body.
 
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
-| orderIds | array of number |	required |	The order ids (as assigned from the server) to request a tan for |
+| orderIds | array of number | required | The order ids (as assigned from the server) to request a tan for. Either orderIds, customIds or combination of both must be given. |
+| customIds | array of string | required | The custom ids (as assigned from the client) to request a tan for. Either orderIds, customIds or combination of both must be given. |
 | method |	[Method](#data-types-method) |	required |	The TAN method to be used for sending the TAN |
 
 ## RequestTanResponse
@@ -434,7 +436,7 @@ Enum values for the 'state' field.
 
 ## Transaction (new instance)
 
-> Response
+> Request
 
 ```json          
 {
@@ -449,7 +451,7 @@ Enum values for the 'state' field.
     "iban" : "LI6808811000000001234"
   },
   "creditor" : {
-    "accountNumber" : "00012345/001.000.001",
+    "accountNumber" : "00012345678",
     "name" : "Max Muster",
     "iban" : "DE12500105170648489890",
     "bic" : "INGDDEFFXXX",
@@ -471,7 +473,7 @@ A single transaction instance to be created.
 | currency |	string |	required, max size: 3, min size: 0 |	The transaction currency |
 | express |	boolean |	required |	Information if it is a express transaction |
 | reference |	string |	max size: 140, min size: 0 |	The reference text or individual note |
-| charge |	[Charge](#data-types-charge)	| | 	The charging type |
+| charge |	[Charge](#data-types-charge)	| required when type FOREIGN | 	The charging type |
 | debitor |	[TransactionDebitorAccount](#data-types-transactiondebitoraccount) |	required |	The client information about the transaction |
 | creditor |	[TransactionCreditorAccount](#data-types-transactioncreditoraccount) |	required |	The beneficiary information about the transaction |
 
@@ -553,11 +555,11 @@ A single transaction existing instance.
 
 ## TransactionAccount
 
-> Response
+> Request
 
 ```json          
 {
-  "accountNumber" : "00012345/001.000.001",
+  "accountNumber" : "00012345678",
   "name" : "Max Muster",
   "iban" : "LI6808811000000001234",
   "bic" : "INGDDEFFXXX",
@@ -572,20 +574,20 @@ Debitor or creditor account information of the transaction.
 
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
-| accountNumber	| string | |	The account number of the corresponding account |
+| accountNumber	| string | |	The account number of the corresponding account (instead of IBAN, only type = FOREIGN ) |
 | name |	string | |	The name of the client or recipient |
 | iban |	string | |	The iban of the corresponding account |
-| bic |	string | |	The bic of the corresponding accounts credit institution |
-| creditInstitution	| string | |	The name of the credit institution |
-| esr	| string | |	The esr number in case of type = ORANGE |
+| bic |	string | |	The bic of the corresponding accounts credit institution (only type = FOREIGN) |
+| creditInstitution	| string | |	The name of the credit institution (only type = FOREIGN) |
+| esr	| string | |	The esr number (only type = ORANGE) |
 
 ## TransactionCreditorAccount
 
-> Response
+> Request
 
 ```json          
 {
-  "accountNumber" : "00012345/001.000.001",
+  "accountNumber" : "00012345678",
   "name" : "Max Muster",
   "iban" : "DE12500105170648489890",
   "bic" : "INGDDEFFXXX",
@@ -600,16 +602,16 @@ The transactions beneficiary account information.
 
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
-| accountNumber	| string |	max size: 30, min size: 0 |	The account number of the recipient |
+| accountNumber	| string |	max size: 30, min size: 0 |	The account number of the recipient (instead of IBAN, only type = FOREIGN ) |
 | name |	string |	required |	The name of the recipient |
-| iban |	string |	max size: 34, min size: 0	| The iban if the recipient account |
-| bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution |
-| creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution |
-| esr	| string |	max size: 27, min size: 0 |	The esr number in case of type = ORANGE |
+| iban |	string |	max size: 34, min size: 0	| The iban of the recipient account |
+| bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution (only type = FOREIGN) |
+| creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution (only type = FOREIGN) |
+| esr	| string |	max size: 27, min size: 0 |	The esr number (only type = ORANGE) |
 
 ## TransactionDebitorAccount
 
-> Response
+> Request
 
 ```json          
 {
@@ -624,6 +626,21 @@ The transactions client account information.
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
 | iban |	string |	required, max size: 34, min size: 0	| the account iban of the sender |
+
+## Type
+
+Enum values for the 'type' field
+
+**Properties**
+
+| value | currency | description |
+| ----- | -------- | ----------- |
+| INTERNAL | Any | Internal transfers within the same company |
+| BANK_INTERNAL |	Any | Bank Frick Internal Transfer to a different company where the contact is linked to |
+| SEPA | Euro |	SEPA Payment (Only transactions in Euro to European countries) |
+| FOREIGN	| Any | International Transfer (SWIFT) |
+| RED |	CHF & EUR | Red Payment Slip |
+| ORANGE | CHF & EUR |	Orange Payment Slip with ESR number (Only in Switzerland) |
 
 ## Transactions
 
@@ -730,18 +747,3 @@ The transactions message response body.
 | moreResults |	boolean	| required |	Attribute indicates that more results are available on the server |
 | resultSetSize |	number |	required |	Number of results in the returned result set |
 | transactions |	array of [Transaction (existing instance)](#data-types-transaction-existing-instance) |	required |	the list of transactions |
-
-## Type
-
-Enum values for the 'type' field
-
-**Properties**
-
-| value | description |
-| ----- | ----------- |
-| INTERNAL |	Internal Transfer |
-| BANK_INTERNAL |	Bank Internal Transfer |
-| SEPA |	SEPA Payment |
-| FOREIGN	| International Transfer |
-| RED |	Red Payment Slip |
-| ORANGE |	Orange Payment Slip |
