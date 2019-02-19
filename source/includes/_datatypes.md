@@ -418,6 +418,24 @@ The sign transactions with tan request body message.
 | challengeId |	string |	required |	The challenge id as given in the requestTan response message |
 | tan |	string |	required |	The received (SMS-)TAN |
 
+## SignTransactionsWithoutTan
+
+> Response
+
+```json          
+{
+  "orderIds" : [ 12345, 12345 ]
+}
+```
+
+The sign transactions without tan request body message.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| orderIds |	array of number |	required |	The order ids (as assigned from the server) to be approved by the user |
+
 ## State 
 
 Enum values for the 'state' field.

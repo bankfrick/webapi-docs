@@ -16,6 +16,7 @@ includes:
   - info
   - requesttan
   - signtxwithtan
+  - signtxwithouttan
   - transactions
   - camt052
   - camt053
