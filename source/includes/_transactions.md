@@ -184,7 +184,9 @@ algorithm: ...
 }
 ```
 
-Get the list of payment orders based on the search parameters. The user also requires corresponding read privileges for the customer account.
+Get the list of payment orders based on the search parameters. The user also requires corresponding read privileges for the customer account. 
+
+This methode only fetches outgoing transactions transmitted via the online banking or the api not the incoming booked transactions (fort hem you would either need to use [camt052](#camt-052) or [camt053](#camt-053) methodes)
 
 If a combination of filter parameters are applied, only orders that match all of the conditions are returned.
 
