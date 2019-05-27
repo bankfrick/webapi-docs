@@ -174,6 +174,8 @@ Enum values for the 'charge' field.
     "amount" : 1321.00,
     "currency" : "EUR",
     "express" : true,
+    "valuta" : "2019-04-28",
+    "valutaIsExecutionDate" : true,
     "reference" : "some individual text",
     "charge" : "SHA",
     "debitor" : {
@@ -260,6 +262,7 @@ The delete transactions request body.
 
 ```json          
 {
+  "language" : "en",
   "message" : "Parameter iban is missing",
   "code" : "request_body_validation_error"
 }
@@ -271,6 +274,7 @@ A single error message instance.
 
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
+| language | string | required | The language of the message as ISO 639-1 code |
 | message |	string |	required |	An explanation about the error |
 | code |	string |	required |	An internal error code |
 
@@ -281,9 +285,11 @@ A single error message instance.
 ```json          
 {
   "errors" : [ {
+    "language" : "en",
     "message" : "Parameter iban is missing",
     "code" : "request_body_validation_error"
   }, {
+    "language" : "en",
     "message" : "Parameter iban is missing",
     "code" : "request_body_validation_error"
   } ]
@@ -332,6 +338,7 @@ The info response message body.
 
 ```json          
 {
+  "language" : "en",
   "title" : "Maintenance",
   "message" : "Due to maintenance work, online banking will not be available on 26.07.2018 from 05:00 to 06:00. We apologize for any inconvenience."
 }
@@ -343,6 +350,7 @@ A single info message instance.
 
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
+| language | string | required | The language of the message as ISO 639-1 code |
 | title |	string ||	The message title |
 | message |	string ||	The message content |
 
@@ -364,6 +372,7 @@ Enum values for the 'method' field
 ```json          
 {
   "orderIds" : [ 12345, 12345 ],
+  "customIds" : [ "...", "..."],
   "method" : "SMS_TAN"
 }
 ```
@@ -374,8 +383,8 @@ The request tan request body.
 
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
-| orderIds | array of number | required | The order ids (as assigned from the server) to request a tan for. Either orderIds, customIds or combination of both must be given. |
-| customIds | array of string | required | The custom ids (as assigned from the client) to request a tan for. Either orderIds, customIds or combination of both must be given. |
+| orderIds | array of number |  | The order ids (as assigned from the server) to request a tan for. Either orderIds, customIds or combination of both must be given. |
+| customIds | array of string |  | The custom ids (as assigned from the client) to request a tan for. Either orderIds, customIds or combination of both must be given. |
 | method |	[Method](#data-types-method) |	required |	The TAN method to be used for sending the TAN |
 
 ## RequestTanResponse
@@ -463,6 +472,8 @@ Enum values for the 'state' field.
   "amount" : 1321.00,
   "currency" : "EUR",
   "express" : true,
+  "valuta" : "2019-04-28",
+  "valutaIsExecutionDate" : true,
   "reference" : "some individual text",
   "charge" : "BEN",
   "debitor" : {
@@ -490,6 +501,8 @@ A single transaction instance to be created.
 | amount |	number |	required, min: 0.01, max digits: 12 (integer), 2 (fraction) |	The amount of the transaction |
 | currency |	string |	required, max size: 3, min size: 0 |	The transaction currency |
 | express |	boolean |	required |	Information if it is a express transaction |
+| valuta | string | | The value date or execution date of the transaction. If not set, it will be set to the current day (default) |
+| valutaIsExecutionDate | boolean | | Indicates if the valuta date is the requested execution date (true) or desired value date (false). If not set it will be the requested execution date (default) |
 | reference |	string |	max size: 140, min size: 0 |	The reference text or individual note |
 | charge |	[Charge](#data-types-charge)	| required when type FOREIGN | 	The charging type |
 | debitor |	[TransactionDebitorAccount](#data-types-transactiondebitoraccount) |	required |	The client information about the transaction |
@@ -509,6 +522,8 @@ A single transaction instance to be created.
   "currency" : "EUR",
   "valuta" : "2018-08-27",
   "express" : true,
+  "valuta" : "2019-04-28",
+  "valutaIsExecutionDate" : true,
   "reference" : "Some Individual Text",
   "charge" : "SHA",
   "debitor" : {
@@ -559,6 +574,8 @@ A single transaction existing instance.
 | currency |	string |	required |	The transaction currency |
 | valuta |	string |	required |	The (est.) valuta date of the transaction |
 | express |	boolean |	required |	Information if it is a express transaction |
+| valuta | string | | The value date or execution date of the transaction. If not set, it will be set to the current day (default) |
+| valutaIsExecutionDate | boolean | | Indicates if the valuta date is the requested execution date (true) or desired value date (false). If not set it will be the requested execution date (default) |
 | reference |	string	| |	The reference text of individual notes |
 | charge |	[Charge](#data-types-charge)	| |	The charging system of the transaction |
 | debitor |	[TransactionAccount](#data-types-transactionaccount) |	required |	The client information about the transaction |
@@ -677,6 +694,8 @@ Enum values for the 'type' field
     "currency" : "EUR",
     "valuta" : "2018-08-27",
     "express" : true,
+    "valuta" : "2019-04-28",
+    "valutaIsExecutionDate" : true,
     "reference" : "Some Individual Text",
     "charge" : "OUR",
     "debitor" : {
@@ -719,6 +738,8 @@ Enum values for the 'type' field
     "currency" : "EUR",
     "valuta" : "2018-08-27",
     "express" : true,
+    "valuta" : "2019-04-28",
+    "valutaIsExecutionDate" : true,
     "reference" : "Some Individual Text",
     "charge" : "OUR",
     "debitor" : {
