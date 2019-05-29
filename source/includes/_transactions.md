@@ -9,7 +9,7 @@ Listing of payment orders similar to the transaction overview within the online 
 > Request
 
 ```shell--sandbox
-DELETE https://olbtest.bankfrick.li/webapi/deleteTransaction
+DELETE https://olbtest.bankfrick.li/webapi/v2/deleteTransaction
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -23,7 +23,7 @@ algorithm: ...
 ```
 
 ```shell--production
-DELETE https://olb.bankfrick.li/webapi/deleteTransaction
+DELETE https://olb.bankfrick.li/webapi/v2/deleteTransaction
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -56,6 +56,7 @@ algorithm: ...
     "amount" : 1000.00,
     "currency" : "EUR",
     "valuta" : "2018-08-02",
+    "valutaIsExecutionDate" : true,
     "express" : false,
     "reference" : "Invoice number 123",
     "debitor" : {
@@ -123,7 +124,7 @@ Delete payment orders that are not yet fully approved, only payment orders in th
 > Request
 
 ```shell--sandbox
-GET https://olbtest.bankfrick.li/webapi/transactions
+GET https://olbtest.bankfrick.li/webapi/v2/transactions
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -132,7 +133,7 @@ Authorization: ...
 ```
 
 ```shell--production
-GET https://olb.bankfrick.li/webapi/transactions
+GET https://olb.bankfrick.li/webapi/v2/transactions
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -160,6 +161,7 @@ algorithm: ...
     "amount" : 1000.00,
     "currency" : "EUR",
     "valuta" : "2018-08-02",
+    "valutaIsExecutionDate" : true,
     "express" : false,
     "reference" : "Invoice number 123",
     "debitor" : {
@@ -186,7 +188,7 @@ algorithm: ...
 
 Get the list of payment orders based on the search parameters. The user also requires corresponding read privileges for the customer account. 
 
-This methode only fetches outgoing transactions transmitted via the online banking or the api not the incoming booked transactions (fort hem you would either need to use [camt052](#camt-052) or [camt053](#camt-053) methodes)
+This methode only fetches outgoing transactions transmitted via the online banking or the api not the incoming booked transactions (for them you would either need to use [camt052](#camt-052) or [camt053](#camt-053) methods)
 
 If a combination of filter parameters are applied, only orders that match all of the conditions are returned.
 
@@ -195,6 +197,8 @@ If a combination of filter parameters are applied, only orders that match all of
 | name | type | description | default | constraints |
 | ---- | ---- | ----------- | ------- | ----------- |
 | Authorization | header | Bearer \<**token**\>
+| orderId | path | | (optional) The payment order id as it was assigned by the server to look for | | regex: ((?<=/)[0-9]{0,20})? |
+| customId | query | 
 | firstPosition | query | (optional) Set the position of the first result to retrieve (offset), defaults to 0 | 0 | int |
 | fromDate | query | (optional) Starting date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD, defaults to current day minus 30 days, if no specific search parameter orderId or customId was given.
 | maxAmount | query | (optional) Maximum amount for a transaction to appear in the report, this parameter should be URL-Encoded.
@@ -234,7 +238,7 @@ If a combination of filter parameters are applied, only orders that match all of
 > Request
 
 ```shell--sandbox 
-PUT https://olbtest.bankfrick.li/webapi/transactions
+PUT https://olbtest.bankfrick.li/webapi/v2/transactions
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -264,7 +268,7 @@ algorithm: ...
 ```
 
 ```shell--production
-PUT https://olb.bankfrick.li/webapi/transactions
+PUT https://olb.bankfrick.li/webapi/v2/transactions
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -278,6 +282,8 @@ algorithm: ...
     "type" : "SEPA",
     "amount" : 1000.00,
     "currency" : "EUR",
+    "valuta" : "2018-08-02",
+    "valutaIsExecutionDate" : true,
     "express" : false,
     "reference" : "Invoice number 123",
     "debitor" : {
@@ -313,6 +319,7 @@ algorithm: ...
     "amount" : 1000.00,
     "currency" : "EUR",
     "valuta" : "2018-08-02",
+    "valutaIsExecutionDate" : true,
     "express" : false,
     "reference" : "Invoice number 123",
     "debitor" : {

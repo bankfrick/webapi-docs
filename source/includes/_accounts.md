@@ -9,7 +9,7 @@ Listing of accounts, similar to the financial overview within the online banking
 > Request
 
 ```shell--sandbox
-GET https://olbtest.bankfrick.li/webapi/accounts
+GET https://olbtest.bankfrick.li/webapi/v2/accounts
 Content-Type: */*
 Accept: application/json
 Authorization: ...
@@ -18,7 +18,7 @@ Authorization: ...
 ```
 
 ```shell--production
-GET https://olb.bankfrick.li/webapi/accounts
+GET https://olb.bankfrick.li/webapi/v2/accounts
 Content-Type: */*
 Accept: application/json
 Authorization: ...
@@ -94,7 +94,7 @@ Get the list of accounts that are visible for the user.
 > Request
 
 ```shell--sandbox
-GET https://olbtest.bankfrick.li/webapi/accounts/0001234/001.000.001
+GET https://olbtest.bankfrick.li/webapi/v2/accounts/0001234/001.000.001
 Content-Type: */*
 Accept: application/json
 Authorization: ...
@@ -104,7 +104,7 @@ Authorization: ...
 ```
 
 ```shell--production
-GET https://olb.bankfrick.li/webapi/accounts/0001234/001.000.001
+GET https://olb.bankfrick.li/webapi/v2/accounts/0001234/001.000.001
 Content-Type: */*
 Accept: application/json
 Authorization: ...
@@ -187,7 +187,7 @@ If a combination of filter parameters are applied, only accounts that match both
 > Request
 
 ```shell--sandbox
-GET https://olbtest.bankfrick.li/webapi/accounts/0001234/001.000.001/transactions
+GET https://olbtest.bankfrick.li/webapi/v2/accounts/0001234/001.000.001/transactions
 Content-Type: */*
 Accept: application/json
 Authorization: ...
@@ -196,7 +196,7 @@ Authorization: ...
 ```
 
 ```shell--production
-GET https://olb.bankfrick.li/webapi/accounts/0001234/001.000.001/transactions
+GET https://olb.bankfrick.li/webapi/v2/accounts/0001234/001.000.001/transactions
 Content-Type: */*
 Accept: application/json
 Authorization: ...
@@ -224,6 +224,7 @@ algorithm: ...
     "amount" : "1000.00",
     "currency" : "EUR",
     "valuta" : "2018-08-02",
+    "valutaIsExecutionDate" : true,
     "express" : false,
     "reference" : "Invoice number 123",
     "debitor" : {
