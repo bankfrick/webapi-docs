@@ -196,7 +196,6 @@ If a combination of filter parameters are applied, only orders that match all of
 | name | type | description | default | constraints |
 | ---- | ---- | ----------- | ------- | ----------- |
 | Authorization | header | Bearer \<**token**\>
-| orderId | path | | (optional) The payment order id as it was assigned by the server to look for | | regex: ((?<=/)[0-9]{0,20})? |
 | customId | query | (optional) Filter for custom id as it was assigned by the client on transaction creation. When searching for BOOKED transactions, the fromDate filter must be set accordingly, otherwise the query might not return the expected result.
 | firstPosition | query | (optional) Set the position of the first result to retrieve (offset), defaults to 0 | 0 | int |
 | fromDate | query | (optional) Starting date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD, defaults to current day minus 30 days.
