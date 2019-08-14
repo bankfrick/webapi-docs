@@ -40,17 +40,17 @@ algorithm: ...
   "moreResults" : false,
   "resultSetSize" : 2,
   "accounts" : [ {
-    "account" : "00012345/001.000.001",
+    "account" : "0012345/001.000.001",
     "type" : "CURRENT ACCOUNT",
-    "iban" : "LI6808811000000001234",
-    "customer" : "00012345 Max Muster",
+    "iban" : "LI6808811000000012345",
+    "customer" : "0012345 Max Muster",
     "currency" : "CHF",
     "balance" : -1321.25,
     "available" : 0
   }, {
-    "account" : "00012345/400.000.840",
+    "account" : "0012345/400.000.840",
     "type" : "TIME DEPOSITS/FIXED DEP. CUSTOMER",
-    "customer" : "00012345 Max Muster",
+    "customer" : "0012345 Max Muster",
     "currency" : "USD",
     "balance" : 515
   } ]
@@ -89,12 +89,12 @@ Get the list of accounts that are visible for the user.
 
 ## Get Accounts (filtered)
 
-`GET /v2/accounts/{customer}{p}{account}`
+`GET /v2/accounts/{customer}/{account}`
 
 > Request
 
 ```shell--sandbox
-GET https://olbtest.bankfrick.li/webapi/v2/accounts/0001234/001.000.001
+GET https://olbtest.bankfrick.li/webapi/v2/accounts/0012345/001.000.001
 Content-Type: */*
 Accept: application/json
 Authorization: ...
@@ -104,7 +104,7 @@ Authorization: ...
 ```
 
 ```shell--production
-GET https://olb.bankfrick.li/webapi/v2/accounts/0001234/001.000.001
+GET https://olb.bankfrick.li/webapi/v2/accounts/0012345/001.000.001
 Content-Type: */*
 Accept: application/json
 Authorization: ...
@@ -127,24 +127,24 @@ algorithm: ...
   "moreResults" : false,
   "resultSetSize" : 2,
   "accounts" : [ {
-    "account" : "00012345/001.000.001",
+    "account" : "0012345/001.000.001",
     "type" : "CURRENT ACCOUNT",
-    "iban" : "LI6808811000000001234",
-    "customer" : "00012345 Max Muster",
+    "iban" : "LI6808811000000012345",
+    "customer" : "0012345 Max Muster",
     "currency" : "CHF",
     "balance" : -1321.25,
     "available" : 0
   }, {
-    "account" : "00012345/400.000.840",
+    "account" : "0012345/400.000.840",
     "type" : "TIME DEPOSITS/FIXED DEP. CUSTOMER",
-    "customer" : "00012345 Max Muster",
+    "customer" : "0012345 Max Muster",
     "currency" : "USD",
     "balance" : 515
   } ]
 }
 ```
 
-Get the list of accounts for the user and the given filter for customer number and account number. It is possible to search only for a customer or an account by leaving the filter parameter empty. E.g. /accounts//001.000.001 would search for accounts with the account number 001.000.001 on all visible customers for the user.
+Get the list of accounts for the user and the given filter for customer number and account number. It is possible to search only for a customer or an account by leaving the filter parameter empty. E.g. /accounts/001.000.001 would search for accounts with the account number 001.000.001 on all visible customers for the user.
 
 If a combination of filter parameters are applied, only accounts that match both conditions are returned.
 
@@ -153,11 +153,11 @@ If a combination of filter parameters are applied, only accounts that match both
 | name | type | description | default | constraints |
 | ---- | ---- | ----------- | ------- | ----------- |
 | Authorization | header | Bearer \<**token**\>
-| account | path | (optional) The account to receive information for
-| p | path | optional) Path separator between customer and account, for searching for an account number without filtering for a customer /accounts//\<account_number\> must be given.
+| account | path | (optional) The account to receive information for | | regex: ([0-9]{3}\.[0-9]{3}\.[0-9]{3})? |
+| customer | path |	(optional) The customer number to receive account information for | | regex: ([0-9]{0,7})? |
 | firstPosition | query | (optional) Set the position of the first result to retrieve (offset), defaults to 0 | 0 | int |
-| maxResults | query | (optional) Set the maximum number of results to retrieve (row_count), defaults to 100, max. 500 | 100 | int |
-| order | query | (optional) Defines the ordering (by customer_number and account_number) of the result where order is one of (desc, asc), defaults to asc | asc
+| maxResults | query | 	(optional) Set the maximum number of results to retrieve (row_count), defaults to 100, max. 2500 | 100 | int |
+| order | query | (optional) Defines the ordering of the result where order is one of (desc, asc), defaults to asc | asc
 
 **Response Codes**
 
@@ -180,14 +180,14 @@ If a combination of filter parameters are applied, only accounts that match both
 
 ## Account Payment Orders
 
-`GET /v2/accounts/{customer}{p}{account}/transactions`
+`GET /v2/accounts/{customer}/{account}/transactions`
 
-`GET /v2/accounts/{customer}{p}{account}/transactions/{orderId}`
+`GET /v2/accounts/{customer}/{account}/transactions/{orderId}`
 
 > Request
 
 ```shell--sandbox
-GET https://olbtest.bankfrick.li/webapi/v2/accounts/0001234/001.000.001/transactions
+GET https://olbtest.bankfrick.li/webapi/v2/accounts/0012345/001.000.001/transactions
 Content-Type: */*
 Accept: application/json
 Authorization: ...
@@ -196,7 +196,7 @@ Authorization: ...
 ```
 
 ```shell--production
-GET https://olb.bankfrick.li/webapi/v2/accounts/0001234/001.000.001/transactions
+GET https://olb.bankfrick.li/webapi/v2/accounts/0012345/001.000.001/transactions
 Content-Type: */*
 Accept: application/json
 Authorization: ...
@@ -228,8 +228,8 @@ algorithm: ...
     "express" : false,
     "reference" : "Invoice number 123",
     "debitor" : {
-      "accountNumber" : "00012345/001.000.001",
-      "iban" : "LI6808811000000001234"
+      "accountNumber" : "0012345/001.000.001",
+      "iban" : "LI6808811000000012345"
     },
     "creditor" : {
       "name" : "Max Muster",
@@ -251,7 +251,7 @@ algorithm: ...
 }
 ```
 
-Get the list of payment orders for a given account. This will forward to the transactions resource. Returns only orders that were created within the context of the online banking. Booked and external transactions must be retrieved using the camt.052/camt.053 services.
+Get the list of payment orders for a given account. This will forward to the transactions resource. Returns only orders that were created within the context of the online banking. Booked and external transactions can also be retrieved using the camt052/camt053 services.
 
 If a combination of filter parameters are applied, only orders that match all of the conditions are returned.
 
@@ -260,24 +260,23 @@ If a combination of filter parameters are applied, only orders that match all of
 | name | type | description | default | constraints |
 | ---- | ---- | ----------- | ------- | ----------- |
 | Authorization | header | Bearer \<**token**\>
-| account | path | (optional) The account to receive information for
-| customer | path | (optional) The customer number to filter the list of transactions for
-| p | path | optional) Path separator between customer and account, for searching for an account number without filtering for a customer /accounts//\<account_number\> must be given.
-| customId | query | (optional) Filter for custom id as it was assigned by the client on transaction creation.
+| account | path | (optional) The account to receive information for | | regex: ([0-9]{3}\.[0-9]{3}\.[0-9]{3})? |
+| customer | path | (optional) The customer number to filter the list of transactions for | | regex: ([0-9]{0,7})? |
+| customId | query | (optional) Filter for custom id as it was assigned by the client on transaction creation. When searching for BOOKED transactions, the fromDate filter must be set accordingly, otherwise the query might not return the expected result.
 | firstPosition | query | (optional) Set the position of the first result to retrieve (offset), defaults to 0 | 0 | int |
-| fromDate | query | (optional) Starting date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD, defaults to current day minus 30 days, if no specific search parameter orderId or customId was given.
+| fromDate | query | (optional) Starting date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD, defaults to current day minus 30 days.
 | maxAmount | query | (optional) Maximum amount for a transaction to appear in the report, this parameter should be URL-Encoded.
-| maxResults | query | (optional) Set the maximum number of results to retrieve (row_count), defaults to 100, max. 500 | 100 | int |
+| maxResults | query | (optional) Set the maximum number of results to retrieve (row_count), defaults to 100, max. 2500 | 100 | int |
 | minAmount | query | (optional) Minimum amount for a transaction to appear in the report, this parameter should be URL-Encoded.
 | order | query | (optional) Defines the ordering (by orderId) of the result where order is one of (desc, asc), defaults to asc | asc
 | reference | query | (optional) Filter for the reference (transaction information), this parameter should be URL-Encoded.
 | searchIban | query | (optional) Filter for the beneficiary account iban.
 | searchName | query | (optional) Filter for the beneficiary name, this parameter should be URL-Encoded.
-| status | query | (optional) Filter for for transaction status, expected one of (PREPARED, IN_PROGRESS, DELETED, EXPIRED, EXECUTED, REJECTED).
+| status | query | (optional) Filter for for transaction status. The status of transactions that where created in the context of online banking can be one of (PREPARED, IN_PROGRESS, DELETED, EXPIRED, EXECUTED, REJECTED, DELETION_REQUESTED). The status of booked transactions on the account is BOOKED. Note: BOOKED transactions (as known from the camt053 export) can only be queried by setting this filter to BOOKED otherwise only transactions that were created in the context of online banking are returned.
 | toDate | query | (optional) Ending date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD.	
-| type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, FOREIGN, RED, ORANGE).	 
+| type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, FOREIGN, RED, ORANGE). Only relevant for transactions that were created in the context of online banking.	 
 
-<aside class="notice">There is an additional request parameter when using <code>GET /v2/accounts/{customer}{p}{account}/transactions/{orderId}</code>: </aside>
+<aside class="notice">There is an additional request parameter when using <code>GET /v2/accounts/{customer}/{account}/transactions/{orderId}</code> </aside>
 
 | name | type | description | default | constraints |
 | ---- | ---- | ----------- | ------- | ----------- |

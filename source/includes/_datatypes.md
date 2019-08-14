@@ -92,26 +92,6 @@ A approval of a transaction.
 | group |	number | |	The contacts group if a special group policy applies |
 | dateOfApproval |	string | |	The date the approval was given |
 
-## AuthBody
-
-> Response
-
-```json          
-{
-  "contactnr" : "1234",
-  "password" : "secret"
-}
-```
-
-Authorization message body
-
-**Properties**
-
-| name | data type | constraints | description |
-| ---- | --------- | ----------- | ----------- |
-| contactnr |	string |	required |	The contact number |
-| password |	string |	required |	The contact password |
-
 ## Authorize
 
 > Response
@@ -219,6 +199,205 @@ The create transactions request body.
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
 | transactions | array of [Transaction (new instance)](#data-types-transaction-new-instance) |	required |	the list of transactions to be created |
+
+
+## CustodyAccounts
+
+> Example
+
+```json          
+{
+  "date" : "2018-12-31",
+  "moreResults" : false,
+  "resultSetSize" : 2,
+  "custodyAccount" : "00012345-000",
+  "type" : "DEPOT MAX MUSTER",
+  "customer" : "00012345 Max Muster",
+  "positions" : [ {
+    "valorNumber" : "000037310703-000",
+    "valorName" : "BK FRICK CRYPTOCURRENCY I 01.7.22",
+    "isin" : "LI0373107031",
+    "valorCurrency" : "CHF",
+    "currency" : "CHF",
+    "currentPrice" : 234.14,
+    "quantity" : 10.0,
+    "marketValutation" : 2341.40,
+    "valorCategory" : "181 - HYBRIDE INSTRUMENTE EIGENE",
+    "courseDate" : "2018-04-10",
+    "acqPrice" : 420000.0,
+    "avePrice" : 450000.0,
+    "winLoss" : 14250.0
+  }, {
+    "valorNumber" : "000000324410-000",
+    "valorName" : "BMW AG",
+    "isin" : "DE0005190003",
+    "valorCurrency" : "EUR",
+    "currency" : "CHF",
+    "currentPrice" : 125.0,
+    "quantity" : 4500.0,
+    "marketValutation" : 562500.0,
+    "valorCategory" : "201 - AKTIEN",
+    "courseDate" : "2018-04-10",
+    "acqPrice" : 4200000.0,
+    "avePrice" : 4500000.0,
+    "winLoss" : 142500.0
+  } ]
+}
+```
+
+A single custody account instance
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| date |	string | | The market valutation date |
+| moreResults |	boolean | |	Attribute indicates that more results are available on the server |
+| resultSetSize |	number | |	Number of results in the returned result set |
+| custodyAccount | string | required | The custody account number. This identifier can be used to access details information for the depot |
+| type | string | | The depot name/type |
+| customer | string | customer | The customer data of the account which consists of the customer number and name |
+| positions | array of CustodyAccountPosition | | |
+
+## CustodyAccountPosition
+
+> Example
+
+```json          
+{
+  "valorNumber" : "000000324410-000",
+  "valorName" : "BMW AG",
+  "isin" : "DE0005190003",
+  "valorCurrency" : "EUR",
+  "currency" : "CHF",
+  "currentPrice" : 125.0,
+  "quantity" : 4500.0,
+  "marketValutation" : 562500.0,
+  "valorCategory" : "201 - AKTIEN",
+  "courseDate" : "2018-04-10",
+  "acqPrice" : 4200000.0,
+  "avePrice" : 4500000.0,
+  "winLoss" : 142500.0
+}
+```
+
+A single depot position item.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| valorNumber |	string | required | The valor number |
+| valorName |	string | |	The valor name |
+| isin |	string | |	The valor position ISIN International Securities Identification Number |
+| valorCurrency | string | | The valor currency |
+| currency | string | | The customer currency |
+| currentPrice | string |  | The current market price |
+| quantity | number | | The quantity |
+| marketValutation | number | | The current market valutation |
+| valorCategory | string | | The valor category |
+| courseDate | string | | Date of the current rating |
+| acqPrice | number | | The entry price of the position |
+| avePrice | number | | The average price |
+| winLoss | number | | The net profit/loss |
+
+## CustodyAccountTransaction
+
+> Example
+
+```json          
+{
+  "refid" : "123123",
+  "status" : "BOOKED",
+  "orderType" : "VCN - REDEMPTION",
+  "valorNumber" : "000000008882",
+  "valorName" : "ACTIVE BOND FUND PLUS - CHF",
+  "isin" : "LI0326842163",
+  "rate" : 100.34,
+  "transactionDate" : "2018-12-31",
+  "quantity" : 123.1234,
+  "courtage" : 10.0,
+  "fees" : 10.0,
+  "exchange" : "011 - BALZERS",
+  "currency" : "CHF",
+  "totalAmount" : 123.12
+}
+```
+
+A single transaction on a custody account.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| refid | string | required | The transaction reference id |
+| status | [TransactionStatus](#data-types-transactionstatus) | required | The transaction status |
+| orderType | string | | The order type |
+| valorNumber |	string | required | The valor number |
+| valorName |	string | |	The valor name |
+| isin |	string | |	The valor position ISIN International Securities Identification Number |
+| rate | number | | The transaction rate |
+| transactionDate | string | required | The transaction date |
+| quantity | number | | The transaction quantiy |
+| courtage | number | | Transaction courtage |
+| fees | number | | Transaction fees amount |
+| exchange | string | | The exchange place |
+| currency | string | required | The transaction currency |
+| totalAmount | number | required | The transaction total amount |
+
+## CustodyAccountTransactions
+
+> Example
+
+```json          
+{
+  "date" : "2018-12-31",
+  "moreResults" : false,
+  "resultSetSize" : 2,
+  "transactions" : [ {
+    "refid" : "123123",
+    "status" : "BOOKED",
+    "orderType" : "VCN - REDEMPTION",
+    "valorNumber" : "000000008882",
+    "valorName" : "ACTIVE BOND FUND PLUS - CHF",
+    "isin" : "LI0326842163",
+    "rate" : 100.34,
+    "transactionDate" : "2018-12-31",
+    "quantity" : 123.1234,
+    "courtage" : 10.0,
+    "fees" : 10.0,
+    "exchange" : "011 - BALZERS",
+    "currency" : "CHF",
+    "totalAmount" : 123.12
+  }, {
+    "refid" : "123123",
+    "status" : "BOOKED",
+    "orderType" : "VCN - REDEMPTION",
+    "valorNumber" : "000000008882",
+    "valorName" : "ACTIVE BOND FUND PLUS - CHF",
+    "isin" : "LI0326842163",
+    "rate" : 100.34,
+    "transactionDate" : "2018-12-31",
+    "quantity" : 123.1234,
+    "courtage" : 10.0,
+    "fees" : 10.0,
+    "exchange" : "011 - BALZERS",
+    "currency" : "CHF",
+    "totalAmount" : 123.12
+  } ]
+}
+```
+
+The custodyaccounts transactions message response body.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| date |	string | required | The result set date |
+| moreResults |	boolean | |	Attribute indicates that more results are available on the server |
+| resultSetSize |	number | |	Number of results in the returned result set |
+| transactions | array of [CustodyAccountTransaction](#data-types-custodyaccounttransaction)
 
 ## DeleteRequestTan
 
@@ -786,3 +965,13 @@ The transactions message response body.
 | moreResults |	boolean	| required |	Attribute indicates that more results are available on the server |
 | resultSetSize |	number |	required |	Number of results in the returned result set |
 | transactions |	array of [Transaction (existing instance)](#data-types-transaction-existing-instance) |	required |	the list of transactions |
+
+## TransactionStatus
+
+Enum values for the 'status' field.
+
+**Properties**
+
+| name | description |
+| ---- | ----------- |
+| BOOKED |

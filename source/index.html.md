@@ -12,6 +12,7 @@ toc_footers:
 
 includes:
   - accounts
+  - custodyaccounts
   - authorize
   - info
   - requesttan
@@ -45,7 +46,21 @@ We have examples for the sandbox as well as for the production environment. You 
 
 # Getting Started
 
-In order to use the online banking webAPI (Sandbox & Production), the client requires having an active account which allows him to access one or multiple customers depending on the user privileges and contact to customer assignments. Here you can set up your account: <a href="https://developers.bankfrick.li/signup" target="_blank" rel="noopener noreferrer">Sign up</a>
+In order to use the online banking WebAPI, the client requires having an active account which allows him to access one or multiple customers depending on the user privileges and contact to customer assignments. The user account is identified by a contact number which also enables him to login into the online banking client gui. In general, the privileges to access accounts and create payment orders are the same for the gui and the WebAPI.
+
+The client user must create an API-Key (Personal Access Token) which will later be used to identify a client application which uses the WebAPI. The API-Key can be created within the gui using the Manage API-Keys Dialog. The client user can define permissions that refer exclusively to the API-Key and set an expiration date. With the API-Key the client application will authenticate on the WebAPI interface.
+
+The client application logs in by sending his API-Key and current password. The API-Key must be created in beforehand by the client user via the online banking gui (requires TAN).
+
+The server verifies the key, it retrieves the client information, generates a JWT (JSON Web Token) containing user details and permissions that will be used to access the services, and the server also sets the expiration on the JWT. The expiration date of the JWT can be before the expiration date of the API-Key, but can never exceed it. At default it is 30 days.
+
+The server signs and sends the JWT to the client as a response to the initial request with the API-Key. Note that the communication itself is stateless, meaning that once a JWT is acquired, the client application can use the token indefinitely respectively as long as stated in the token or the API-Key is revoked. The JWT is not stored on the server.
+
+The client sends the stored JWT in the authorization header for every following request to the server.
+
+For each request, the server takes the JWT from the authorization header and validates the signature, extracts the user data and permissions. If the JWT cannot be validated or is no longer accepted, the server will send a 401 HTTP code (unauthorized) as response.
+
+Here you can set up your account: <a href="https://developers.bankfrick.li/signup" target="_blank" rel="noopener noreferrer">Sign up</a>
 
 After the Sign Up, you will receive the following three pieces of information by post to access your account and use the webAPI.
 
