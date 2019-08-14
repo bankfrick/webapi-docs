@@ -1,6 +1,7 @@
 # Transactions
 
-Listing of payment orders similar to the transaction overview within the online banking. Returns only orders that were created within the context of the online banking. Booked and external transactions must be retrieved using the camt.052/camt.053 services.
+Get the list of payment orders based on the search parameters. The user also requires corresponding read privileges for the customer account.
+If a combination of filter parameters are applied, only orders that match all of the conditions are returned.
 
 ## DELETE
 
@@ -79,7 +80,7 @@ algorithm: ...
 }
 ```
 
-Delete payment orders that are not yet fully approved, only payment orders in the PREPARED state and are created by the user can be deleted.
+Service to reject or delete not yet executed payment orders. Payment orders that are not yet fully approved and in state PREPARED can be rejected with a tan. Reject payment orders that are not yet fully approved, only payment orders in the PREPARED state and are created by the user can be rejected.
 
 **Request Parameters**
 
@@ -186,9 +187,7 @@ algorithm: ...
 }
 ```
 
-Get the list of payment orders based on the search parameters. The user also requires corresponding read privileges for the customer account. 
-
-This methode only fetches outgoing transactions transmitted via the online banking or the api not the incoming booked transactions (for them you would either need to use [camt052](#camt-052) or [camt053](#camt-053) methods)
+Get the list of payment orders based on the search parameters. The user also requires corresponding read privileges for the customer account.
 
 If a combination of filter parameters are applied, only orders that match all of the conditions are returned.
 
@@ -198,19 +197,19 @@ If a combination of filter parameters are applied, only orders that match all of
 | ---- | ---- | ----------- | ------- | ----------- |
 | Authorization | header | Bearer \<**token**\>
 | orderId | path | | (optional) The payment order id as it was assigned by the server to look for | | regex: ((?<=/)[0-9]{0,20})? |
-| customId | query | 
+| customId | query | (optional) Filter for custom id as it was assigned by the client on transaction creation. When searching for BOOKED transactions, the fromDate filter must be set accordingly, otherwise the query might not return the expected result.
 | firstPosition | query | (optional) Set the position of the first result to retrieve (offset), defaults to 0 | 0 | int |
-| fromDate | query | (optional) Starting date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD, defaults to current day minus 30 days, if no specific search parameter orderId or customId was given.
+| fromDate | query | (optional) Starting date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD, defaults to current day minus 30 days.
 | maxAmount | query | (optional) Maximum amount for a transaction to appear in the report, this parameter should be URL-Encoded.
-| maxResults | query | (optional) Set the maximum number of results to retrieve (row_count), defaults to 100, max. 500 | 100 | int |
+| maxResults | query | (optional) Set the maximum number of results to retrieve (row_count), defaults to 100, max. 2500 | 100 | int |
 | minAmount | query | (optional) Minimum amount for a transaction to appear in the report, this parameter should be URL-Encoded.
 | order | query | (optional) Defines the ordering (by orderId) of the result where order is one of (desc, asc), defaults to asc | asc
 | reference | query | (optional) Filter for the reference (transaction information), this parameter should be URL-Encoded.
 | searchIban | query | (optional) Filter for the beneficiary account iban.
 | searchName | query | (optional) Filter for the beneficiary name, this parameter should be URL-Encoded.
-| status | query | (optional) Filter for for transaction status, expected one of (PREPARED, IN_PROGRESS, DELETED, EXPIRED, EXECUTED, REJECTED).
+| status | query | (optional) Filter for for transaction status. The status of transactions that where created in the context of online banking can be one of (PREPARED, IN_PROGRESS, DELETED, EXPIRED, EXECUTED, REJECTED, DELETION_REQUESTED). The status of booked transactions on the account is BOOKED. Note: BOOKED transactions (as known from the camt053 export) can only be queried by setting this filter to BOOKED otherwise only transactions that were created in the context of online banking are returned.
 | toDate | query | (optional) Ending date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD.
-| type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, FOREIGN, RED, ORANGE).
+| type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, FOREIGN, RED, ORANGE). Only relevant for transactions that were created in the context of online banking.
 
 **Response Codes**
 
