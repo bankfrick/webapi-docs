@@ -7,7 +7,7 @@ Login to the WebAPI using an API-Key and the current user password to receive a 
 > Request
 
 ```shell--sandbox
-POST https://olbtest.bankfrick.li/webapi/authorize
+POST https://olbtest.bankfrick.li/webapi/v2/authorize
 Content-Type: application/json
 Accept: application/json
 Signature: ...
@@ -21,7 +21,7 @@ algorithm: ...
 ```
 
 ```shell--production
-POST https://olb.bankfrick.li/webapi/authorize
+POST https://olb.bankfrick.li/webapi/v2/authorize
 Content-Type: application/json
 Accept: application/json
 Signature: ...

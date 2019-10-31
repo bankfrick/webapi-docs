@@ -9,7 +9,7 @@ Request a TAN challenge in order to sign one or multiple transactions with the S
 > Request
 
 ```shell--sandbox
-DELETE https://olbtest.bankfrick.li/webapi/requestTan
+DELETE https://olbtest.bankfrick.li/webapi/v2/requestTan
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -23,7 +23,7 @@ algorithm: ...
 ```
 
 ```shell--production
-DELETE https://olb.bankfrick.li/webapi/requestTan
+DELETE https://olb.bankfrick.li/webapi/v2/requestTan
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -93,7 +93,7 @@ Request a tan for previously created transactions used to sign the transactions.
 > Request
 
 ```shell--sandbox
-POST https://olbtest.bankfrick.li/webapi/requestTan
+POST https://olbtest.bankfrick.li/webapi/v2/requestTan
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -108,7 +108,7 @@ algorithm: ...
 ```
 
 ```shell--production
-POST https://olb.bankfrick.li/webapi/requestTan
+POST https://olb.bankfrick.li/webapi/v2/requestTan
 Content-Type: application/json
 Accept: application/json
 Authorization: ...

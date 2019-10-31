@@ -7,7 +7,7 @@ With this message, one or multiple payment orders can be approved by the contact
 > Request
 
 ```shell--sandbox
-POST https://olbtest.bankfrick.li/webapi/signTransactionWithTan
+POST https://olbtest.bankfrick.li/webapi/v2/signTransactionWithTan
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -22,7 +22,7 @@ algorithm: ...
 ```
 
 ```shell--production
-POST https://olb.bankfrick.li/webapi/signTransactionWithTan
+POST https://olb.bankfrick.li/webapi/v2/signTransactionWithTan
 Content-Type: application/json
 Accept: application/json
 Authorization: ...

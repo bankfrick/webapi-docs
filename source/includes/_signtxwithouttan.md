@@ -7,7 +7,7 @@ With this message, one or multiple payment orders can be approved without a TAN 
 > Request
 
 ```shell--sandbox
-POST https://olbtest.bankfrick.li/webapi/signTransactionWithoutTan
+POST https://olbtest.bankfrick.li/webapi/v2/signTransactionWithoutTan
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -21,7 +21,7 @@ algorithm: ...
 ```
 
 ```shell--production
-POST https://olb.bankfrick.li/webapi/signTransactionWithoutTan
+POST https://olb.bankfrick.li/webapi/v2/signTransactionWithoutTan
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
