@@ -1,3 +1,0 @@
-transaction id;debit iban;transaction currency;transaction amount;fee option;receiver acc. name;receiver iban;receiver acc. no.;receiver bank name;receiver bank swift;payment ref. 1;receiver address;receiver postalcode;receiver city;receiver country
-ZA00001;LI59088110101001K000E;EUR;100;SHA;Max Mustermann;LI33088110102903K000C;;;;Test Payment 01;;;;
-optional;mandatory;mandatory;mandatory;mandatory;mandatory;If IBAN, then Receiver Bank and BIC will be filled automatically;If Acct.No., Receiver Bank and BIC is mandatory;;;optional;optional;optional;optional;optional
