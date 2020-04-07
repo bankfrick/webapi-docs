@@ -65,7 +65,7 @@ algorithm: ...
       "iban" : "LI6808811000000001234"
     },
     "creditor" : {
-      "name" : "Max Muster",
+      "name" : "Satoshi Nakamoto",
       "iban" : "DE12500105170648489890",
       "bic" : "INGDDEFFXXX",
       "creditInstitution" : "ING-DiBa GERMANY"
@@ -154,36 +154,33 @@ algorithm: ...
 {
   "moreResults" : false,
   "resultSetSize" : 1,
-  "transactions" : [ {
-    "orderId" : 20771,
-    "customId" : "4711",
-    "type" : "SEPA",
-    "state" : "PREPARED",
-    "amount" : 1000.00,
-    "currency" : "EUR",
-    "valuta" : "2018-08-02",
-    "valutaIsExecutionDate" : true,
-    "express" : false,
-    "reference" : "Invoice number 123",
-    "debitor" : {
-      "accountNumber" : "00012345/001.000.001",
-      "iban" : "LI6808811000000001234"
-    },
-    "creditor" : {
-      "name" : "Max Muster",
-      "iban" : "DE12500105170648489890",
-      "bic" : "INGDDEFFXXX",
-      "creditInstitution" : "ING-DiBa GERMANY"
-    },
-    "creator" : "6789 Max Muster",
-    "right" : "Bevollmächtigter kollektiv zu 2",
-    "groupPolicy" : "Group intern",
-    "quorum" : 2,
-    "approvals" : [ {
-      "contact" : "6789 Max Muster",
-      "dateOfApproval" : "2018-08-22T10:07:02"
-    } ]
-  } ]
+  "transactions" : [ 
+    {
+      "orderId": 12345,
+      "transactionNr": "1234567",
+      "serviceType": "SIC",
+      "transactionCode": "102-Transfer int. with Avis/Geb",
+      "state": "BOOKED",
+      "amount": -200.00,
+      "totalAmount": 10060.00,
+      "currency": "CHF",
+      "valuta": "2020-04-01",
+      "bookingDate": "2020-04-01",
+      "reference": "Payment to Satoshi Nakamoto",
+      "debitor": {
+        "name": "Michael Tester",
+        "iban": "LI6808811000000001234",
+        "bic": "BFRILI22XXX",
+        "creditInstitution": "Bank Frick and Co. AG"
+      },
+      "creditor": {
+        "name": "Satoshi Nakamoto",
+        "iban": "DE12500105170648489890",
+        "bic": "INGDDEFFXXX",
+        "creditInstitution": "ING-DiBa GERMANY"
+      }
+    }
+  ]
 }
 ```
 
@@ -256,7 +253,7 @@ algorithm: ...
       "iban" : "LI6808811000000001234"
     },
     "creditor" : {
-      "name" : "Max Muster",
+      "name" : "Satoshi Nakamoto",
       "iban" : "DE12500105170648489890",
       "bic" : "INGDDEFFXXX",
       "creditInstitution" : "ING-DiBa GERMANY"
@@ -288,7 +285,7 @@ algorithm: ...
       "iban" : "LI6808811000000001234"
     },
     "creditor" : {
-      "name" : "Max Muster",
+      "name" : "Satoshi Nakamoto",
       "iban" : "DE12500105170648489890",
       "bic" : "INGDDEFFXXX",
       "creditInstitution" : "ING-DiBa GERMANY"
@@ -325,7 +322,7 @@ algorithm: ...
       "iban" : "LI6808811000000001234"
     },
     "creditor" : {
-      "name" : "Max Muster",
+      "name" : "Satoshi Nakamoto",
       "iban" : "DE12500105170648489890",
       "bic" : "INGDDEFFXXX",
       "creditInstitution" : "ING-DiBa GERMANY"

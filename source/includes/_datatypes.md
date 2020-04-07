@@ -695,6 +695,8 @@ A single transaction instance to be created.
 {
   "orderId" : 20222,
   "customId" : "4711",
+  "transactionNr": "3307348",
+  "serviceType": "SIC",
   "type" : "FOREIGN",
   "state" : "EXECUTED",
   "amount" : 1321.00,
@@ -707,7 +709,7 @@ A single transaction instance to be created.
   "charge" : "SHA",
   "debitor" : {
     "accountNumber" : "00012345/001.000.001",
-    "name" : "Max Muster",
+    "name" : "Satoshi Nakamoto",
     "iban" : "LI6808811000000001234",
     "bic" : "INGDDEFFXXX",
     "creditInstitution" : "ING-DiBa",
@@ -715,7 +717,7 @@ A single transaction instance to be created.
   },
   "creditor" : {
     "accountNumber" : "00012345/001.000.001",
-    "name" : "Max Muster",
+    "name" : "Satoshi Nakamoto",
     "iban" : "LI6808811000000001234",
     "bic" : "INGDDEFFXXX",
     "creditInstitution" : "ING-DiBa",
@@ -747,6 +749,8 @@ A single transaction existing instance.
 | ---- | --------- | ----------- | ----------- |
 | orderId	| number	| |  The order id as assigned by the system |
 | customId | string	 | | Unique custom id for a transaction given by the client |
+| transactionNr | number | | Unique reference of the booking assigned by the financial institution |
+| serviceType | string | required | The type of the transaction - SWIFT / SIC / EUROSIC |
 | type |	[Type](#data-types-type) |	required |	The type of the payment order |
 | state |	[State](#data-types-state)	| required |	The state of the payment order |
 | amount |	number |	required |	The amount of the transaction |
@@ -908,51 +912,33 @@ Enum values for the 'type' field
       "group" : 1,
       "dateOfApproval" : "2018-08-22T10:07:02"
     } ]
-  }, {
-    "orderId" : 20222,
-    "customId" : "4711",
-    "type" : "ORANGE",
-    "state" : "ERROR",
-    "amount" : 1321.00,
-    "currency" : "EUR",
-    "valuta" : "2018-08-27",
-    "express" : true,
-    "valuta" : "2019-04-28",
-    "valutaIsExecutionDate" : true,
-    "reference" : "Some Individual Text",
-    "charge" : "OUR",
-    "debitor" : {
-      "accountNumber" : "00012345/001.000.001",
-      "name" : "Max Muster",
-      "iban" : "LI6808811000000001234",
-      "bic" : "INGDDEFFXXX",
-      "creditInstitution" : "ING-DiBa",
-      "esr" : "961116900000006600000009284"
-    },
-    "creditor" : {
-      "accountNumber" : "00012345/001.000.001",
-      "name" : "Max Muster",
-      "iban" : "LI6808811000000001234",
-      "bic" : "INGDDEFFXXX",
-      "creditInstitution" : "ING-DiBa",
-      "esr" : "961116900000006600000009284"
-    },
-    "creator" : "1234 Max Muster",
-    "createDate" : "2018-08-22T10:07:02",
-    "right" : "Bevollmächtigter kollektiv zu 2",
-    "groupPolicy" : "Group intern",
-    "group" : 1,
-    "quorum" : 2,
-    "approvals" : [ {
-      "contact" : "1234 Max Muster",
-      "group" : 1,
-      "dateOfApproval" : "2018-08-22T10:07:02"
-    }, {
-      "contact" : "1234 Max Muster",
-      "group" : 1,
-      "dateOfApproval" : "2018-08-22T10:07:02"
-    } ]
-  } ]
+  }, 
+    {
+      "orderId": 12345,
+      "transactionNr": "1234567",
+      "serviceType": "SIC",
+      "transactionCode": "102-Transfer int. with Avis/Geb",
+      "state": "BOOKED",
+      "amount": -200.00,
+      "totalAmount": 10060.00,
+      "currency": "CHF",
+      "valuta": "2020-04-01",
+      "bookingDate": "2020-04-01",
+      "reference": "Payment to Satoshi Nakamoto",
+      "debitor": {
+        "name": "Michael Tester",
+        "iban": "LI6808811000000001234",
+        "bic": "BFRILI22XXX",
+        "creditInstitution": "Bank Frick and Co. AG"
+      },
+      "creditor": {
+        "name": "Satoshi Nakamoto",
+        "iban": "DE12500105170648489890",
+        "bic": "INGDDEFFXXX",
+        "creditInstitution": "ING-DiBa GERMANY"
+      }
+    }
+  ]
 }
 ```
 
