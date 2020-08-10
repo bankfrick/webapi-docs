@@ -243,20 +243,21 @@ algorithm: ...
                 
 {
   "transactions" : [ {
-    "customId" : "4711",
+    "customId" : "A4711",
     "type" : "SEPA",
     "amount" : 1000.00,
     "currency" : "EUR",
-    "express" : false,
-    "reference" : "Invoice number 123",
+    "express" : true,
+    "valuta" : "2020-01-03",
+    "valutaIsExecutionDate" : true,
+    "reference" : "some individual text",
+    "charge" : "SHA",
     "debitor" : {
       "iban" : "LI6808811000000001234"
     },
     "creditor" : {
       "name" : "Satoshi Nakamoto",
-      "iban" : "DE12500105170648489890",
-      "bic" : "INGDDEFFXXX",
-      "creditInstitution" : "ING-DiBa GERMANY"
+      "iban" : "DE12500105170648489890"
     }
   } ]
 }
@@ -273,22 +274,21 @@ algorithm: ...
                 
 {
   "transactions" : [ {
-    "customId" : "4711",
+    "customId" : "A4711",
     "type" : "SEPA",
     "amount" : 1000.00,
     "currency" : "EUR",
-    "valuta" : "2018-08-02",
+    "express" : true,
+    "valuta" : "2020-01-03",
     "valutaIsExecutionDate" : true,
-    "express" : false,
-    "reference" : "Invoice number 123",
+    "reference" : "some individual text",
+    "charge" : "SHA",
     "debitor" : {
       "iban" : "LI6808811000000001234"
     },
     "creditor" : {
       "name" : "Satoshi Nakamoto",
-      "iban" : "DE12500105170648489890",
-      "bic" : "INGDDEFFXXX",
-      "creditInstitution" : "ING-DiBa GERMANY"
+      "iban" : "DE12500105170648489890"
     }
   } ]
 }
@@ -308,15 +308,15 @@ algorithm: ...
   "resultSetSize" : 1,
   "transactions" : [ {
     "orderId" : 20771,
-    "customId" : "4711",
+    "customId" : "A4711",
     "type" : "SEPA",
     "state" : "PREPARED",
     "amount" : 1000.00,
     "currency" : "EUR",
-    "valuta" : "2018-08-02",
+    "valuta" : "2020-01-03",
     "valutaIsExecutionDate" : true,
     "express" : false,
-    "reference" : "Invoice number 123",
+    "reference" : "some individual text",
     "debitor" : {
       "accountNumber" : "00012345/001.000.001",
       "iban" : "LI6808811000000001234"
@@ -328,8 +328,10 @@ algorithm: ...
       "creditInstitution" : "ING-DiBa GERMANY"
     },
     "creator" : "6789 Max Muster",
+    "createDate" : "2020-01-03T08:00:22",
     "right" : "Bevollmächtigter kollektiv zu 2",
-    "groupPolicy" : "Group intern"
+    "groupPolicy" : "No constraint",
+    "quorum" : 1
   } ]
 }
 ```

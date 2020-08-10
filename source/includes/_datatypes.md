@@ -9,9 +9,9 @@
   "account" : "00012345/001.000.001",
   "type" : "CURRENT ACCOUNT",
   "iban" : "LI6808811000000001234",
-  "customer" : "00012345 Max Muster",
+  "customer" : "00012345 Satoshi Nakamoto",
   "currency" : "CHF",
-  "balance" : -1321.0,
+  "balance" : 10000.0,
   "available" : 0.0
 }
 ```
@@ -43,16 +43,16 @@ A single account instance
     "account" : "00012345/001.000.001",
     "type" : "CURRENT ACCOUNT",
     "iban" : "LI6808811000000001234",
-    "customer" : "00012345 Max Muster",
+    "customer" : "00012345 Satoshi Nakamoto",
     "currency" : "CHF",
-    "balance" : -1321.0,
+    "balance" : 10000.0,
     "available" : 0.0
   }, {
-    "account" : "00012345/001.000.001",
+    "account" : "00012345/001.000.978",
     "type" : "CURRENT ACCOUNT",
     "iban" : "LI6808811000000001234",
-    "customer" : "00012345 Max Muster",
-    "currency" : "CHF",
+    "customer" : "00012345 Satoshi Nakamoto",
+    "currency" : "EUR",
     "balance" : -1321.0,
     "available" : 0.0
   } ]
@@ -76,7 +76,7 @@ The accounts message response body.
 
 ```json          
 {
-  "contact" : "1234 Max Muster",
+  "contact" : "1234 Satoshi Nakamoto",
   "group" : 1,
   "dateOfApproval" : "2018-08-22T10:07:02"
 }
@@ -149,9 +149,9 @@ Enum values for the 'charge' field.
 ```json          
 {
   "transactions" : [ {
-    "customId" : "4711",
-    "type" : "FOREIGN",
-    "amount" : 1321.00,
+    "customId" : "A4711",
+    "type" : "SEPA",
+    "amount" : 1000.00,
     "currency" : "EUR",
     "express" : true,
     "valuta" : "2019-04-28",
@@ -162,31 +162,29 @@ Enum values for the 'charge' field.
       "iban" : "LI6808811000000001234"
     },
     "creditor" : {
-      "accountNumber" : "00012345/001.000.001",
-      "name" : "Max Muster",
-      "iban" : "DE12500105170648489890",
-      "bic" : "INGDDEFFXXX",
-      "creditInstitution" : "ING-DiBa",
-      "esr" : "961116900000006600000009284"
+      "name" : "Satoshi Nakamoto",
+      "iban" : "DE12500105170648489890"
     }
   }, {
-    "customId" : "4711",
-    "type" : "ORANGE",
-    "amount" : 1321.00,
+    "customId" : "A4712",
+    "type" : "FOREIGN",
+    "amount" : 1337.00,
     "currency" : "EUR",
     "express" : true,
     "reference" : "some individual text",
-    "charge" : "BEN",
+    "charge" : "SHA",
     "debitor" : {
       "iban" : "LI6808811000000001234"
     },
     "creditor" : {
-      "accountNumber" : "00012345/001.000.001",
-      "name" : "Max Muster",
-      "iban" : "DE12500105170648489890",
-      "bic" : "INGDDEFFXXX",
-      "creditInstitution" : "ING-DiBa",
-      "esr" : "961116900000006600000009284"
+      "accountNumber" : "123456123",
+      "name" : "Satoshi Nakamoto",
+	    "address" : "Street 100",
+	    "postalcode" : "150004",
+	    "city" : "Tokyo",
+	    "country" : "Japan",
+      "bic" : "MHCBJPJ6",
+      "creditInstitution" : "MIZUHO BANK"
     }
   } ]
 }
@@ -211,8 +209,8 @@ The create transactions request body.
   "moreResults" : false,
   "resultSetSize" : 2,
   "custodyAccount" : "00012345-000",
-  "type" : "DEPOT MAX MUSTER",
-  "customer" : "00012345 Max Muster",
+  "type" : "DEPOT Satoshi Nakamoto",
+  "customer" : "00012345 Satoshi Nakamoto",
   "positions" : [ {
     "valorNumber" : "000037310703-000",
     "valorName" : "BK FRICK CRYPTOCURRENCY I 01.7.22",
@@ -646,26 +644,24 @@ Enum values for the 'state' field.
 
 ```json          
 {
-  "customId" : "4711",
-  "type" : "BANK_INTERNAL",
-  "amount" : 1321.00,
-  "currency" : "EUR",
-  "express" : true,
-  "valuta" : "2019-04-28",
-  "valutaIsExecutionDate" : true,
-  "reference" : "some individual text",
-  "charge" : "BEN",
-  "debitor" : {
-    "iban" : "LI6808811000000001234"
-  },
-  "creditor" : {
-    "accountNumber" : "00012345678",
-    "name" : "Max Muster",
-    "iban" : "DE12500105170648489890",
-    "bic" : "INGDDEFFXXX",
-    "creditInstitution" : "ING-DiBa",
-    "esr" : "961116900000006600000009284"
-  }
+    "transactions" : [ {
+    "customId" : "A4711",
+    "type" : "SEPA",
+    "amount" : 1000.00,
+    "currency" : "EUR",
+    "express" : true,
+    "valuta" : "2019-04-28",
+    "valutaIsExecutionDate" : true,
+    "reference" : "some individual text",
+    "charge" : "SHA",
+    "debitor" : {
+      "iban" : "LI6808811000000001234"
+    },
+    "creditor" : {
+      "name" : "Satoshi Nakamoto",
+      "iban" : "DE12500105170648489890"
+   }
+  } ]
 }
 ```
 
@@ -723,18 +719,18 @@ A single transaction instance to be created.
     "creditInstitution" : "ING-DiBa",
     "esr" : "961116900000006600000009284"
   },
-  "creator" : "1234 Max Muster",
+  "creator" : "1234 Satoshi Nakamoto",
   "createDate" : "2018-08-22T10:07:02",
   "right" : "Bevollmächtigter kollektiv zu 2",
   "groupPolicy" : "Group intern",
   "group" : 1,
   "quorum" : 2,
   "approvals" : [ {
-    "contact" : "1234 Max Muster",
+    "contact" : "1234 Satoshi Nakamoto",
     "group" : 1,
     "dateOfApproval" : "2018-08-22T10:07:02"
   }, {
-    "contact" : "1234 Max Muster",
+    "contact" : "1234 Satoshi Nakamoto",
     "group" : 1,
     "dateOfApproval" : "2018-08-22T10:07:02"
   } ]
@@ -778,10 +774,14 @@ A single transaction existing instance.
 ```json          
 {
   "accountNumber" : "00012345678",
-  "name" : "Max Muster",
-  "iban" : "LI6808811000000001234",
-  "bic" : "INGDDEFFXXX",
-  "creditInstitution" : "ING-DiBa",
+  "iban" : "DE12500105170648489890",
+  "name" : "Satoshi Nakamoto",
+	"address" : "Street 100",
+	"postalcode" : "150004",
+	"city" : "Tokyo",
+	"country" : "Japan",
+  "bic" : "MHCBJPJ6",
+  "creditInstitution" : "MIZUHO BANK",
   "esr" : "961116900000006600000009284"
 }
 ```
@@ -792,12 +792,17 @@ Debitor or creditor account information of the transaction.
 
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
-| accountNumber	| string | |	The account number of the corresponding account (instead of IBAN, only type = FOREIGN ) |
-| name |	string | |	The name of the client or recipient |
-| iban |	string | |	The iban of the corresponding account |
-| bic |	string | |	The bic of the corresponding accounts credit institution (only type = FOREIGN) |
-| creditInstitution	| string | |	The name of the credit institution (only type = FOREIGN) |
-| esr	| string | |	The esr number (only type = ORANGE) |
+| accountNumber	| string |	max size: 30, min size: 0 |	The account number of the recipient (instead of IBAN, only [type](#data-types-type) = FOREIGN ) |
+| aba | string | max size: 11, min size: 0 | The aba routing number of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
+| iban |	string |	max size: 34, min size: 0	| The iban of the recipient account |
+| name |	string |	required, max size: 35, min size: 0   |	The name of the recipient |
+| address |	string |	max size: 70, min size: 0  | Address information of the recipient (e.g. Street), for international transfers or payments in USD |
+| postalcode |	string |	max size: 11, min size: 0   |	Postalcode of the recipient address, for international transfers or payments in USD |
+| city |	string |	max size: 70, min size: 0  |	Postalcode of the recipient address, for international transfers or payments in USD |
+| country |	string |	max size: 70, min size: 0  |	Country of the recipient, for international transfers or payments in USD |
+| bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
+| creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution (only [type](#data-types-type) = FOREIGN) |
+| esr	| string |	max size: 27, min size: 0 |	The esr number (only [type](#data-types-type) = ORANGE) |
 
 ## TransactionCreditorAccount
 
@@ -806,10 +811,14 @@ Debitor or creditor account information of the transaction.
 ```json          
 {
   "accountNumber" : "00012345678",
-  "name" : "Max Muster",
   "iban" : "DE12500105170648489890",
-  "bic" : "INGDDEFFXXX",
-  "creditInstitution" : "ING-DiBa",
+  "name" : "Satoshi Nakamoto",
+	"address" : "Street 100",
+	"postalcode" : "150004",
+	"city" : "Tokyo",
+	"country" : "Japan",
+  "bic" : "MHCBJPJ6",
+  "creditInstitution" : "MIZUHO BANK",
   "esr" : "961116900000006600000009284"
 }
 ```
@@ -820,12 +829,17 @@ The transactions beneficiary account information.
 
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
-| accountNumber	| string |	max size: 30, min size: 0 |	The account number of the recipient (instead of IBAN, only type = FOREIGN ) |
-| name |	string |	required |	The name of the recipient |
+| accountNumber	| string |	max size: 30, min size: 0 |	The account number of the recipient (instead of IBAN, only [type](#data-types-type) = FOREIGN ) |
+| aba | string | max size: 11, min size: 0 | The aba routing number of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | iban |	string |	max size: 34, min size: 0	| The iban of the recipient account |
-| bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution (only type = FOREIGN) |
-| creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution (only type = FOREIGN) |
-| esr	| string |	max size: 27, min size: 0 |	The esr number (only type = ORANGE) |
+| name |	string |	required, max size: 35, min size: 0   |	The name of the recipient |
+| address |	string |	max size: 70, min size: 0  | Address information of the recipient (e.g. Street), for international transfers or payments in USD |
+| postalcode |	string |	max size: 11, min size: 0   |	Postalcode of the recipient address, for international transfers or payments in USD |
+| city |	string |	max size: 70, min size: 0  |	Postalcode of the recipient address, for international transfers or payments in USD |
+| country |	string |	max size: 70, min size: 0  |	Country of the recipient, for international transfers or payments in USD |
+| bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
+| creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution (only [type](#data-types-type) = FOREIGN) |
+| esr	| string |	max size: 27, min size: 0 |	The esr number (only [type](#data-types-type) = ORANGE) |
 
 ## TransactionDebitorAccount
 
@@ -883,7 +897,7 @@ Enum values for the 'type' field
     "charge" : "OUR",
     "debitor" : {
       "accountNumber" : "00012345/001.000.001",
-      "name" : "Max Muster",
+      "name" : "Satoshi Nakamoto",
       "iban" : "LI6808811000000001234",
       "bic" : "INGDDEFFXXX",
       "creditInstitution" : "ING-DiBa",
@@ -891,24 +905,24 @@ Enum values for the 'type' field
     },
     "creditor" : {
       "accountNumber" : "00012345/001.000.001",
-      "name" : "Max Muster",
+      "name" : "Satoshi Nakamoto",
       "iban" : "LI6808811000000001234",
       "bic" : "INGDDEFFXXX",
       "creditInstitution" : "ING-DiBa",
       "esr" : "961116900000006600000009284"
     },
-    "creator" : "1234 Max Muster",
+    "creator" : "1234 Satoshi Nakamoto",
     "createDate" : "2018-08-22T10:07:02",
     "right" : "Bevollmächtigter kollektiv zu 2",
     "groupPolicy" : "Group intern",
     "group" : 1,
     "quorum" : 2,
     "approvals" : [ {
-      "contact" : "1234 Max Muster",
+      "contact" : "1234 Satoshi Nakamoto",
       "group" : 1,
       "dateOfApproval" : "2018-08-22T10:07:02"
     }, {
-      "contact" : "1234 Max Muster",
+      "contact" : "1234 Satoshi Nakamoto",
       "group" : 1,
       "dateOfApproval" : "2018-08-22T10:07:02"
     } ]
