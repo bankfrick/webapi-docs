@@ -60,13 +60,12 @@ The client sends the stored JWT in the authorization header for every following 
 
 For each request, the server takes the JWT from the authorization header and validates the signature, extracts the user data and permissions. If the JWT cannot be validated or is no longer accepted, the server will send a 401 HTTP code (unauthorized) as response.
 
-Here you can set up your account: <a href="https://developers.bankfrick.li/signup" target="_blank" rel="noopener noreferrer">Sign up</a>
+Here you can sign up for an account: <a href="https://developers.bankfrick.li/signup" target="_blank" rel="noopener noreferrer">Sign up</a>
 
-After the Sign Up, you will receive the following three pieces of information by post to access your account and use the webAPI.
+After the Sign Up, you will receive the following two informations by email to access your account and use the webAPI.
 
   * Contact number
   * Password
-  * TAN
 
 If you subsequently have an active Bank Frick account, you can start webAPI with the Online Banking setup.
 
