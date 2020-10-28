@@ -87,7 +87,7 @@ Get the list of accounts that are visible for the user.
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## Get Accounts (filtered)
+## GET Accounts Customer (filtered)
 
 `GET /v2/accounts/{customer}/{account}`
 
@@ -178,7 +178,7 @@ If a combination of filter parameters are applied, only accounts that match both
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## Account Payment Orders
+## GET Accounts Customer Transactions
 
 `GET /v2/accounts/{customer}/{account}/transactions`
 
@@ -251,7 +251,7 @@ algorithm: ...
 }
 ```
 
-Get the list of payment orders for a given account. This will forward to the transactions resource. Returns only orders that were created within the context of the online banking. Booked and external transactions can also be retrieved using the camt052/camt053 services.
+Get the list of payment orders for a given account. This will forward to the transactions resource. Returns orders that were created within the context of the online banking or external transactions. Booked and external transactions can also be retrieved using the camt052/camt053 services.
 
 If a combination of filter parameters are applied, only orders that match all of the conditions are returned.
 

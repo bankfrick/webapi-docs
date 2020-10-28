@@ -2,6 +2,93 @@
 
 Request a TAN challenge in order to sign one or multiple transactions with the SignTransactionWithTan message.
 
+## POST
+
+`POST /v2/requestTan`
+
+Request a tan for previously created transactions used to sign the transactions. This will send a tan via the selected method to the contact. Only one tan challenge can be active per contact at a time and must be resolved within the returned expire time.
+
+> Request
+
+```shell--sandbox
+POST https://olbtest.bankfrick.li/webapi/v2/requestTan
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+                
+{
+  "orderIds" : [ 20771, 20772 ],
+  "method" : "SMS_TAN"
+}
+```
+
+```shell--production
+POST https://olb.bankfrick.li/webapi/v2/requestTan
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+                
+{
+  "orderIds" : [ 20771, 20772 ],
+  "method" : "SMS_TAN"
+}
+```
+
+> Response
+
+```shell
+HTTP/1.1 200 OK
+Content-Type: application/json
+Signature: ...
+algorithm: ...
+
+                
+{
+  "challengeId" : "c6f8dd20-aad0-11e8-98d0-529269fb1459",
+  "expires" : "2020-08-22T10:07:02.895"
+}
+```
+
+**Request Parameters**
+
+| name | type | description |
+| ---- | ---- | ----------- |
+| Authorization | header | Bearer \<**token**\> |
+| Signature | header | \<**signature**\> |
+| algorithm | header | The used signing algorithm, e.g. rsa-sha512 |
+
+**Request Body**
+
+| media type | data type | description |
+| ---------- | --------- | ----------- |
+| application/json | [RequestTan](#data-types-requesttan) (JSON) | The request TAN body |
+
+**Response Codes**
+
+| code | condition | type |
+| ---- | --------- | ---- |
+| 200 | Request successful | [RequestTanResponse](#data-types-requesttanresponse) (JSON) |
+
+**Response Body**
+
+| media type | data type | description |
+| ---------- | --------- | ----------- |
+| application/json | [RequestTanResponse](#data-types-requesttanresponse) (JSON) | The request TAN response message as json object |
+
+**Response Headers**
+
+| name | description |
+| ---- | ----------- |
+| signature | \<**signature**\> |
+| algorithm | The used signing algorithm, e.g. rsa-sha512 |
+
+
 ## DELETE
 
 `DELETE /v2/requestTan`
@@ -84,16 +171,17 @@ Delete a ongoing TAN request challenge.
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## POST
 
-`POST /v2/requestTan`
+## POST requestTan/marketorder
 
-Request a tan for previously created transactions used to sign the transactions. This will send a tan via the selected method to the contact. Only one tan challenge can be active per contact at a time and must be resolved within the returned expire time.
+`POST /v2/requestTan/marketorder`
+
+Request a tan for previously created orders used to sign the market orders. This will send a tan via the selected method to the contact. Only one tan challenge can be active per contact at a time and must be resolved within the returned expire time.
 
 > Request
 
 ```shell--sandbox
-POST https://olbtest.bankfrick.li/webapi/v2/requestTan
+POST https://olbtest.bankfrick.li/webapi/v2/requestTan/marketorder
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -108,7 +196,7 @@ algorithm: ...
 ```
 
 ```shell--production
-POST https://olb.bankfrick.li/webapi/v2/requestTan
+POST https://olb.bankfrick.li/webapi/v2/requestTan/marketorder
 Content-Type: application/json
 Accept: application/json
 Authorization: ...
@@ -133,7 +221,7 @@ algorithm: ...
                 
 {
   "challengeId" : "c6f8dd20-aad0-11e8-98d0-529269fb1459",
-  "expires" : "2018-08-22T10:07:02.895"
+  "expires" : "2020-08-22T10:07:02.895"
 }
 ```
 
@@ -149,7 +237,7 @@ algorithm: ...
 
 | media type | data type | description |
 | ---------- | --------- | ----------- |
-| application/json | [RequestTan](#data-types-requesttan) (JSON) | The request TAN body |
+| application/json | [RequestTanOrder](#data-types-requesttanorder) (JSON) | The request TAN body |
 
 **Response Codes**
 

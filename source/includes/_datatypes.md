@@ -142,6 +142,82 @@ Enum values for the 'charge' field.
 | OUR |	sender pays costs |
 | SHA |	shared costs |
 
+## ConfirmMifid
+
+> Example
+
+```json          
+{
+  "marketorderIds" : [ 12345, 12345 ],
+  "confirmRiskClassification" : true,
+  "confirmKnowledge" : true
+}
+```
+
+Request body to confirm MiFID check result
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| marketorderIds |	array of number |	required |	A list of market order ids to be confirmed if MiFID confirmation is required |
+| confirmRiskClassification | boolean | required | Must be set to true in order to confirm the MiFID check result CONFIRMATION_REQURED for riskClassification of the instrument. |
+| confirmKnowledge | boolean | required | Must be set to true in order to confirm the MiFID check result CONFIRMATION_REQURED for riskClassification of the instrument. |
+
+## CreateMarketorders
+
+> Request
+
+```json          
+{
+  "marketorders" : [ {
+    "customId" : "4711",
+    "valoren" : "908440",
+    "suffix" : "001",
+    "isin" : "US0378331005",
+    "tradingType" : "SELL",
+    "totalQuantity" : 15.0,
+    "limit" : 100.05,
+    "validUntil" : "2020-08-27",
+    "depot" : [ {
+      "iban" : "LI6808811000000001234",
+      "depot" : "1234567-000",
+      "quantity" : 15.0
+    }, {
+      "iban" : "LI6808811000000001234",
+      "depot" : "1234567-000",
+      "quantity" : 15.0
+    } ]
+  }, {
+    "customId" : "4711",
+    "valoren" : "908440",
+    "suffix" : "001",
+    "isin" : "US0378331005",
+    "tradingType" : "BUY",
+    "totalQuantity" : 15.0,
+    "limit" : 100.05,
+    "validUntil" : "2020-08-27",
+    "depot" : [ {
+      "iban" : "LI6808811000000001234",
+      "depot" : "1234567-000",
+      "quantity" : 15.0
+    }, {
+      "iban" : "LI6808811000000001234",
+      "depot" : "1234567-000",
+      "quantity" : 15.0
+    } ]
+  } ]
+}
+```
+
+The create marketorder request body.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| marketorders | array of [Marketorder](#data-types-marketorder) |	required |	the list of marketorders to be created |
+
 ## CreateTransaction
 
 > Request
@@ -397,6 +473,24 @@ The custodyaccounts transactions message response body.
 | resultSetSize |	number | |	Number of results in the returned result set |
 | transactions | array of [CustodyAccountTransaction](#data-types-custodyaccounttransaction)
 
+## DeleteMarketorders
+
+> Response
+
+```json          
+{
+  "marketorderIds" : [ 12345, 12345 ]
+}
+```
+
+The delete marketorder request body.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| marketorderIds | array of number |	required |	The marketorder ids (as assigned from the server) to be deleted |
+
 ## DeleteRequestTan
 
 > Response
@@ -531,6 +625,327 @@ A single info message instance.
 | title |	string ||	The message title |
 | message |	string ||	The message content |
 
+## Instrument
+
+> Response
+
+```json          
+{
+  "valoren" : "908440",
+  "suffix" : "000",
+  "isin" : "US0378331005",
+  "symbol" : "AAPL",
+  "name" : "APPLE INC",
+  "additionalName" : "APPLE INC",
+  "currency" : "USD",
+  "domicile" : "US",
+  "type" : "BONDS",
+  "canTrade" : true,
+  "recentPrice" : {
+    "dateTime" : "2020-08-22T10:07:02",
+    "price" : 12345.0,
+    "currency" : "...",
+    "percentPrice" : true
+  },
+  "denomination" : 12345.0
+}
+```
+
+Object representing a specific financial instrument.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| valoren | string | required | The valoren number of the instrument. |
+| suffix |	string ||		In case the valoren number is not unique (e.g. securities exists for different currencies) the suffix must be given to identify the instrument correctly. Defaults to 000. |
+| isin |	string ||	The ISIN of the financial instrument |
+| symbol | string || The symbol of valoren if available |
+| name | string || The name of the valoren |
+| additionalName | string || An additional name or details, e.g. company name |
+| currency | string || The currency of the financial instrument |
+| domicile | string || The domicile of the instrument |
+| type | [InstrumentTypeGroup](#data-types-instrumenttypegroup) || The type of the securities |
+| canTrade | boolean || If false this financial instrument cannot currently be purchased in online banking. Please contact your client advisor if you are interested in this instrument. |
+| recentPrice | [ValuationPrice](#data-types-valuationprice) || The most recent valuation price |
+| denomination | number
+
+## InstrumentSearchResult
+
+> Example
+
+```json          
+{
+  "moreResults" : false,
+  "resultSetSize" : 2,
+  "instruments" : [ {
+    "valoren" : "908440",
+    "suffix" : "000",
+    "isin" : "US0378331005",
+    "symbol" : "AAPL",
+    "name" : "APPLE INC",
+    "additionalName" : "APPLE INC",
+    "currency" : "USD",
+    "domicile" : "US",
+    "type" : "FUNDS",
+    "canTrade" : true,
+    "recentPrice" : {
+      "dateTime" : "2020-08-22T10:07:02",
+      "price" : 12345.0,
+      "currency" : "...",
+      "percentPrice" : true
+    },
+    "denomination" : 12345.0
+  }, {
+    "valoren" : "908440",
+    "suffix" : "000",
+    "isin" : "US0378331005",
+    "symbol" : "AAPL",
+    "name" : "APPLE INC",
+    "additionalName" : "APPLE INC",
+    "currency" : "USD",
+    "domicile" : "US",
+    "type" : "BONDS",
+    "canTrade" : true,
+    "recentPrice" : {
+      "dateTime" : "2020-08-22T10:07:02",
+      "price" : 12345.0,
+      "currency" : "...",
+      "percentPrice" : true
+    },
+    "denomination" : 12345.0
+  } ]
+}
+```
+
+Result container for a securities search.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| moreResults | boolean | required | Attribute indicates that more results are available on the server |
+| resultSetSize |	number | required |	Number of results in the returned result set |
+| instruments |	array of [Instrument](#data-types-instrument) || |
+
+## InstrumentTypeGroup
+
+Securities type
+
+**Properties**
+
+| value | description |
+| ----- | ----------- |
+| STOCKS |	Equities |
+| BONDS | Bonds / Obligations |
+| STRUCTURED_PRODUCTS | Structured products |
+| FUNDS | Funds |
+| CRYPTO_CURRENCIES | Crypto currencies |
+
+## Marketorder
+
+> Example
+
+```json          
+{
+  "marketorderId" : 4711,
+  "customId" : "4711",
+  "state" : "ERROR",
+  "tradingType" : "SELL",
+  "totalQuantity" : 15.0,
+  "limit" : 100.05,
+  "validUntil" : "2020-08-27",
+  "instrument" : {
+    "valoren" : "908440",
+    "suffix" : "000",
+    "isin" : "US0378331005",
+    "symbol" : "AAPL",
+    "name" : "APPLE INC",
+    "additionalName" : "APPLE INC",
+    "currency" : "USD",
+    "domicile" : "US",
+    "type" : "STOCKS",
+    "canTrade" : true,
+    "recentPrice" : {
+      "dateTime" : "2020-08-22T10:07:02",
+      "price" : 12345.0,
+      "currency" : "...",
+      "percentPrice" : true
+    },
+    "denomination" : 12345.0
+  },
+  "depot" : [ {
+    "accountNumber" : "00012345/001.000.001",
+    "name" : "Max Muster",
+    "iban" : "LI6808811000000001234",
+    "depot" : "1234567-000",
+    "quantity" : 15.0,
+    "riskClassification" : "CONFIRMATION_REQUIRED",
+    "knowledge" : "CONFIRMED"
+  }, {
+    "accountNumber" : "00012345/001.000.001",
+    "name" : "Max Muster",
+    "iban" : "LI6808811000000001234",
+    "depot" : "1234567-000",
+    "quantity" : 15.0,
+    "riskClassification" : "CONFIRMATION_REQUIRED",
+    "knowledge" : "CONFIRMATION_REQUIRED"
+  } ],
+  "creator" : "1234 Max Muster",
+  "createDate" : "2018-08-22T10:07:02",
+  "approvals" : [ {
+    "contact" : "1234 Max Muster",
+    "group" : 1,
+    "dateOfApproval" : "2018-08-22T10:07:02",
+    "dateOfRejection" : "2018-08-22T10:07:02"
+  }, {
+    "contact" : "1234 Max Muster",
+    "group" : 1,
+    "dateOfApproval" : "2018-08-22T10:07:02",
+    "dateOfRejection" : "2018-08-22T10:07:02"
+  } ],
+  "rejector" : {
+    "contact" : "1234 Max Muster",
+    "group" : 1,
+    "dateOfApproval" : "2018-08-22T10:07:02",
+    "dateOfRejection" : "2018-08-22T10:07:02"
+  },
+  "date" : "..."
+}
+```
+
+List of market orders response body
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| marketorderId | number | required | The unique marketorder id as assigned by the system |
+| customId |	string | required |	Unique custom marketorder id for a order given by the client |
+| state |	[State](#data-types-state) | required |	The state of the market order |
+| tradingType | [TradingType](#data-types-tradingtype) | required | The trading type of the order |
+| totalQuantity | number | required, min: 0, max digits: 16 (integer), 6 (fraction) | The total quantity of the order, must be the sum of all individual quantities in case of a block order. |
+| limit | number | min: 0, max digits: 16 (integer), 6 (fraction) | The limit of the order. The limit always refers to a single position. |
+| validUntil | string | | The date until the order is valid. Must not exceed 90 days in the future. |
+| instrument | [Instrument](#data-types-instrument) | | The financial instrument to be traded by the market order |
+| depot | array of [MarketOrderDepot](#data-types-marketorderdepot) | required | The list of depots. Must at least contain one entry. |
+| creator | string | | The creator contact information |
+| createDate | string | | The create date |
+| approvals | array of [Approval](#data-types-approval) | | A list of confirmation approvals given to the market order |
+| rejector | [Approval](#data-types-approval) | | Person who has rejected the market order so the order will not be executed |
+| date | string | |
+
+## Marketorders
+
+> Example
+
+```json          
+{
+  "moreResults" : false,
+  "resultSetSize" : 2,
+  "marketorders" : [ {
+    "marketorderId" : 4711,
+    "customId" : "4711",
+    "state" : "BOOKED",
+    "tradingType" : "SELL",
+    "totalQuantity" : 15.0,
+    "limit" : 100.05,
+    "validUntil" : "2020-08-27",
+    "instrument" : {
+      "valoren" : "908440",
+      "suffix" : "000",
+      "isin" : "US0378331005",
+      "symbol" : "AAPL",
+      "name" : "APPLE INC",
+      "additionalName" : "APPLE INC",
+      "currency" : "USD",
+      "domicile" : "US",
+      "type" : "STOCKS",
+      "canTrade" : true,
+      "recentPrice" : { },
+      "denomination" : 12345.0
+    },
+    "depot" : [ {
+      "accountNumber" : "00012345/001.000.001",
+      "name" : "Max Muster",
+      "iban" : "LI6808811000000001234",
+      "depot" : "1234567-000",
+      "quantity" : 15.0,
+      "riskClassification" : "OK",
+      "knowledge" : "CONFIRMED"
+    }, {
+      "accountNumber" : "00012345/001.000.001",
+      "name" : "Max Muster",
+      "iban" : "LI6808811000000001234",
+      "depot" : "1234567-000",
+      "quantity" : 15.0,
+      "riskClassification" : "OK",
+      "knowledge" : "OK"
+    } ],
+    "creator" : "1234 Max Muster",
+    "createDate" : "2018-08-22T10:07:02",
+    "approvals" : [ {
+      "contact" : "1234 Max Muster",
+      "group" : 1,
+      "dateOfApproval" : "2018-08-22T10:07:02",
+      "dateOfRejection" : "2018-08-22T10:07:02"
+    }, {
+      "contact" : "1234 Max Muster",
+      "group" : 1,
+      "dateOfApproval" : "2018-08-22T10:07:02",
+      "dateOfRejection" : "2018-08-22T10:07:02"
+    } ],
+    "rejector" : {
+      "contact" : "1234 Max Muster",
+      "group" : 1,
+      "dateOfApproval" : "2018-08-22T10:07:02",
+      "dateOfRejection" : "2018-08-22T10:07:02"
+    },
+    "date" : "..."
+  }]
+}
+```
+
+List of market orders response body
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| moreResults | boolean | required | Attribute indicates that more results are available on the server |
+| resultSetSize |	number | required |	Number of results in the returned result set |
+| marketorders |	array of [Marketorder](#data-types-marketorder) | required |		the list of transactions |
+
+## MarketorderDepot
+
+> Example
+
+```json          
+{
+  "accountNumber" : "00012345/001.000.001",
+  "name" : "Max Muster",
+  "iban" : "LI6808811000000001234",
+  "depot" : "1234567-000",
+  "quantity" : 15.0,
+  "riskClassification" : "CONFIRMED",
+  "knowledge" : "CONFIRMED"
+}
+```
+
+A depot entry for the marketorder.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| accountNumber | string | required |	The account number of the settlement account |
+| name |	string | required |	The name of the customer |
+| iban |	string | required, max size: 34, min size: 0 |	The iban of the settlement account |
+| depot | string | required, max size: 11, min size: 0 | 	The depot reference number |
+| quantity | number | required, min: 0, max digits: 16 (integer), 6 (fraction) | The quantity for the depot. In case the order has only one depot position, the quantity must be equal to the total quantity. |
+| riskClassification | [MifidStatus](#data-types-mifidstatus) || Verification of the risk profile of the customer compared to the instrument risk of the securities. If the instrument risk is exceeded, the order must be explicitly confirmed using the mifid confirmation resource.|
+| knowledge | [MifidStatus](#data-types-mifidstatus) || Verification of the product knowledge of the customer. If the knowledge check failed, the order must be explicitly confirmed using the mifid confirmation resource.|
+
 ## Method
 
 Enum values for the 'method' field
@@ -541,6 +956,19 @@ Enum values for the 'method' field
 | ----- | ----------- |
 | SMS_TAN |	TAN send by SMS |
 | PUSH_TAN | TAN send by PushTAN App |
+| SECURITY_TOKEN | 	TAN generated by hardware token |
+
+## MifidStatus
+
+The status of MIFID confirmation
+
+**Properties**
+
+| value | description |
+| ----- | ----------- |
+| OK ||
+| CONFIRMATION_REQUIRED	 ||
+| CONFIRMED ||
 
 ## RequestTan
 
@@ -564,6 +992,30 @@ The request tan request body.
 | customIds | array of string |  | The custom ids (as assigned from the client) to request a tan for. Either orderIds, customIds or combination of both must be given. |
 | method |	[Method](#data-types-method) |	required |	The TAN method to be used for sending the TAN |
 
+## RequestTanOrder
+
+> Response
+
+```json          
+{
+  "marketorderIds" : [ 12345, 12345 ],
+  "customIds" : [ "...", "..." ],
+  "method" : "SMS_TAN",
+  "securityTokenSerial" : "..."
+}
+```
+
+The request tan response body.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| marketorderIds |	array of number |	 |	The marketorder ids (as assigned from the server) to request a tan for. Either marketorderIds, customIds or combination of both must be given. |
+| customIds |	array of string |	 |	The custom ids (as assigned from the client) to request a tan for. Either marketorderIds, customIds or combination of both must be given. |
+| method | [Method](#data-types-method) | required | The TAN method to be used for sending the TAN |
+| securityTokenSerial | string |  | Only for SECURITY_TOKEN method to specify which security token will be used to fulfill the tan challenge. The serial is located on the back on the device and must be linked to the users account. |
+
 ## RequestTanResponse
 
 > Response
@@ -571,7 +1023,7 @@ The request tan request body.
 ```json          
 {
   "challange" : "c6f8dd20-aad0-11e8-98d0-529269fb1459",
-  "expires" : "2018-08-22T10:07:02.895"
+  "expires" : "2020-08-22T10:07:02.895"
 }
 ```
 
@@ -583,6 +1035,26 @@ The request tan response body.
 | ---- | --------- | ----------- | ----------- |
 | challange |	string |	required |	A challenge id which must be returned to the server when resolving the tan request |
 | expires |	string |	required |	The time until the tan challenge must be resolved |
+
+## SignOrdersWithoutTan
+
+> Response
+
+```json          
+{
+  "marketorderIds" : [ 12345, 12345 ],
+  "customIds" : [ "...", "..." ]
+}
+```
+
+The sign market orders without tan request body message.
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| marketorderIds |	array of number |	required |	The marketorder ids (as assigned from the server) to be approved by the user. Either marketorderIds, customIds or combination of both must be given. |
+| customIds |	array of string |	required |	The custom marketorder ids (as assigned from the client) to be approved by the user. Either marketorderIds, customIds or combination of both must be given. |
 
 ## SignTransactionsWithTan
 
@@ -637,6 +1109,19 @@ Enum values for the 'state' field.
 | EXECUTED |	The transaction was executed |
 | REJECTED |	The transaction was rejected |
 | ERROR |	The transaction was faulty |
+| DELETION_REQUESTED | The deletion of the transaction is currently requested in online banking |
+| BOOKED | Status representing transactions that are booked on the account (camt053 relevant). NOTE: For querying BOOKED transactions, the filter must be set accordingly. |
+
+## TradingType 
+
+The trading types.
+
+**Properties**
+
+| value | description |
+| ----- | ----------- |
+| BUY |
+| SELL |
 
 ## Transaction (new instance)
 
@@ -859,21 +1344,6 @@ The transactions client account information.
 | ---- | --------- | ----------- | ----------- |
 | iban |	string |	required, max size: 34, min size: 0	| the account iban of the sender |
 
-## Type
-
-Enum values for the 'type' field
-
-**Properties**
-
-| value | currency | description |
-| ----- | -------- | ----------- |
-| INTERNAL | Any | Internal transfers within the same company |
-| BANK_INTERNAL |	Any | Bank Frick Internal Transfer to a different company where the contact is linked to |
-| SEPA | Euro |	SEPA Payment (Only transactions in Euro to European countries) |
-| FOREIGN	| Any | International Transfer (SWIFT) |
-| RED |	CHF & EUR | Red Payment Slip |
-| ORANGE | CHF & EUR |	Orange Payment Slip with ESR number (Only in Switzerland) |
-
 ## Transactions
 
 > Response
@@ -975,3 +1445,43 @@ Enum values for the 'status' field.
 | name | description |
 | ---- | ----------- |
 | BOOKED |
+
+## Type
+
+Enum values for the 'type' field
+
+**Properties**
+
+| value | currency | description |
+| ----- | -------- | ----------- |
+| INTERNAL | Any | Internal transfers within the same company |
+| BANK_INTERNAL |	Any | Bank Frick Internal Transfer to a different company where the contact is linked to |
+| SEPA | Euro |	SEPA Payment (Only transactions in Euro to European countries) |
+| FOREIGN	| Any | International Transfer (SWIFT) |
+| RED |	CHF & EUR | Red Payment Slip |
+| ORANGE | CHF & EUR |	Orange Payment Slip with ESR number (Only in Switzerland) |
+
+## ValuationPrice
+
+> Example
+
+```json          
+{
+  "dateTime" : "2020-08-22T10:07:02",
+  "price" : 12345.0,
+  "currency" : "...",
+  "percentPrice" : true
+}
+```
+
+Container for a valuation price
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| dateTime |	string	| required |	The iso date time of the valuation |
+| price |	number |	required | |
+| currency | string |	required | |
+| percentPrice | boolean ||
+
