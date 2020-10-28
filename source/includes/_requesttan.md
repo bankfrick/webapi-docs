@@ -172,7 +172,7 @@ Delete a ongoing TAN request challenge.
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
 
-## POST requestTan/marketorder
+## POST marketorder
 
 `POST /v2/requestTan/marketorder`
 

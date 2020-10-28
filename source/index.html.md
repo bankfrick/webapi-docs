@@ -18,6 +18,7 @@ includes:
   - requesttan
   - signtxwithtan
   - signtxwithouttan
+  - trading
   - transactions
   - camt052
   - camt053
