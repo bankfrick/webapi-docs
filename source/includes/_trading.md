@@ -528,7 +528,7 @@ MiFID confirmation must explicitly be given if required before requesting a tan 
 
 ## Trading Instrument
 
-`GET /v2/trading`
+`GET /v2/trading/instrument`
 
 > Request
 
@@ -612,7 +612,7 @@ Reads a specific instrument including the recent valuation price. The requested 
 
 ## Trading Search
 
-`GET /v2/search`
+`GET /v2/trading/search`
 
 > Request
 
