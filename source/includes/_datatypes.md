@@ -916,6 +916,35 @@ List of market orders response body
 | resultSetSize |	number | required |	Number of results in the returned result set |
 | marketorders |	array of [Marketorder](#data-types-marketorder) | required |		the list of transactions |
 
+
+## OrderingCustomer
+
+> Example
+
+```json          
+{
+  "name" : "Max Muster",
+  "address" : "Street 100",
+  "postalcode" : "101000",
+  "city" : "Moscow",
+  "country" : "Russia"
+}
+```
+
+Detail information about an ordering customer. Only relevant for correspondence payments.
+
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| name |	string | required, max size: 35, min size: 0 |	The name of the customer |
+| address |	string | required, max size: 70, min size: 0 | Address information of the ordering customer (e.g. Street) |
+| postalcode | string | required, max size: 11, min size: 0 | Postalcode of the ordering customer address |
+| city | string | required, max size: 70, min size: 0 | City of the ordering customer address |
+| country | string | 	required, max size: 70, min size: 0 | Country of the ordering customer |
+
+
 ## MarketorderDepot
 
 > Example
@@ -1165,6 +1194,8 @@ A single transaction instance to be created.
 | valutaIsExecutionDate | boolean | | Indicates if the valuta date is the requested execution date (true) or desired value date (false). If not set it will be the requested execution date (default) |
 | reference |	string |	max size: 140, min size: 0 |	The reference text or individual note |
 | charge |	[Charge](#data-types-charge)	| required when type FOREIGN | 	The charging type |
+| correspondence | boolean | | Must be set to true in case of correspondence payment |
+| orderingCustomer | [orderingCustomer](#data-types-orderingCustomer) | | In case of correspondence payment information about the ordering customer must be given |
 | debitor |	[TransactionDebitorAccount](#data-types-transactiondebitoraccount) |	required |	The client information about the transaction |
 | creditor |	[TransactionCreditorAccount](#data-types-transactioncreditoraccount) |	required |	The beneficiary information about the transaction |
 
