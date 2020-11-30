@@ -1195,7 +1195,7 @@ A single transaction instance to be created.
 | reference |	string |	max size: 140, min size: 0 |	The reference text or individual note |
 | charge |	[Charge](#data-types-charge)	| required when type FOREIGN | 	The charging type |
 | correspondence | boolean | | Must be set to true in case of correspondence payment |
-| orderingCustomer | [orderingCustomer](#data-types-orderingCustomer) | | In case of correspondence payment information about the ordering customer must be given |
+| orderingCustomer | [OrderingCustomer](#data-types-orderingcustomer) | | In case of correspondence payment information about the ordering customer must be given |
 | debitor |	[TransactionDebitorAccount](#data-types-transactiondebitoraccount) |	required |	The client information about the transaction |
 | creditor |	[TransactionCreditorAccount](#data-types-transactioncreditoraccount) |	required |	The beneficiary information about the transaction |
 
@@ -1265,14 +1265,19 @@ A single transaction existing instance.
 | serviceType | string | required | The type of the transaction - SWIFT / SIC / EUROSIC |
 | type |	[Type](#data-types-type) |	required |	The type of the payment order |
 | state |	[State](#data-types-state)	| required |	The state of the payment order |
+| transactionCode | string | | The transaction code. This is only available for booked transactions |
+| fees | number | | The fees of the transaction. This is only available for booked transactions |
 | amount |	number |	required |	The amount of the transaction |
+| totalAmount | number | required | 	The total amount of the transaction |
 | currency |	string |	required |	The transaction currency |
-| valuta |	string |	required |	The (est.) valuta date of the transaction |
 | express |	boolean |	required |	Information if it is a express transaction |
-| valuta | string | | The value date or execution date of the transaction. If not set, it will be set to the current day (default) |
+| valuta | string | | The value date or execution date of the transaction |
+| bookingDate | string | | The booking date of the transaction. This is only available for booked transactions |
 | valutaIsExecutionDate | boolean | | Indicates if the valuta date is the requested execution date (true) or desired value date (false). If not set it will be the requested execution date (default) |
 | reference |	string	| |	The reference text of individual notes |
 | charge |	[Charge](#data-types-charge)	| |	The charging system of the transaction |
+| correspondence | boolean | | 	Must be set to true in case of correspondence payment |
+| orderingCustomer | [OrderingCustomer](#data-types-orderingcustomer) | | 	In case of correspondence payment information about the ordering customer must be given |
 | debitor |	[TransactionAccount](#data-types-transactionaccount) |	required |	The client information about the transaction |
 | creditor |	[TransactionAccount](#data-types-transactionaccount) |	required |	The beneficiary information about the transaction |
 | creator |	string |	required |	The creator contact information |
