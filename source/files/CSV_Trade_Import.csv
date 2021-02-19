@@ -1,0 +1,3 @@
+order id;isin;trading type;customer;depot;iban;quantity;currency;limit amount;valid until
+A000123;US0378331005;BUY;0601121;000;LI74088110601121K000E;100;;;
+optional;mandatory;mandatory;mandatory;mandatory;mandatory;mandatory;optional;required when limit order;required when limit order
