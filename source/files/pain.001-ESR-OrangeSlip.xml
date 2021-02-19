@@ -8,7 +8,7 @@
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>123.45</CtrlSum>
       <InitgPty>
-        <Nm>Test Company</Nm>
+        <Nm>Test Company (remitter)</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
@@ -17,7 +17,7 @@
       <BtchBookg>true</BtchBookg>
       <ReqdExctnDt>2022-01-31</ReqdExctnDt>
       <Dbtr>
-        <Nm>Test Company</Nm>
+        <Nm>Test Company (remitter)</Nm>
       </Dbtr>
       <DbtrAcct>
         <Id>
@@ -46,7 +46,7 @@
         </Amt>
         <Cdtr>
 		<!-- NOTE: Name of the receiver -->
-          <Nm>Some guy</Nm>
+          <Nm>BENEFICIARY Name</Nm>
         </Cdtr>
         <CdtrAcct>
           <Id>

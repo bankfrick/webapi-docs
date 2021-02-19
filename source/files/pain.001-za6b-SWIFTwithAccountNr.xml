@@ -45,12 +45,18 @@
           </FinInstnId>
         </CdtrAgt>
         <Cdtr>
-          <Nm>BENEFICIARY_Name</Nm>
+          <Nm>BENEFICIARY Name</Nm>
+            <PstlAdr>
+				      <StrtNm>Street</StrtNm>
+				      <PstCd>Postalcode</PstCd>
+				      <TwnNm>City</TwnNm>
+				      <Ctry>Country</Ctry>
+			      </PstlAdr>			
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <!-- Account Number -->
             <Othr>
+              <!-- Account Number -->
               <Id>12345678</Id>
             </Othr>
           </Id>

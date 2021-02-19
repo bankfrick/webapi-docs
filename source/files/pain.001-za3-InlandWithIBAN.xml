@@ -7,7 +7,7 @@
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>123.45</CtrlSum>
       <InitgPty>
-        <Nm>ABC Corporation</Nm>
+        <Nm>Test Company (remitter)</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
@@ -16,7 +16,7 @@
       <BtchBookg>true</BtchBookg>
       <ReqdExctnDt>2022-01-31</ReqdExctnDt>
       <Dbtr>
-        <Nm>ABC Corporation</Nm>
+        <Nm>Test Company (remitter)</Nm>
       </Dbtr>
       <DbtrAcct>
         <Id>
@@ -43,7 +43,7 @@
           </FinInstnId>
         </CdtrAgt>
         <Cdtr>
-          <Nm>Some guy</Nm>
+          <Nm>BENEFICIARY NAME</Nm>
         </Cdtr>
         <CdtrAcct>
           <Id>

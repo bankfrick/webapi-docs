@@ -56,7 +56,13 @@
           </CdtrAgt>
         -->
         <Cdtr>
-          <Nm>BENEFICIARY_Name</Nm>
+          <Nm>BENEFICIARY Name</Nm>
+            <PstlAdr>
+				      <StrtNm>Street</StrtNm>
+				      <PstCd>Postalcode</PstCd>
+				      <TwnNm>City</TwnNm>
+				      <Ctry>Country</Ctry>
+			      </PstlAdr>
         </Cdtr>
         <CdtrAcct>
           <Id>
