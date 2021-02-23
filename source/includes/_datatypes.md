@@ -1267,8 +1267,8 @@ A single transaction existing instance.
 | state |	[State](#data-types-state)	| required |	The state of the payment order |
 | transactionCode | string | | The transaction code. This is only available for booked transactions |
 | fees | number | | The fees of the transaction. This is only available for booked transactions |
-| amount |	number |	required |	The amount of the transaction |
-| totalAmount | number | required | 	The total amount of the transaction |
+| amount |	number |	required |	The amount of the transaction (net amount)|
+| totalAmount | number | required | The total amount of the transaction |
 | currency |	string |	required |	The transaction currency |
 | express |	boolean |	required |	Information if it is a express transaction |
 | valuta | string | | The value date or execution date of the transaction |
