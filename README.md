@@ -2,7 +2,7 @@
 ==================================
 [Family-run enterprising bank serving intermediaries with a strong expertise in funds and emissions and a focus on blockchain banking.](https://bankfrick.li)
 
-This is the public repo for the [Bank Frick webAPI Documentation](https://bankfrickpsd2docs.netlify.app/#bank-frick-psd2-api) built with [Slate](https://github.com/lord/slate).
+This is the public repo for the [Bank Frick webAPI Documentation](https://developers.bankfrick.li/docs#introduction) built with [Slate](https://github.com/lord/slate).
 
 :question: :boom: Found a bug or need help?
 ----------------------------------
