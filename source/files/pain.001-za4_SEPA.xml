@@ -2,13 +2,13 @@
 <Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <!-- NOTE: change the last number to reupload the file -->
-      <MsgId>za01-01</MsgId>
-      <CreDtTm>2009-09-28T14:07:00</CreDtTm>
+      <!-- NOTE: Change the last number to reupload the file -->
+      <MsgId>za4-1001</MsgId>
+      <CreDtTm>2021-09-28T14:00:00</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>123.45</CtrlSum>
+      <CtrlSum>123.50</CtrlSum>
       <InitgPty>
-        <Nm>Test Company(remitter)</Nm>
+        <Nm>Test Company(Remitter)</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
@@ -20,17 +20,19 @@
           <Cd>SEPA</Cd>
         </SvcLvl>
       </PmtTpInf>
-      <ReqdExctnDt>2022-01-31</ReqdExctnDt>
+      <ReqdExctnDt>2022-12-15</ReqdExctnDt>
       <Dbtr>
-        <Nm>Test Company(remitter)</Nm>
+        <Nm>Test Company(Remitter)</Nm>
       </Dbtr>
       <DbtrAcct>
         <Id>
-          <IBAN>LI44088110609197K000C</IBAN>
+		<!-- NOTE: Change here to your IBAN -->
+          <IBAN>LI47088110104056K000E</IBAN>
         </Id>
       </DbtrAcct>
       <DbtrAgt>
         <FinInstnId>
+		<!-- NOTE: Always the same Bank Frick BIC -->
           <BIC>BFRILI22</BIC>
         </FinInstnId>
       </DbtrAgt>
@@ -38,24 +40,24 @@
         <PmtId>
           <InstrId>1-1</InstrId>
 			<!-- Payment reference -->
-			<EndToEndId>Payment reference and Purpose of use</EndToEndId>
+			<EndToEndId>Payment Purpose</EndToEndId>
         </PmtId>
         <Amt>
-          <InstdAmt Ccy="CHF">123.45</InstdAmt>
+          <InstdAmt Ccy="EUR">123.50</InstdAmt>
         </Amt>
         <CdtrAgt>
           <FinInstnId>
             <!-- BIC Foreign Country -->
-            <BIC>BYLADEM1ASA</BIC>
+            <BIC>DRESDEFF200</BIC>
           </FinInstnId>
         </CdtrAgt>
         <Cdtr>
-          <Nm>BENEFICIARY NAME</Nm>
+          <Nm>Test Person</Nm>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <!-- IBAN -->
-            <IBAN>AT026000000001349870</IBAN>
+            <!-- Recipient IBAN -->
+            <IBAN>DE96200800000911006900</IBAN>
           </Id>
         </CdtrAcct>
       </CdtTrfTxInf>
