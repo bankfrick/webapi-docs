@@ -131,8 +131,7 @@ algorithm: ...
 
 
 {
-  "challengeId" : "c6f8dd20-aad0-11e8-98d0-529269fb1459",
-  "tan" : "123456"
+  "marketorderIds" : [ 20771 ]
 }
 ```
 
@@ -146,7 +145,7 @@ algorithm: ...
 
 
 {
-  "marketorderIds" : [ 20771, 20772 ]
+  "marketorderIds" : [ 20771 ]
 }
 ```
 
@@ -208,7 +207,7 @@ algorithm: ...
 }
 ```
 
-Sign a order without previously requesting a tan. The contact must be eligible for this resource. If the order requires MiFID confirmation, the order must first be confirmed before it can be signed.
+Sign an order without previously requesting a tan. The contact must be eligible for this resource. If the order requires MiFID confirmation, the order must first be confirmed before it can be signed.
 
 **Request Parameters**
 

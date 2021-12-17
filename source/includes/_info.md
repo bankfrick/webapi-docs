@@ -7,7 +7,7 @@ Utility resource to receive status information from the backend. This is the onl
 > Request 
 
 ```shell--sandbox
-GET https://olbtest.bankfrick.li/webapi/info
+GET https://olbtest.bankfrick.li/webapi/v2/info
 Content-Type: */*
 Accept: application/json
        
@@ -15,7 +15,7 @@ Accept: application/json
 ```
 
 ```shell--production
-GET https://olb.bankfrick.li/webapi/info
+GET https://olb.bankfrick.li/webapi/v2/info
 Content-Type: */*
 Accept: application/json
        
@@ -36,7 +36,7 @@ algorithm: ...
   "environment" : "production",
   "messages" : [ {
     "title" : "Maintenance",
-    "message" : "Due to maintenance work, online banking will not be available on 26.07.2018 from 05:00 to 06:00. We apologize for any inconvenience."
+    "message" : "Due to maintenance work, online banking will not be available on 26.07.2021 from 05:00 to 06:00. We apologize for any inconvenience."
   } ]
 }
 ```
