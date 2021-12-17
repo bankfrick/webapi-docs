@@ -11,7 +11,7 @@
   "iban" : "LI6808811000000001234",
   "customer" : "00012345 Satoshi Nakamoto",
   "currency" : "CHF",
-  "balance" : 10000.0,
+  "balance" : 1000.0,
   "available" : 0.0
 }
 ```
@@ -45,7 +45,7 @@ A single account instance
     "iban" : "LI6808811000000001234",
     "customer" : "00012345 Satoshi Nakamoto",
     "currency" : "CHF",
-    "balance" : 10000.0,
+    "balance" : 1000.0,
     "available" : 0.0
   }, {
     "account" : "00012345/001.000.978",
