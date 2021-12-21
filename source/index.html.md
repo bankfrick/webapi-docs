@@ -78,7 +78,7 @@ Currently 2 environments are available
 The API is available under the following path:<br>
 BaseURL = \<Environment URL\>/webapi/v2/
 
-Schemes: https
+Schemes: https...
 
 ## Signatures
 
