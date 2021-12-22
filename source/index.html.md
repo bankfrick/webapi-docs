@@ -76,7 +76,7 @@ Currently 2 environments are available
   * Sandbox: <a href="https://olbtest.bankfrick.li/" target="_blank" rel="noopener noreferrer">https://olbtest.bankfrick.li</a>
 
 The API is available under the following path:<br>
-BaseURL = \<Environment URL\>/webapi/v2/
+BaseURL = \<Environment URL\>/webapi/
 
 Schemes: https
 
