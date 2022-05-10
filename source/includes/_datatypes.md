@@ -98,8 +98,8 @@ A approval of a transaction.
 
 ```json          
 {
-  "key" : "1234567890abcdefgHIJKLMN",
-  "password" : "secret"
+  "key" : "YourAPIkeyFromOnlineBanking",
+  "password" : "OnlineBankingPassword"
 }
 ```
 
@@ -110,7 +110,7 @@ The authorization message request body.
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
 | key |	string |	required |	The previously generated API-Key (Personal Access Token) |
-| password |	string |	required |	The current user password |
+| password |	string | |	The current user password |
 
 ## AuthorizeResponse
 
