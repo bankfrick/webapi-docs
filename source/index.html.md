@@ -39,7 +39,7 @@ search: true
  |_| |_|\___|_|_|\___/     \_/\_/ \___/|_|  |_|\__,_(_)                  
 ```
 
-This is the Bank Frick online banking webAPI documentation. In this documentation the client can see what requirements must be fulfilled, which functionalities Bank Frick's online banking webAPI must have and how it must be set up.
+This is the Bank Frick online banking webAPI documentation. In this documentation the client can see what requirements must be fulfilled, which functionalities Bank Frick's online banking webAPI must have and how it must be set up in order to be used.
 
 The online banking webAPI enables to create and approve payment orders and receive account information in a simplified JSON format or standardized camt report without the requirement of logging in into the online banking frontend.
 
@@ -53,7 +53,7 @@ The client user must create an API-Key (Personal Access Token) which will later 
 
 The client application logs in by sending his API-Key and current password. The API-Key must be created in beforehand by the client user via the online banking gui (requires TAN).
 
-The server verifies the key, it retrieves the client information, generates a JWT (JSON Web Token) containing user details and permissions that will be used to access the services, and the server also sets the expiration on the JWT. The expiration date of the JWT can be before the expiration date of the API-Key, but can never exceed it. At default it is 30 days.
+The server verifies the key, it retrieves the client information, generates a JWT (JSON Web Token) containing user details and permissions that will be used to access the services, and the server also sets the expiration on the JWT. The expiration date of the JWT can be before the expiration date of the API-Key, but can never exceed it. At default it is unlimited.
 
 The server signs and sends the JWT to the client as a response to the initial request with the API-Key. Note that the communication itself is stateless, meaning that once a JWT is acquired, the client application can use the token indefinitely respectively as long as stated in the token or the API-Key is revoked. The JWT is not stored on the server.
 

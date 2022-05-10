@@ -32,7 +32,7 @@ algorithm: ...
 
                 
 {
-  "orderIds" : [ 20771 ]
+  "marketorderIds" : [ 20771 ]
 }
 ```
 
@@ -272,6 +272,7 @@ algorithm: ...
   "marketorders" : [ {
     "customId" : "1234",
     "valoren" : "130666",
+    "suffix" : "000",
     "tradingType" : "BUY",
     "totalQuantity" : 2,
     "depot" : [ {
@@ -297,7 +298,22 @@ algorithm: ...
 
                 
 {
-  "orderIds" : [ 20771 ]
+  "marketorders" : [ {
+    "customId" : "1234",
+    "valoren" : "130666",
+    "suffix" : "000",
+    "tradingType" : "BUY",
+    "totalQuantity" : 2,
+    "depot" : [ {
+      "iban" : "LI6808811000000001234",
+      "depot" : "1234567-000",
+      "quantity" : 1
+    }, {
+      "iban" : "LI6808811000000001234",
+      "depot" : "1234567-001",
+      "quantity" : 1
+    } ]
+  } ]
 }
 ```
 
@@ -428,7 +444,9 @@ algorithm: ...
 
                 
 {
-  "orderIds" : [ 20771 ]
+  "marketorderIds" : [ 123, 456 ],
+  "confirmRiskClassification" : false,
+  "confirmKnowledge" : true
 }
 ```
 

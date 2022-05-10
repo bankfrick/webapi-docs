@@ -44,12 +44,12 @@ Upload a pain.001 message. Note that errors respectively the status regarding pa
 
 | Description | Local Instrument | Creditor Account |  Creditor Agent | Currency |
 | ---- | ------ | --------- | ----------- | ----------- |
-| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/2717d24adf1e10e6e65299890ff29255c0736f70/source/files/pain001-ESR-OrangeSlip.xml" download>Domestic Payment (CH/LI) - ESR (Orange payment slip)</a> | CH01 |   |   | CHF |
-| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/2717d24adf1e10e6e65299890ff29255c0736f70/source/files/pain001-za2_2-SWIFTwitIhBAN.xml" download>Domestic Payment (CH/LI) - with IBAN</a> |  | IBAN in CH/LI |    | CHF/EUR |
-| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/2717d24adf1e10e6e65299890ff29255c0736f70/source/files/pain001-za3-InlandWithIBAN.xml" download>Domestic Payment (CH/LI) - with IBAN</a> |  | IBAN in CH/LI |   | All except CHF/EUR |
-| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/2717d24adf1e10e6e65299890ff29255c0736f70/source/files/pain001-za5-SEPA.xml" download>Foreign Payment - SEPA</a> |  | IBAN in Europe |   | EUR |
-| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/2717d24adf1e10e6e65299890ff29255c0736f70/source/files/pain001-za6a-SWIFTwithIBAN.xml" download>Foreign Payment not SEPA - SWIFT</a> |  | IBAN | BIC | Any Currency |
-| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/2717d24adf1e10e6e65299890ff29255c0736f70/source/files/pain001-za6b-SWIFTwithAccountNr.xml" download>Foreign Payment not SEPA - SWIFT</a> |  | Account Number | BIC | Any Currency |
+| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/master/source/files/pain.001-za1_ESR_OrangeSlip.xml" download>Domestic Payment (CH/LI) - ESR (Orange payment slip)</a> | CH01 |   |   | CHF |
+| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/master/source/files/pain.001-za2_SWIFTwithIBAN.xml" download>Domestic Payment (CH/LI) - with IBAN</a> |  | IBAN in CH/LI |    | CHF/EUR |
+| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/master/source/files/pain.001-za3_InlandwithIBAN.xml" download>Domestic Payment (CH/LI) - with IBAN</a> |  | IBAN in CH/LI |   | All except CHF/EUR |
+| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/master/source/files/pain.001-za4_SEPA.xml" download>Foreign Payment - SEPA</a> |  | IBAN in Europe |   | EUR |
+| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/master/source/files/pain.001-za5_SWIFTwithIBAN.xml" download>Foreign Payment not SEPA - SWIFT</a> |  | IBAN | BIC | Any Currency |
+| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/master/source/files/pain.001-za6_SWIFTwithAccountNr.xml" download>Foreign Payment not SEPA - SWIFT</a> |  | Account Number | BIC | Any Currency |
 
 ## Response
 

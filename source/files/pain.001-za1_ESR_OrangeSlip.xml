@@ -2,30 +2,32 @@
 <Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
   <CstmrCdtTrfInitn>
     <GrpHdr>
-      <!-- NOTE: change the last number to reupload the file -->
-      <MsgId>za_2_2-IBAN-1</MsgId>
-      <CreDtTm>2009-09-28T14:07:00</CreDtTm>
+      <!-- NOTE: Change the last number to reupload the file -->
+      <MsgId>za1-1001</MsgId>
+      <CreDtTm>2021-09-28T14:00:00</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>123.45</CtrlSum>
+      <CtrlSum>123.50</CtrlSum>
       <InitgPty>
-        <Nm>Test Company(remitter)</Nm>
+        <Nm>Test Company(Remitter)</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
       <PmtInfId>1</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <BtchBookg>true</BtchBookg>
-      <ReqdExctnDt>2022-01-31</ReqdExctnDt>
+      <ReqdExctnDt>2022-12-15</ReqdExctnDt>
       <Dbtr>
-        <Nm>Test Company (remitter)</Nm>
+        <Nm>Test Company(Remitter)</Nm>
       </Dbtr>
       <DbtrAcct>
         <Id>
-          <IBAN>LI50088110111111K000C</IBAN>
+		<!-- NOTE: Change here to your IBAN -->
+          <IBAN>LI47088110104056K000E</IBAN>
         </Id>
       </DbtrAcct>
       <DbtrAgt>
         <FinInstnId>
+		<!-- NOTE: Always the same Bank Frick BIC -->
           <BIC>BFRILI22</BIC>
         </FinInstnId>
       </DbtrAgt>
@@ -33,37 +35,35 @@
         <PmtId>
           <InstrId>1-1</InstrId>
           <EndToEndId>1-1</EndToEndId>
-		  	<!-- Payment reference -->
-			<EndToEndId>Payment </EndToEndId>
         </PmtId>
         <PmtTpInf>
           <LclInstrm>
-            <Prtry>CH03</Prtry>
+            <Prtry>CH01</Prtry>
           </LclInstrm>
         </PmtTpInf>
         <Amt>
-          <InstdAmt Ccy="CHF">123.45</InstdAmt>
+          <InstdAmt Ccy="CHF">123.50</InstdAmt>
         </Amt>
-        <!-- No need of Agt with IBAN -->
-        <!--
-          <CdtrAgt>
-          <FinInstnId>
-          <Nm>TEST Bank</Nm>
-          <Othr>
-          <Id>80-22-2</Id>
-          </Othr>
-          </FinInstnId>
-          </CdtrAgt>
-        -->
         <Cdtr>
-          <Nm>BENEFICIARY_Name</Nm>
+		<!-- NOTE: Name of the receiver -->
+          <Nm>Test Person</Nm>
         </Cdtr>
         <CdtrAcct>
           <Id>
-            <!-- IBAN -->
-            <IBAN>AT026000000001349870</IBAN>
+            <Othr>
+              <!-- ESR-TNR -->
+              <Id>01-39139-1</Id>
+            </Othr>
           </Id>
         </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <!-- ESR-Reference -->
+              <Ref>210000000003139471430009017</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
       </CdtTrfTxInf>
     </PmtInf>
   </CstmrCdtTrfInitn>

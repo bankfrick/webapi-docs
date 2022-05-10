@@ -194,6 +194,7 @@ If a combination of filter parameters are applied, only orders that match all of
 | ---- | ---- | ----------- | ------- | ----------- |
 | Authorization | header | Bearer \<**token**\>
 | customId | query | (optional) Filter for custom id as it was assigned by the client on transaction creation. When searching for BOOKED transactions, the fromDate filter must be set accordingly, otherwise the query might not return the expected result.
+| transactionNr | query | (optional) Filter for transaction number. Only relevant for booked transaction. If a payment order should be addressed, use orderId of the coresponding account path instead.
 | firstPosition | query | (optional) Set the position of the first result to retrieve (offset), defaults to 0 | 0 | int |
 | fromDate | query | (optional) Starting date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD, defaults to current day minus 30 days.
 | iban | query | (optional) Filter for transactions only related to account iban. This iban must relate to an account the user has access to, otherwise the query will return no result.
