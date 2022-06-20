@@ -1205,52 +1205,59 @@ A single transaction instance to be created.
 
 ```json          
 {
-  "orderId" : 20222,
-  "customId" : "4711",
-  "transactionNr": "3307348",
-  "serviceType": "SIC",
-  "type" : "FOREIGN",
-  "state" : "EXECUTED",
-  "amount" : 1321.00,
+  "transactionNr" : "3307348",
+  "serviceType" : "EUROSIC",
+  "transactionCode" : "120 - Eingang (Kundenvergütungen)",
+  "state" : "BOOKED",
+  "fxrate" : 1.05000000,
+  "fxPair" : "CHF/EUR",
+  "fxTransactionAmount" : 10000.00,
+  "fxTransactionCurrency" : "CHF",
+  "md" : "D",
+  "amount" : 9523.80,
+  "totalAmount" : 9523.80,
   "currency" : "EUR",
-  "valuta" : "2018-08-27",
-  "express" : true,
-  "valuta" : "2019-04-28",
-  "valutaIsExecutionDate" : true,
+  "valuta" : "2022-05-01",
+  "bookingDate" : "2022-05-01",
   "reference" : "Some Individual Text",
-  "charge" : "SHA",
+  "direction" : "incoming",
   "debitor" : {
-    "accountNumber" : "00012345/001.000.001",
     "name" : "Satoshi Nakamoto",
-    "iban" : "LI6808811000000001234",
-    "bic" : "INGDDEFFXXX",
-    "creditInstitution" : "ING-DiBa",
-    "esr" : "961116900000006600000009284"
+    "iban" : "CH10001000111000100110",
+    "bic" : "ZKBKCHZZ80A",
+    "creditInstitution" : "Zuercher Kantonalbank"
   },
   "creditor" : {
-    "accountNumber" : "00012345/001.000.001",
     "name" : "Satoshi Nakamoto",
     "iban" : "LI6808811000000001234",
-    "bic" : "INGDDEFFXXX",
-    "creditInstitution" : "ING-DiBa",
-    "esr" : "961116900000006600000009284"
+    "bic" : "BFRILI22XXX",
+    "creditInstitution" : "Bank Frick and Co. AG"
+   }
+},{
+  "orderId" : 123456,
+  "transactionNr" : "3307350",
+  "serviceType" : "SWIFT",
+  "transactionCode" : "116 - Vergütung SWIFT",
+  "state" : "BOOKED",
+  "amount" : -100.00,
+  "totalAmount" : -100.00,
+  "currency" : "EUR",
+  "valuta" : "2022-05-01",
+  "bookingDate" : "2022-05-01",
+  "reference" : "Some Individual Text",
+  "direction" : "outgoing",
+  "debitor" : {
+    "name" : "Max Muster",
+    "iban" : "LI08088110102720K000E",
+    "bic" : "BFRILI22XXX",
+    "creditInstitution" : "Bank Frick and Co. AG"
   },
-  "creator" : "1234 Satoshi Nakamoto",
-  "createDate" : "2018-08-22T10:07:02",
-  "right" : "Bevollmächtigter kollektiv zu 2",
-  "groupPolicy" : "Group intern",
-  "group" : 1,
-  "quorum" : 2,
-  "approvals" : [ {
-    "contact" : "1234 Satoshi Nakamoto",
-    "group" : 1,
-    "dateOfApproval" : "2018-08-22T10:07:02"
-  }, {
-    "contact" : "1234 Satoshi Nakamoto",
-    "group" : 1,
-    "dateOfApproval" : "2018-08-22T10:07:02"
-  } ]
-}
+  "creditor" : {
+    "name" : "Satoshi Nakamoto",
+    "iban" : "LT100101101010010101",
+    "bic" : "REVOLT21XXX",
+    "creditInstitution" : "REVOLUT PAYMENTS UAB"
+  }
 ```
 
 A single transaction existing instance.
@@ -1267,6 +1274,11 @@ A single transaction existing instance.
 | state |	[State](#data-types-state)	| required |	The state of the payment order |
 | transactionCode | string | | The transaction code. This is only available for booked transactions |
 | fees | number | | The fees of the transaction. This is only available for booked transactions |
+| fxrate | number | | The exchange rate of the transaction. Only relevant in case of currency change. |
+| fxPair | string | | The currency pair in case of foreign exchange. Only relevant in case of currency change. |
+| fxTransactionAmount | number | | The transaction amount in foreign currency. Only relevant in case of currency change. |
+| fxTransactionCurrency | string | |  The foreign currency. Only relevant in case of currency change. |
+| md | string | | The exchange rate multiplicant (M = multiply, D = devision). Only relevant in case of currency change. |
 | amount |	number |	required |	The amount of the transaction (net amount)|
 | totalAmount | number | required | The total amount of the transaction |
 | currency |	string |	required |	The transaction currency |
@@ -1277,6 +1289,7 @@ A single transaction existing instance.
 | reference |	string	| |	The reference text of individual notes |
 | charge |	[Charge](#data-types-charge)	| |	The charging system of the transaction |
 | correspondence | boolean | | 	Must be set to true in case of correspondence payment |
+| direction | string | | Either "incoming", "outgoing" or "return". |
 | orderingCustomer | [OrderingCustomer](#data-types-orderingcustomer) | | 	In case of correspondence payment information about the ordering customer must be given |
 | debitor |	[TransactionAccount](#data-types-transactionaccount) |	required |	The client information about the transaction |
 | creditor |	[TransactionAccount](#data-types-transactionaccount) |	required |	The beneficiary information about the transaction |
