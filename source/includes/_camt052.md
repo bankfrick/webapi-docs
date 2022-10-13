@@ -24,7 +24,7 @@ Signature: ...
 algorithm: ...
 ```
 
-Retrieve a camt052 (intraday information) report.
+Retrieve a camt.052 (intraday information) report.
 
 **Request Parameters**
 
@@ -33,8 +33,8 @@ Retrieve a camt052 (intraday information) report.
 | Authorization | header | Bearer \<**token**\> |
 | Signature | header | \<**signature**\> |
 | algorithm | header | The used signing algorithm, e.g. rsa-sha512 |
-| iban |	query |	(mandatory) The iban of the account to get the camt052 report for. If an account does not have an iban, accountnumber must be used. | 
-| accountnumber |	query | (mandatory) The account number of the account to get the camt052 report for, this parameter should be URL-Encoded. **Either iban or accountnumber** must be given; the report can only be created for one account per request. If an account does not have an iban, accountnumber must be used. |
+| iban |	query |	(mandatory) The iban of the account to get the camt.052 report for. If an account does not have an iban, accountnumber must be used. | 
+| accountnumber |	query | (mandatory) The account number of the account to get the camt.052 report for, this parameter should be URL-Encoded. **Either iban or accountnumber** must be given; the report can only be created for one account per request. If an account does not have an iban, accountnumber must be used. |
 | maxAmount |	query |	(optional) Maximum amount for a transaction to appear in the report, this parameter should be URL-Encoded |
 | minAmount |	query |	(optional) Minimum amount for a transaction to appear in the report, this parameter should be URL-Encoded |
 | reference |	query |	(optional) Search in the reference (transaction information), this parameter should be URL-Encoded |
