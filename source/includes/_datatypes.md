@@ -1312,11 +1312,11 @@ A single transaction existing instance.
   "name" : "Satoshi Nakamoto",
 	"address" : "Street 100",
 	"postalcode" : "150004",
-	"city" : "Tokyo",
-	"country" : "Japan",
-  "bic" : "MHCBJPJ6",
-  "creditInstitution" : "MIZUHO BANK",
-  "esr" : "961116900000006600000009284"
+	"city" : "Berlin",
+	"country" : "Germany",
+  "bic" : "INGDDEFFXXX",
+  "creditInstitution" : "ING-DiBa",
+  "qrReference" : "961116900000006600000009284"
 }
 ```
 
@@ -1336,7 +1336,7 @@ Debitor or creditor account information of the transaction.
 | country |	string |	max size: 70, min size: 0  |	Country of the recipient, for international transfers or payments in USD |
 | bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution (only [type](#data-types-type) = FOREIGN) |
-| esr	| string |	max size: 27, min size: 0 |	The esr number (only [type](#data-types-type) = ORANGE) |
+| qrReference	| string |	max size: 27, min size: 0 |	 The qr bill reference number in case of [type](#data-types-type) = QR_BILL) |
 
 ## TransactionCreditorAccount
 
@@ -1349,11 +1349,11 @@ Debitor or creditor account information of the transaction.
   "name" : "Satoshi Nakamoto",
 	"address" : "Street 100",
 	"postalcode" : "150004",
-	"city" : "Tokyo",
-	"country" : "Japan",
-  "bic" : "MHCBJPJ6",
-  "creditInstitution" : "MIZUHO BANK",
-  "esr" : "961116900000006600000009284"
+	"city" : "Berlin",
+	"country" : "Germany",
+  "bic" : "INGDDEFFXXX",
+  "creditInstitution" : "ING-DiBa",
+  "qrReference" : "961116900000006600000009284"
 }
 ```
 
@@ -1373,7 +1373,7 @@ The transactions beneficiary account information.
 | country |	string |	max size: 70, min size: 0  |	Country of the recipient, for international transfers or payments in USD |
 | bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution (only [type](#data-types-type) = FOREIGN) |
-| esr	| string |	max size: 27, min size: 0 |	The esr number (only [type](#data-types-type) = ORANGE) |
+| qrReference	| string |	max size: 27, min size: 0 |	 The qr bill reference number in case of [type](#data-types-type) = QR_BILL) |
 
 ## TransactionDebitorAccount
 
@@ -1420,7 +1420,7 @@ The transactions client account information.
       "iban" : "LI6808811000000001234",
       "bic" : "INGDDEFFXXX",
       "creditInstitution" : "ING-DiBa",
-      "esr" : "961116900000006600000009284"
+      "qrReference" : "961116900000006600000009284"
     },
     "creditor" : {
       "accountNumber" : "00012345/001.000.001",
@@ -1428,7 +1428,7 @@ The transactions client account information.
       "iban" : "LI6808811000000001234",
       "bic" : "INGDDEFFXXX",
       "creditInstitution" : "ING-DiBa",
-      "esr" : "961116900000006600000009284"
+      "qrReference" : "961116900000006600000009284"
     },
     "creator" : "1234 Satoshi Nakamoto",
     "createDate" : "2018-08-22T10:07:02",
@@ -1508,7 +1508,7 @@ Enum values for the 'type' field
 | SEPA | Euro |	SEPA Payment (Only transactions in Euro to European countries) |
 | FOREIGN	| Any | International Transfer (SWIFT) |
 | RED |	CHF & EUR | Red Payment Slip |
-| ORANGE | CHF & EUR |	Orange Payment Slip with ESR number (Only in Switzerland) |
+| QR_BILL | CHF |	QR Bill Payment Slip with QR reference (Only in Switzerland) |
 
 ## ValuationPrice
 
