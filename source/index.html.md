@@ -2,7 +2,7 @@
 title: Bank Frick webAPI Documentation
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell--sandbox: sandbox 
+  - shell--test: test 
   - shell--production: production
 
 toc_footers:
