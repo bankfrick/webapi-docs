@@ -73,7 +73,7 @@ If you subsequently have an active Bank Frick account, you can start webAPI with
 Currently 2 environments are available
 
   * Production: <a href="https://olb.bankfrick.li/" target="_blank" rel="noopener noreferrer">https://olb.bankfrick.li</a>
-  * Sandbox: <a href="https://olbtest.bankfrick.li/" target="_blank" rel="noopener noreferrer">https://olbtest.bankfrick.li</a>
+  * Test: <a href="https://olbtest.bankfrick.li/" target="_blank" rel="noopener noreferrer">https://olbtest.bankfrick.li</a>
 
 The API is available under the following path:<br>
 BaseURL = \<Environment URL\>/webapi/
