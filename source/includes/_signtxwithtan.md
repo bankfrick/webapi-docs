@@ -119,8 +119,6 @@ Sign a transaction with a previously requested tan.
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-# Sign Marktorder with TAN
-
 ## POST
 
 `POST /v2/signTransactionWithTan/marketorder`
