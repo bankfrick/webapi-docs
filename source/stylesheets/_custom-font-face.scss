@@ -1,23 +1,30 @@
+/* In Ihrer CSS-Datei */
 @font-face {
-    font-family: 'AauxNext';
-    src: font-url('32202F_1_0.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: auto;
-  }
-  
-  @font-face {
-    font-family: 'AauxNext';
-    src: font-url('3285B4_0_0.woff2') format('woff2');
-    font-weight: bold;
-    font-style: normal;
-    font-display: auto;
-  }
-  
-  @font-face {
-    font-family: 'AauxNext';
-    src: font-url('2202F_0_0.woff2') format('woff2');
-    font-weight: bolder;
-    font-style: normal;
-    font-display: auto;
-  }
+  font-family: 'AauxNext';
+  src: url('fonts/32202F_1_0.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: auto;
+}
+
+@font-face {
+  font-family: 'AauxNext';
+  src: url('fonts/3285B4_0_0.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: auto;
+}
+
+@font-face {
+  font-family: 'AauxNext';
+  src: url('fonts/2202F_0_0.woff2') format('woff2');
+  font-weight: bolder;
+  font-style: normal;
+  font-display: auto;
+}
+
+/* Jetzt können Sie die Schriftart in Ihren CSS-Regeln verwenden */
+body {
+  font-family: 'AauxNext', sans-serif;
+  /* Weitere CSS-Stile hier einfügen */
+}

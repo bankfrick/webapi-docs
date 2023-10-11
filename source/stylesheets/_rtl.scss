@@ -26,7 +26,7 @@ $default: auto;
     #{right}: 0;
     transition: right 0.3s ease-in-out;
     &.open {
-        right: $nav-width
+        right: $nav-width;
     }
 }
 
@@ -109,14 +109,15 @@ p,
 aside {
     text-align: right;
     direction: rtl;
+    font-family: sans-serif; /* Schriftart auf sans-serif geändert */
 }
 
 .toc-wrapper {
     text-align: right;
     direction: rtl;
     font-weight: 100 !important;
+    font-family: sans-serif; /* Schriftart auf sans-serif geändert */
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESPONSIVE DESIGN

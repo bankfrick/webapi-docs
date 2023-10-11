@@ -20,7 +20,6 @@ under the License.
 ////////////////////////////////////////////////////////////////////////////////
 // Use these settings to help adjust the appearance of Slate
 
-
 // BACKGROUND COLORS
 ////////////////////
 $nav-bg: #f5f5f5 !default;
@@ -39,7 +38,6 @@ $aside-warning-bg: #FFCDD2 !default;
 $aside-success-bg: #97D99F !default;
 $search-notice-bg: #FFCDD2 !default;
 
-
 // TEXT COLORS
 ////////////////////
 $main-text: #000 !default; // main content text color
@@ -49,7 +47,6 @@ $nav-active-parent-text: #23255e !default; // parent links of the current sectio
 $lang-select-text: #fff !default; // color of unselected language tab text
 $lang-select-active-text: #fff !default; // color of selected language tab text
 $lang-select-pressed-text: #fff !default; // color of language tab text when mouse is pressed
-
 
 // SIZES
 ////////////////////
@@ -65,11 +62,10 @@ $h1-margin-bottom: 21px !default; // padding under the largest header tags
 $tablet-width: 930px !default; // min width before reverting to tablet size
 $phone-width: $tablet-width - $nav-width !default; // min width before reverting to mobile size
 
-
 // FONTS
 ////////////////////
 %default-font {
-  font-family: AauxNext, Roboto, Sans-Serif, Helvetica, Arial, Apple Color Emoji, Segoe Ui Emoji, Segoe Ui Symbol, Apple System, System Ui, Segoe Ui;
+  font-family: 'AauxNext', sans-serif; /* Schriftart auf sans-serif geändert */
   font-size: 14px;
 }
 
@@ -79,17 +75,15 @@ $phone-width: $tablet-width - $nav-width !default; // min width before reverting
 }
 
 %code-font {
-  font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+  font-family: 'Consolas', 'Menlo', 'Monaco', 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;
   font-size: 12px;
   line-height: 1.5;
 }
-
 
 // OTHER
 ////////////////////
 $nav-footer-border-color: #666 !default;
 $search-box-border-color: #878787 !default;
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // INTERNAL
