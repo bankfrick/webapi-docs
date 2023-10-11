@@ -144,4 +144,3 @@ If the message cannot be delivered, e.g. because the client server is not respon
 ![WebHooks](/images/documentation/bank-frick-webapi-webhooks.png "WebHooks")
 
 ![WebHooks Details](/images/documentation/bank-frick-webapi-webhooks-details.png "WebHooks Details")
----
