@@ -117,8 +117,6 @@ Sign a transaction without previously requesting a tan. This resource must be ac
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## POST
-
 `POST /v2/signTransactionWithoutTan/marketorder`
 
 > Request
