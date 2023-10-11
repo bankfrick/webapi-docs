@@ -6,6 +6,12 @@ def toc_data(page_content)
   # get a flat list of headers
   headers = []
   html_doc.css('h1, h2, h3').each do |header|
+    puts "Header ID: #{header.attribute('id')}"
+    puts "Header Content: #{header.children}"
+    puts "Header Title: #{header.children.to_s.gsub(/<[^>]*>/, '')}"
+    puts "Header Level: #{header.name[1].to_i}"
+    puts "Header Children: []"
+    
     headers.push({
       id: header.attribute('id').to_s,
       content: header.children,
@@ -27,5 +33,6 @@ def toc_data(page_content)
       end
     end
   end
+
   headers
 end
