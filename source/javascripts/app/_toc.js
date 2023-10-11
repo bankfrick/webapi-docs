@@ -47,9 +47,6 @@
       var currentTop = $(document).scrollTop() + scrollOffset;
 
       if (currentTop + windowHeight >= pageHeight) {
-        // at bottom of page, so just select last header by making currentTop very large
-        // this fixes the problem where the last header won't ever show as active if its content
-        // is shorter than the window height
         currentTop = pageHeight + 1000;
       }
 
@@ -60,16 +57,15 @@
         }
       }
 
-      // Catch the initial load case
       if (currentTop == scrollOffset && !loaded) {
         best = window.location.hash;
         loaded = true;
       }
 
       var $best = $toc.find("[href='" + best + "']").first();
+      var $bestParent = $best.parent(); // Hinzugefügte Zeile, um das Elternelement zu erhalten
+
       if (!$best.hasClass("active")) {
-        // .active is applied to the ToC link we're currently on, and its parent <ul>s selected by tocListSelector
-        // .active-expanded is applied to the ToC links that are parents of this one
         $toc.find(".active").removeClass("active");
         $toc.find(".active-parent").removeClass("active-parent");
         $best.addClass("active");
@@ -85,6 +81,11 @@
           document.title = thisTitle + " – " + originalTitle;
         } else {
           document.title = originalTitle;
+        }
+
+        // Hinzugefügte Abschnitte, um das Untermenü zu öffnen
+        if ($bestParent.hasClass(tocListSelector)) {
+          $bestParent.slideDown(150);
         }
       }
     };
