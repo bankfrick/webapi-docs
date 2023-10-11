@@ -2,6 +2,8 @@
 
 With this resource, one or multiple transactions/orders can be approved without a TAN challenge. The contact must be eligible for this resource and it might be used to automate the creation and approval of orders without direct user interaction.
 
+## POST
+
 `POST /v2/signTransactionWithoutTan`
 
 > Request
@@ -115,7 +117,9 @@ Sign a transaction without previously requesting a tan. This resource must be ac
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## sign MarketOrder
+# Sign Marketorder without TAN
+
+## POST
 
 `POST /v2/signTransactionWithoutTan/marketorder`
 

@@ -2,7 +2,7 @@
 
 Resource for searching of securities, query of valuation rates, entry of a market order and MIFID confirmation.
 
-## DELETE Trading
+## DELETE
 
 `DELETE /v2/trading`
 
@@ -131,7 +131,7 @@ Service to reject market orders. Only market orders that are not yet fully appro
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
 
-## GET Trading
+## GET
 
 `GET /v2/trading`
 
@@ -253,7 +253,7 @@ If a combination of filter parameters are applied, only orders that match all of
 | Trading-Hours | contains a note about the current stock exchange trading hours |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## PUT Trading
+## PUT
 
 `PUT /v2/trading`
 
@@ -412,7 +412,7 @@ Creates a new market order. A block order is implicitly created if the order con
 | Trading-Hours | contains a note about the current stock exchange trading hours |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## Trading confirmMifid
+## POST Trading confirmMifid
 
 `POST /v2/trading/confirmMifid`
 
@@ -544,7 +544,7 @@ MiFID confirmation must explicitly be given if required before requesting a tan 
 | Trading-Hours | contains a note about the current stock exchange trading hours |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## Trading Instrument
+## GET Trading Instrument
 
 `GET /v2/trading/instrument`
 
@@ -628,7 +628,7 @@ Reads a specific instrument including the recent valuation price. The requested 
 | Trading-Hours | contains a note about the current stock exchange trading hours |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## Trading Search
+## GET Trading Search
 
 `GET /v2/trading/search`
 
@@ -735,7 +735,7 @@ Allows to search for financial instruments.
 | Trading-Hours | contains a note about the current stock exchange trading hours |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## Trading {marketorderId}
+## GET Trading {marketorderId}
 
 `GET /v2/{marketorderId}`
 

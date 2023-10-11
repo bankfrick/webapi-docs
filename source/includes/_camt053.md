@@ -2,6 +2,8 @@
 
 This message is used to download a camt053 report. This export format only contains booked transactions either from successful processed payment orders or other external transactions, similar to the “Executed” tab in the transaction overview of the online banking frontend.
 
+## GET
+
 `GET /v2/camt053`
 
 > Request

@@ -2,6 +2,8 @@
 
 Utility resource to receive status information from the backend. This is the only resource which can be used by anyone without any authorization. It can be used to test connectivity and the general availability of the service. In later releases, this method also returns important system messages which would normally be shows on the login screen.
 
+## GET
+
 `GET /v2/info`
 
 > Request 

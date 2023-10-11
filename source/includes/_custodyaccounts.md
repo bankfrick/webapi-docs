@@ -2,7 +2,7 @@
 
 Access to custody accounts. Listing of custody accounts and depot transactions.
 
-## Get CustodyAccounts
+## GET
 
 `GET /v2/custodyaccounts`
 
@@ -81,7 +81,7 @@ Listing of depots for the contact with basic information like: Deposit number, n
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## Get CustodyAccounts (filtered)
+## GET CustodyAccounts (filtered)
 
 `GET /v2/custodyaccounts/{customer}`
 
@@ -190,6 +190,8 @@ Access depot details including list of depot positions for a customer.
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
+## GET CustodyAccounts Depot (filtered)
+
 `GET /v2/custodyaccounts/{customer}-{depot}`
 
 > Request
@@ -282,6 +284,8 @@ Access depot details including list of depot positions for a defined depot.
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
 <br><br><br><br>
+
+## GET CustodyAccounts Depot Tranactions (filtered)
 
 `GET /v2/custodyaccounts/{customer}-{depot}/transactions`
 

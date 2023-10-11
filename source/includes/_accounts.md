@@ -2,7 +2,7 @@
 
 Listing of accounts, similar to the financial overview within the online banking. Will only show accounts visible to the user as defined by the customer to contact relation and permission.
 
-## GET Accounts
+## GET
 
 `GET /v2/accounts`
 

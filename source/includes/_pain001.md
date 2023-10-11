@@ -2,6 +2,8 @@
 
 Resource for the pain.001 message upload.
 
+## PUT
+
 `PUT /v2/pain001`
 
 Upload a pain.001 message. Note that errors respectively the status regarding pain001 is returned as pain002 message with the HTTP 200 or 207 status code.

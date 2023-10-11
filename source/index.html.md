@@ -11,8 +11,8 @@ toc_footers:
   - <a href='https://github.com/bankfrick/webapi-docs' target='_blank' rel='noopener noreferrer'>Edit on GitHub</a>
 
 includes:
-  - authorize
   - accounts
+  - authorize
   - custodyaccounts
   - info
   - requesttan

@@ -2,6 +2,8 @@
 
 With this message, one or multiple payment orders can be approved by the contact with a TAN that was previously requested by the RequestTan message. Only payment orders can be approved that were previously referred in the TAN challenge request. Only one TAN challenge can be active at the time per API-Key.
 
+## POST
+
 `POST /v2/signTransactionWithTan`
 
 > Request
@@ -117,7 +119,9 @@ Sign a transaction with a previously requested tan.
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## sign MarketOrder
+# Sign Marktorder with TAN
+
+## POST
 
 `POST /v2/signTransactionWithTan/marketorder`
 

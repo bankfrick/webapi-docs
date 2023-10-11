@@ -230,7 +230,7 @@ If a combination of filter parameters are applied, only orders that match all of
 
 ## PUT
 
-`PUT /v2/transactions``
+`PUT /v2/transactions`
 
 > Request
 

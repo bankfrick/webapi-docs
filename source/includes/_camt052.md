@@ -2,6 +2,8 @@
 
 This message is used to download a camt.052 report. This export format only contains booked transactions as intraday information and provides a near real time view of the accounts.
 
+## GET
+
 `GET /v2/camt052`
 
 > Request
