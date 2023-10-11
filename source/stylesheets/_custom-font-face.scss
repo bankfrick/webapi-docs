@@ -1,4 +1,5 @@
 /* In Ihrer CSS-Datei */
+/*
 @font-face {
   font-family: 'AauxNext';
   src: url('fonts/32202F_1_0.woff2') format('woff2');
@@ -22,9 +23,9 @@
   font-style: normal;
   font-display: auto;
 }
-
+*/
 /* Jetzt können Sie die Schriftart in Ihren CSS-Regeln verwenden */
 body {
-  font-family: 'AauxNext', sans-serif;
+  font-family: sans-serif;
   /* Weitere CSS-Stile hier einfügen */
 }
