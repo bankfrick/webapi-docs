@@ -11,8 +11,8 @@ toc_footers:
   - <a href='https://github.com/bankfrick/webapi-docs' target='_blank' rel='noopener noreferrer'>Edit on GitHub</a>
 
 includes:
-  - accounts
   - authorize
+  - accounts
   - custodyaccounts
   - info
   - requesttan
@@ -144,3 +144,4 @@ If the message cannot be delivered, e.g. because the client server is not respon
 ![WebHooks](/images/documentation/bank-frick-webapi-webhooks.png "WebHooks")
 
 ![WebHooks Details](/images/documentation/bank-frick-webapi-webhooks-details.png "WebHooks Details")
+---
