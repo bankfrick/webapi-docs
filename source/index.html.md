@@ -70,10 +70,11 @@ After the Sign Up, you will receive the following two informations by email to a
 
 If you subsequently have an active Bank Frick account, you can start webAPI with the Online Banking setup.
 
-Currently 2 environments are available
+Currently 3 environments are available
 
   * Production: <a href="https://olb.bankfrick.li/" target="_blank" rel="noopener noreferrer">https://olb.bankfrick.li</a>
   * Test: <a href="https://olbtest.bankfrick.li/" target="_blank" rel="noopener noreferrer">https://olbtest.bankfrick.li</a>
+  * Sandbox: <a href="https://olbsandbox.bankfrick.li/" target="_blank" rel="noopener noreferrer">https://olbsandbox.bankfrick.li</a> (*Note*: The data in the sandbox environment is anonymized.)
 
 The API is available under the following path:<br>
 BaseURL = \<Environment URL\>/webapi/

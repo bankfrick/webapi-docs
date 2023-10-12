@@ -285,7 +285,7 @@ Access depot details including list of depot positions for a defined depot.
 
 <br><br><br><br>
 
-## GET CustodyAccounts Depot Tranactions (filtered)
+## GET CustodyAccounts Depot Transactions (filtered)
 
 `GET /v2/custodyaccounts/{customer}-{depot}/transactions`
 

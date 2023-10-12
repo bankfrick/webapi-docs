@@ -22,18 +22,15 @@
   var closeToc = function() {
     $(".toc-wrapper").removeClass('open');
     $("#nav-button").removeClass('open');
-    console.log('Toc closed.'); // Hinzugefügt
   };
 
   function loadToc($toc, tocLinkSelector, tocListSelector, scrollOffset) {
-    console.log('loadToc function started.'); // Hinzugefügt
     var headerHeights = {};
     var pageHeight = 0;
     var windowHeight = 0;
     var originalTitle = document.title;
 
     var recacheHeights = function() {
-      console.log('Recaching heights...'); // Hinzugefügt
       headerHeights = {};
       pageHeight = $(document).height();
       windowHeight = $(window).height();
@@ -46,7 +43,6 @@
     };
 
     var refreshToc = function() {
-      console.log('Refreshing TOC...'); // Hinzugefügt
       var currentTop = $(document).scrollTop() + scrollOffset;
       if (currentTop + windowHeight >= pageHeight) {
         currentTop = pageHeight + 1000;
@@ -98,14 +94,12 @@
       $("#nav-button").click(function() {
         $(".toc-wrapper").toggleClass('open');
         $("#nav-button").toggleClass('open');
-        console.log('Toc button clicked.'); // Hinzugefügt
         return false;
       });
       $(".page-wrapper").click(closeToc);
       $(".toc-link").click(closeToc);
 
       $toc.find(tocLinkSelector).click(function() {
-        console.log('Toc link clicked.'); // Hinzugefügt
         setTimeout(function() {
           refreshToc();
         }, 0);
