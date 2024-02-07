@@ -1332,7 +1332,7 @@ Debitor or creditor account information of the transaction.
 | name |	string |	required, max size: 35, min size: 0   |	The name of the recipient |
 | address |	string |	max size: 70, min size: 0  | Address information of the recipient (e.g. Street), for international transfers or payments in USD |
 | postalcode |	string |	max size: 11, min size: 0   |	Postalcode of the recipient address, for international transfers or payments in USD |
-| city |	string |	max size: 70, min size: 0  |	Postalcode of the recipient address, for international transfers or payments in USD |
+| city |	string |	max size: 70, min size: 0  |	City of the recipient, for international transfers or payments in USD |
 | country |	string |	max size: 70, min size: 0  |	Country of the recipient, for international transfers or payments in USD |
 | bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution (only [type](#data-types-type) = FOREIGN) |
