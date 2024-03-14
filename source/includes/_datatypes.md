@@ -1223,6 +1223,7 @@ A single transaction instance to be created.
   "direction" : "incoming",
   "debitor" : {
     "name" : "Satoshi Nakamoto",
+    "address" : "Street 100",
     "iban" : "CH10001000111000100110",
     "bic" : "ZKBKCHZZ80A",
     "creditInstitution" : "Zuercher Kantonalbank"
