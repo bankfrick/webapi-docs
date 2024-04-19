@@ -8,7 +8,7 @@ Login to the WebAPI using an API-Key to receive a JWT. The password is optional 
 
 > Request
 
-```json-doc--test
+```http--test
 POST https://olbtest.bankfrick.li/webapi/v2/authorize
 Content-Type: application/json
 Accept: application/json
@@ -22,7 +22,7 @@ algorithm: ...
 }
 ```
 
-```json-doc--production
+```http--production
 POST https://olb.bankfrick.li/webapi/v2/authorize
 Content-Type: application/json
 Accept: application/json

@@ -8,7 +8,7 @@ Utility resource to receive status information from the backend. This is the onl
 
 > Request 
 
-```json-doc--test
+```http--test
 GET https://olbtest.bankfrick.li/webapi/v2/info
 Content-Type: */*
 Accept: application/json
@@ -16,7 +16,7 @@ Accept: application/json
 ...
 ```
 
-```json-doc--production
+```http--production
 GET https://olb.bankfrick.li/webapi/v2/info
 Content-Type: */*
 Accept: application/json

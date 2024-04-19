@@ -8,7 +8,7 @@ Listing of accounts, similar to the financial overview within the online banking
 
 > Request
 
-```json-doc--test
+```http--test
 GET https://olbtest.bankfrick.li/webapi/v2/accounts
 Content-Type: */*
 Accept: application/json
@@ -17,7 +17,7 @@ Authorization: ...
 ...    
 ```
 
-```json-doc--production
+```http--production
 GET https://olb.bankfrick.li/webapi/v2/accounts
 Content-Type: */*
 Accept: application/json
@@ -93,7 +93,7 @@ Get the list of accounts that are visible for the user.
 
 > Request
 
-```json-doc--test
+```http--test
 GET https://olbtest.bankfrick.li/webapi/v2/accounts/0012345/001.000.001
 Content-Type: */*
 Accept: application/json
@@ -103,7 +103,7 @@ Authorization: ...
 ...
 ```
 
-```json-doc--production
+```http--production
 GET https://olb.bankfrick.li/webapi/v2/accounts/0012345/001.000.001
 Content-Type: */*
 Accept: application/json
@@ -186,7 +186,7 @@ If a combination of filter parameters are applied, only accounts that match both
 
 > Request
 
-```json-doc--test
+```http--test
 GET https://olbtest.bankfrick.li/webapi/v2/accounts/0012345/001.000.001/transactions
 Content-Type: */*
 Accept: application/json
@@ -195,7 +195,7 @@ Authorization: ...
 ...
 ```
 
-```json-doc--production
+```http--production
 GET https://olb.bankfrick.li/webapi/v2/accounts/0012345/001.000.001/transactions
 Content-Type: */*
 Accept: application/json

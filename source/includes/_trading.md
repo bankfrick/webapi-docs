@@ -8,7 +8,7 @@ Resource for searching of securities, query of valuation rates, entry of a marke
 
 > Request
 
-```json-doc--test
+```http--test
 DELETE https://olbtest.bankfrick.li/webapi/v2/trading
 Content-Type: application/json
 Accept: application/json
@@ -22,7 +22,7 @@ algorithm: ...
 }
 ```
 
-```json-doc--production
+```http--production
 DELETE https://olb.bankfrick.li/webapi/v2/trading
 Content-Type: application/json
 Accept: application/json
@@ -137,7 +137,7 @@ Service to reject market orders. Only market orders that are not yet fully appro
 
 > Request
 
-```json-doc--test
+```http--test
 GET https://olbtest.bankfrick.li/webapi/v2/trading
 Content-Type: application/json
 Accept: application/json
@@ -146,7 +146,7 @@ Authorization: ...
 ...
 ```
 
-```json-doc--production
+```http--production
 GET https://olb.bankfrick.li/webapi/v2/trading
 Content-Type: application/json
 Accept: application/json
@@ -259,7 +259,7 @@ If a combination of filter parameters are applied, only orders that match all of
 
 > Request
 
-```json-doc--test
+```http--test
 PUT https://olbtest.bankfrick.li/webapi/v2/trading
 Content-Type: application/json
 Accept: application/json
@@ -288,7 +288,7 @@ algorithm: ...
 }
 ```
 
-```json-doc--production
+```http--production
 PUT https://olb.bankfrick.li/webapi/v2/trading
 Content-Type: application/json
 Accept: application/json
@@ -418,7 +418,7 @@ Creates a new market order. A block order is implicitly created if the order con
 
 > Request
 
-```json-doc--test
+```http--test
 POST https://olbtest.bankfrick.li/webapi/v2/trading/confirmMifid
 Content-Type: application/json
 Accept: application/json
@@ -434,7 +434,7 @@ algorithm: ...
 }
 ```
 
-```json-doc--production
+```http--production
 POST https://olb.bankfrick.li/webapi/v2/trading/confirmMifid
 Content-Type: application/json
 Accept: application/json
@@ -550,7 +550,7 @@ MiFID confirmation must explicitly be given if required before requesting a tan 
 
 > Request
 
-```json-doc--test
+```http--test
 GET https://olbtest.bankfrick.li/webapi/v2/trading/instrument
 Content-Type: application/json
 Accept: application/json
@@ -559,7 +559,7 @@ Authorization: ...
 ...
 ```
 
-```json-doc--production
+```http--production
 GET https://olb.bankfrick.li/webapi/v2/trading/instrument
 Content-Type: application/json
 Accept: application/json
@@ -634,7 +634,7 @@ Reads a specific instrument including the recent valuation price. The requested 
 
 > Request
 
-```json-doc--test
+```http--test
 GET https://olbtest.bankfrick.li/webapi/v2/trading/search
 Content-Type: application/json
 Accept: application/json
@@ -643,7 +643,7 @@ Authorization: ...
 ...
 ```
 
-```json-doc--production
+```http--production
 GET https://olb.bankfrick.li/webapi/v2/trading/search
 Content-Type: application/json
 Accept: application/json
@@ -741,7 +741,7 @@ Allows to search for financial instruments.
 
 > Request
 
-```json-doc--test
+```http--test
 GET https://olbtest.bankfrick.li/webapi/v2/trading/{marketorderId}
 Content-Type: application/json
 Accept: application/json
@@ -750,7 +750,7 @@ Authorization: ...
 ...
 ```
 
-```json-doc--production
+```http--production
 GET https://olb.bankfrick.li/webapi/v2/trading/{marketorderId}
 Content-Type: application/json
 Accept: application/json
