@@ -8,7 +8,7 @@ With this resource, one or multiple transactions/orders can be approved without 
 
 > Request
 
-```http--test
+```json-doc--test
 POST https://olbtest.bankfrick.li/webapi/v2/signTransactionWithoutTan
 Content-Type: application/json
 Accept: application/json
@@ -22,7 +22,7 @@ algorithm: ...
 }
 ```
 
-```http--production
+```json-doc--production
 POST https://olb.bankfrick.li/webapi/v2/signTransactionWithoutTan
 Content-Type: application/json
 Accept: application/json
@@ -121,7 +121,7 @@ Sign a transaction without previously requesting a tan. This resource must be ac
 
 > Request
 
-```http--test
+```json-doc--test
 POST https://olbtest.bankfrick.li/webapi/v2/signTransactionWithoutTan/marketorder
 Content-Type: application/json
 Accept: application/json
@@ -135,7 +135,7 @@ algorithm: ...
 }
 ```
 
-```http--production
+```json-doc--production
 POST https://olb.bankfrick.li/webapi/v2/signTransactionWithoutTan/marketorder
 Content-Type: application/json
 Accept: application/json

@@ -9,7 +9,7 @@ If a combination of filter parameters are applied, only orders that match all of
 
 > Request
 
-```http--test
+```json-doc--test
 DELETE https://olbtest.bankfrick.li/webapi/v2/deleteTransaction
 Content-Type: application/json
 Accept: application/json
@@ -23,7 +23,7 @@ algorithm: ...
 }
 ```
 
-```http--production
+```json-doc--production
 DELETE https://olb.bankfrick.li/webapi/v2/deleteTransaction
 Content-Type: application/json
 Accept: application/json
@@ -124,7 +124,7 @@ Service to reject or delete not yet executed payment orders. Payment orders that
 
 > Request
 
-```http--test
+```json-doc--test
 GET https://olbtest.bankfrick.li/webapi/v2/transactions
 Content-Type: application/json
 Accept: application/json
@@ -133,7 +133,7 @@ Authorization: ...
 ...
 ```
 
-```http--production
+```json-doc--production
 GET https://olb.bankfrick.li/webapi/v2/transactions
 Content-Type: application/json
 Accept: application/json
@@ -234,7 +234,7 @@ If a combination of filter parameters are applied, only orders that match all of
 
 > Request
 
-```http--test 
+```json-doc--test 
 PUT https://olbtest.bankfrick.li/webapi/v2/transactions
 Content-Type: application/json
 Accept: application/json
@@ -265,7 +265,7 @@ algorithm: ...
 }
 ```
 
-```http--production
+```json-doc--production
 PUT https://olb.bankfrick.li/webapi/v2/transactions
 Content-Type: application/json
 Accept: application/json

@@ -8,7 +8,7 @@ Access to custody accounts. Listing of custody accounts and depot transactions.
 
 > Request
 
-```http--test
+```json-doc--test
 GET https://olbtest.bankfrick.li/webapi/v2/custodyaccounts
 Content-Type: */*
 Accept: application/json
@@ -17,7 +17,7 @@ Authorization: ...
 ...    
 ```
 
-```http--production
+```json-doc--production
 GET https://olb.bankfrick.li/webapi/v2/custodyaccounts
 Content-Type: */*
 Accept: application/json
@@ -87,7 +87,7 @@ Listing of depots for the contact with basic information like: Deposit number, n
 
 > Request
 
-```http--test
+```json-doc--test
 GET https://olbtest.bankfrick.li/webapi/v2/custodyaccounts/0012345
 Content-Type: */*
 Accept: application/json
@@ -97,7 +97,7 @@ Authorization: ...
 ...
 ```
 
-```http--production
+```json-doc--production
 GET https://olb.bankfrick.li/webapi/v2/custodyaccounts/0012345
 Content-Type: */*
 Accept: application/json
@@ -196,7 +196,7 @@ Access depot details including list of depot positions for a customer.
 
 > Request
 
-```http--test
+```json-doc--test
 GET https://olbtest.bankfrick.li/webapi/v2/custodyaccounts/0012345-000
 Content-Type: */*
 Accept: application/json
@@ -205,7 +205,7 @@ Authorization: ...
 ...
 ```
 
-```http--production
+```json-doc--production
 GET https://olb.bankfrick.li/webapi/v2/custodyaccounts/0012345-000
 Content-Type: */*
 Accept: application/json
@@ -291,7 +291,7 @@ Access depot details including list of depot positions for a defined depot.
 
 > Request
 
-```http--test
+```json-doc--test
 GET https://olbtest.bankfrick.li/webapi/v2/custodyaccounts/0012345-000/transactions
 Content-Type: */*
 Accept: application/json
@@ -300,7 +300,7 @@ Authorization: ...
 ...
 ```
 
-```http--production
+```json-doc--production
 GET https://olb.bankfrick.li/webapi/v2/custodyaccounts/0012345-000/transactions
 Content-Type: */*
 Accept: application/json
