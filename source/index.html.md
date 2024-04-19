@@ -2,8 +2,7 @@
 title: Bank Frick webAPI Documentation
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell--test: test 
-  - shell--production: production
+  - http
 
 toc_footers:
   - <a href='https://developers.bankfrick.li' target='_blank' rel='noopener noreferrer'>Visit Bank Frick Developers</a>
@@ -27,6 +26,12 @@ includes:
   - datatypes
 
 search: true
+
+code_clipboard: true
+
+meta:
+  - name: description
+    content: Documentation for the Kittn API
 ---
 
 # Introduction
