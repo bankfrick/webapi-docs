@@ -10,7 +10,7 @@ Request a tan for previously created transactions used to sign the transactions.
 
 > Request
 
-```shell--sandbox
+```http--test
 POST https://olbtest.bankfrick.li/webapi/v2/requestTan
 Content-Type: application/json
 Accept: application/json
@@ -25,7 +25,7 @@ algorithm: ...
 }
 ```
 
-```shell--production
+```http--production
 POST https://olb.bankfrick.li/webapi/v2/requestTan
 Content-Type: application/json
 Accept: application/json
@@ -95,7 +95,7 @@ algorithm: ...
 
 > Request
 
-```shell--sandbox
+```http--test
 DELETE https://olbtest.bankfrick.li/webapi/v2/requestTan
 Content-Type: application/json
 Accept: application/json
@@ -109,7 +109,7 @@ algorithm: ...
 }
 ```
 
-```shell--production
+```http--production
 DELETE https://olb.bankfrick.li/webapi/v2/requestTan
 Content-Type: application/json
 Accept: application/json
@@ -180,7 +180,7 @@ Request a tan for previously created orders used to sign the market orders. This
 
 > Request
 
-```shell--sandbox
+```http--test
 POST https://olbtest.bankfrick.li/webapi/v2/requestTan/marketorder
 Content-Type: application/json
 Accept: application/json
@@ -195,7 +195,7 @@ algorithm: ...
 }
 ```
 
-```shell--production
+```http--production
 POST https://olb.bankfrick.li/webapi/v2/requestTan/marketorder
 Content-Type: application/json
 Accept: application/json
