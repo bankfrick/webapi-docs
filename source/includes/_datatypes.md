@@ -1504,8 +1504,8 @@ Enum values for the 'type' field
 
 | value | currency | description |
 | ----- | -------- | ----------- |
-| INTERNAL | Any | Internal transfers within the same company |
-| BANK_INTERNAL |	Any | Bank Frick Internal Transfer to a different company where the contact is linked to |
+| INTERNAL | Any | Transfer to another bank account within the same customer account |
+| BANK_INTERNAL |	Any | Transfer to another bank account at Bank Frick owned by another customer account |
 | SEPA | Euro |	SEPA Payment (Only transactions in Euro to European countries) |
 | FOREIGN	| Any | International Transfer (SWIFT) |
 | RED |	CHF & EUR | Red Payment Slip |
