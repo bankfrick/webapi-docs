@@ -8,7 +8,7 @@ With this message, one or multiple payment orders can be approved by the contact
 
 > Request
 
-```http--test
+```shell--test
 POST https://olbtest.bankfrick.li/webapi/v2/signTransactionWithTan
 Content-Type: application/json
 Accept: application/json
@@ -23,7 +23,7 @@ algorithm: ...
 }
 ```
 
-```http--production
+```shell--production
 POST https://olb.bankfrick.li/webapi/v2/signTransactionWithTan
 Content-Type: application/json
 Accept: application/json
@@ -123,7 +123,7 @@ Sign a transaction with a previously requested tan.
 
 > Request
 
-```http--test
+```shell--test
 POST https://olbtest.bankfrick.li/webapi/v2/signTransactionWithTan/marketorder
 Content-Type: application/json
 Accept: application/json
@@ -138,7 +138,7 @@ algorithm: ...
 }
 ```
 
-```http--production
+```shell--production
 POST https://olb.bankfrick.li/webapi/v2/signTransactionWithTan/marketorder
 Content-Type: application/json
 Accept: application/json

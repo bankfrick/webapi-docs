@@ -2,8 +2,8 @@
 title: Bank Frick webAPI Documentation
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - http--test: test 
-  - http--production: production
+  - shell--test: test 
+  - shell--production: production
 
 toc_footers:
   - <a href='https://developers.bankfrick.li' target='_blank' rel='noopener noreferrer'>Visit Bank Frick Developers</a>
