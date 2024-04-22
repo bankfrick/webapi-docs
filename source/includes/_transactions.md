@@ -9,7 +9,7 @@ If a combination of filter parameters are applied, only orders that match all of
 
 > Request
 
-```shell--sandbox
+```shell--test
 DELETE https://olbtest.bankfrick.li/webapi/v2/deleteTransaction
 Content-Type: application/json
 Accept: application/json
@@ -124,7 +124,7 @@ Service to reject or delete not yet executed payment orders. Payment orders that
 
 > Request
 
-```shell--sandbox
+```shell--test
 GET https://olbtest.bankfrick.li/webapi/v2/transactions
 Content-Type: application/json
 Accept: application/json
@@ -234,7 +234,7 @@ If a combination of filter parameters are applied, only orders that match all of
 
 > Request
 
-```shell--sandbox 
+```shell--test 
 PUT https://olbtest.bankfrick.li/webapi/v2/transactions
 Content-Type: application/json
 Accept: application/json

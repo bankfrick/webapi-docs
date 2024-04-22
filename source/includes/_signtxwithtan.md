@@ -8,7 +8,7 @@ With this message, one or multiple payment orders can be approved by the contact
 
 > Request
 
-```shell--sandbox
+```shell--test
 POST https://olbtest.bankfrick.li/webapi/v2/signTransactionWithTan
 Content-Type: application/json
 Accept: application/json
@@ -123,7 +123,7 @@ Sign a transaction with a previously requested tan.
 
 > Request
 
-```shell--sandbox
+```shell--test
 POST https://olbtest.bankfrick.li/webapi/v2/signTransactionWithTan/marketorder
 Content-Type: application/json
 Accept: application/json

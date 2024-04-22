@@ -8,7 +8,7 @@ With this resource, one or multiple transactions/orders can be approved without 
 
 > Request
 
-```shell--sandbox
+```shell--test
 POST https://olbtest.bankfrick.li/webapi/v2/signTransactionWithoutTan
 Content-Type: application/json
 Accept: application/json
@@ -121,7 +121,7 @@ Sign a transaction without previously requesting a tan. This resource must be ac
 
 > Request
 
-```shell--sandbox
+```shell--test
 POST https://olbtest.bankfrick.li/webapi/v2/signTransactionWithoutTan/marketorder
 Content-Type: application/json
 Accept: application/json
