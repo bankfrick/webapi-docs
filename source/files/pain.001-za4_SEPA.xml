@@ -4,7 +4,7 @@
     <GrpHdr>
       <!-- NOTE: Change the last number to reupload the file -->
       <MsgId>ZA100000001</MsgId>
-      <CreDtTm>2024-04-05T10:30:00</CreDtTm>
+      <CreDtTm>2024-05-16T10:30:00</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>200.00</CtrlSum>
       <InitgPty>
@@ -12,10 +12,10 @@
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>1ddd</PmtInfId>
+      <PmtInfId>1</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <BtchBookg>true</BtchBookg>
-      <ReqdExctnDt>2024-04-05</ReqdExctnDt>
+      <ReqdExctnDt>2024-05-16</ReqdExctnDt>
       <Dbtr>
         <Nm>Your Customer</Nm>
       </Dbtr>
