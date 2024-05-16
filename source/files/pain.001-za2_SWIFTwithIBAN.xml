@@ -3,21 +3,21 @@
   <CstmrCdtTrfInitn>
     <GrpHdr>
       <!-- NOTE: Change the last number to reupload the file -->
-      <MsgId>za2-IBAN-1001</MsgId>
-      <CreDtTm>2021-09-28T14:00:00</CreDtTm>
+      <MsgId>Domestic-1001</MsgId>
+      <CreDtTm>2024-05-16T08:00:00</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>123.50</CtrlSum>
+      <CtrlSum>100.00</CtrlSum>
       <InitgPty>
-        <Nm>Test Company(Remitter)</Nm>
+        <Nm>Your Company</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
       <PmtInfId>1</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <BtchBookg>true</BtchBookg>
-      <ReqdExctnDt>2022-12-15</ReqdExctnDt>
+      <ReqdExctnDt>2024-05-16</ReqdExctnDt>
       <Dbtr>
-        <Nm>Test Company(Remitter)</Nm>
+        <Nm>Your Customer</Nm>
       </Dbtr>
       <DbtrAcct>
         <Id>
@@ -33,9 +33,8 @@
       </DbtrAgt>
       <CdtTrfTxInf>
         <PmtId>
-          <InstrId>1-1</InstrId>
-          <EndToEndId>1-1</EndToEndId>
-		  	<!-- Payment reference -->
+          <InstrId>Your unique ID_1</InstrId>
+          <EndToEndId>Your EndtoEndId_1</EndToEndId>
         </PmtId>
         <PmtTpInf>
           <LclInstrm>
@@ -43,7 +42,7 @@
           </LclInstrm>
         </PmtTpInf>
         <Amt>
-          <InstdAmt Ccy="CHF">123.50</InstdAmt>
+          <InstdAmt Ccy="CHF">100.00</InstdAmt>
         </Amt>
         <!-- No need of Agt with IBAN -->
         <!--
@@ -57,14 +56,18 @@
           </CdtrAgt>
         -->
         <Cdtr>
-          <Nm>Test Person</Nm>
+          <Nm>Your Customer</Nm>
         </Cdtr>
         <CdtrAcct>
           <Id>
             <!-- Recipient IBAN -->
-            <IBAN>AT026000000001349870</IBAN>
+            <IBAN>CH0200781125534343504</IBAN>
           </Id>
         </CdtrAcct>
+        <RmtInf>
+		<!-- Payment reference -->
+		    <Ustrd>Payment Reference</Ustrd>
+		</RmtInf>
       </CdtTrfTxInf>
     </PmtInf>
   </CstmrCdtTrfInitn>

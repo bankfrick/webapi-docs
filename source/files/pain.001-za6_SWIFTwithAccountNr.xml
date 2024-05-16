@@ -1,70 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
-  <CstmrCdtTrfInitn>
-    <GrpHdr>
-      <!-- NOTE: Change the last number to reupload the file -->
-      <MsgId>za6-IBAN-1001</MsgId>
-      <CreDtTm>2021-09-28T14:00:00</CreDtTm>
-      <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>123.50</CtrlSum>
-      <InitgPty>
-        <Nm>Test Company(Remitter)</Nm>
-      </InitgPty>
-    </GrpHdr>
-    <PmtInf>
-      <PmtInfId>1</PmtInfId>
-      <PmtMtd>TRF</PmtMtd>
-      <BtchBookg>true</BtchBookg>
-      <ReqdExctnDt>2022-12-15</ReqdExctnDt>
-      <Dbtr>
-        <Nm>Test Company(Remitter)</Nm>
-      </Dbtr>
-      <DbtrAcct>
-        <Id>
-		<!-- NOTE: Change here to your IBAN -->
-          <IBAN>LI47088110104056K000E</IBAN>
-        </Id>
-      </DbtrAcct>
-      <DbtrAgt>
-        <FinInstnId>
-		<!-- NOTE: Always the same Bank Frick BIC -->
-          <BIC>BFRILI22</BIC>
-        </FinInstnId>
-      </DbtrAgt>
-      <CdtTrfTxInf>
-        <PmtId>
-          <InstrId>1-1</InstrId>
-		  			<!-- Payment reference -->
-          <EndToEndId>Payment reference</EndToEndId>
-        </PmtId>
-        <Amt>
-          <InstdAmt Ccy="GBP">123.50</InstdAmt>
-        </Amt>
-        <CdtrAgt>
-          <FinInstnId>
-            <!-- BIC Foreign Country -->
-            <BIC>BOFAUS3NXXX</BIC>
-          </FinInstnId>
-        </CdtrAgt>
-        <Cdtr>
-			<Nm>Test Company</Nm>
-			<PstlAdr>
-			<StrtNm>11th St</StrtNm>
-			<BldgNb>-</BldgNb>
-			<PstCd>33174</PstCd>
-			<TwnNm>Miami</TwnNm>
-			<Ctry>US</Ctry>
-			</PstlAdr>
-        </Cdtr>
-        <CdtrAcct>
-          <Id>
-            <!-- Account Number -->
-            <Othr>
-              <Id>123456789</Id>
-            </Othr>
-          </Id>
-        </CdtrAcct>
-      </CdtTrfTxInf>
-    </PmtInf>
-  </CstmrCdtTrfInitn>
+    <CstmrCdtTrfInitn>
+        <GrpHdr>
+            <!-- NOTE: Change the last number to reupload the file -->
+            <MsgId>SWIFT_AccNr-1001</MsgId>
+            <CreDtTm>2022-05-16T08:00:00</CreDtTm>
+            <NbOfTxs>1</NbOfTxs>
+            <CtrlSum>100.00</CtrlSum>
+            <InitgPty>
+                <Nm>Your Company</Nm>
+            </InitgPty>
+        </GrpHdr>
+        <PmtInf>
+            <PmtInfId>1</PmtInfId>
+            <PmtMtd>TRF</PmtMtd>
+            <BtchBookg>true</BtchBookg>
+            <ReqdExctnDt>2024-05-16</ReqdExctnDt>
+            <Dbtr>
+                <Nm>Your Customer</Nm>
+            </Dbtr>
+            <DbtrAcct>
+                <Id>
+                    <!-- NOTE: Change here to your IBAN -->
+                    <IBAN>LI47088110104056K000E</IBAN>
+                </Id>
+            </DbtrAcct>
+            <DbtrAgt>
+                <FinInstnId>
+                    <!-- NOTE: Always the same Bank Frick BIC -->
+                    <BIC>BFRILI22</BIC>
+                </FinInstnId>
+            </DbtrAgt>
+            <CdtTrfTxInf>
+                <PmtId>
+                    <InstrId>Your unique ID_1</InstrId>
+                    <EndToEndId>Your EndtoEndId_1</EndToEndId>
+                </PmtId>
+                <Amt>
+                    <InstdAmt Ccy="USD">100.00</InstdAmt>
+                </Amt>
+                <CdtrAgt>
+                    <FinInstnId>
+                        <!-- BIC Foreign Country -->
+                        <BIC>BOFAUS3NXXX</BIC>
+                    </FinInstnId>
+                </CdtrAgt>
+                <Cdtr>
+                    <Nm>Test Company</Nm>
+                    <PstlAdr>
+                        <StrtNm>11th St</StrtNm>
+                        <BldgNb>-</BldgNb>
+                        <PstCd>33174</PstCd>
+                        <TwnNm>Miami</TwnNm>
+                        <Ctry>US</Ctry>
+                    </PstlAdr>
+                </Cdtr>
+                <CdtrAcct>
+                    <Id>
+                        <!-- Account Number -->
+                        <Othr>
+                            <Id>123456789</Id>
+                        </Othr>
+                    </Id>
+                </CdtrAcct>
+            </CdtTrfTxInf>
+        </PmtInf>
+    </CstmrCdtTrfInitn>
 </Document>
