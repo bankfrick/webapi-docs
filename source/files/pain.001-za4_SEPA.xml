@@ -3,31 +3,26 @@
   <CstmrCdtTrfInitn>
     <GrpHdr>
       <!-- NOTE: Change the last number to reupload the file -->
-      <MsgId>za4-1001</MsgId>
-      <CreDtTm>2021-09-28T14:00:00</CreDtTm>
+      <MsgId>ZA100000001</MsgId>
+      <CreDtTm>2024-04-05T10:30:00</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
-      <CtrlSum>123.50</CtrlSum>
+      <CtrlSum>200.00</CtrlSum>
       <InitgPty>
-        <Nm>Test Company(Remitter)</Nm>
+        <Nm>Your Company</Nm>
       </InitgPty>
     </GrpHdr>
     <PmtInf>
-      <PmtInfId>1</PmtInfId>
+      <PmtInfId>1ddd</PmtInfId>
       <PmtMtd>TRF</PmtMtd>
       <BtchBookg>true</BtchBookg>
-      <PmtTpInf>
-        <SvcLvl>
-          <Cd>SEPA</Cd>
-        </SvcLvl>
-      </PmtTpInf>
-      <ReqdExctnDt>2022-12-15</ReqdExctnDt>
+      <ReqdExctnDt>2024-04-05</ReqdExctnDt>
       <Dbtr>
-        <Nm>Test Company(Remitter)</Nm>
+        <Nm>Your Customer</Nm>
       </Dbtr>
       <DbtrAcct>
         <Id>
 		<!-- NOTE: Change here to your IBAN -->
-          <IBAN>LI47088110104056K000E</IBAN>
+          <IBAN>LI980***********002E</IBAN>
         </Id>
       </DbtrAcct>
       <DbtrAgt>
@@ -38,28 +33,41 @@
       </DbtrAgt>
       <CdtTrfTxInf>
         <PmtId>
-          <InstrId>1-1</InstrId>
-			<!-- Payment reference -->
-			<EndToEndId>Payment Purpose</EndToEndId>
+          <InstrId>Your unique ID</InstrId>
+          <EndToEndId>Your EndtoEndId</EndToEndId>
         </PmtId>
+        <PmtTpInf>
+          <LclInstrm>
+            <Prtry>CH03</Prtry>
+          </LclInstrm>
+        </PmtTpInf>
         <Amt>
-          <InstdAmt Ccy="EUR">123.50</InstdAmt>
+          <InstdAmt Ccy="EUR">200.00</InstdAmt>
         </Amt>
-        <CdtrAgt>
+        <!-- No need of Agt with IBAN -->
+        <!--
+          <CdtrAgt>
           <FinInstnId>
-            <!-- BIC Foreign Country -->
-            <BIC>DRESDEFF200</BIC>
+          <Nm>TEST Bank</Nm>
+          <Othr>
+          <Id>80-22-2</Id>
+          </Othr>
           </FinInstnId>
-        </CdtrAgt>
+          </CdtrAgt>
+        -->
         <Cdtr>
-          <Nm>Test Person</Nm>
+          <Nm>Your Customer</Nm>
         </Cdtr>
         <CdtrAcct>
           <Id>
             <!-- Recipient IBAN -->
-            <IBAN>DE96200800000911006900</IBAN>
+            <IBAN>DE96200800********6900</IBAN>
           </Id>
         </CdtrAcct>
+		<RmtInf>
+		<!-- Payment reference -->
+		<Ustrd>Payment Reference</Ustrd>
+		</RmtInf>
       </CdtTrfTxInf>
     </PmtInf>
   </CstmrCdtTrfInitn>
