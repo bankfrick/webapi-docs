@@ -42,7 +42,7 @@
                     </LclInstrm>
                 </PmtTpInf>
                 <Amt>
-                    <InstdAmt Ccy="CHF">100.00</InstdAmt>
+                    <InstdAmt Ccy="EUR">100.00</InstdAmt>
                 </Amt>
                 <Cdtr>
                     <Nm>Your Customer</Nm>
