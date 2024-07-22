@@ -1508,7 +1508,6 @@ Enum values for the 'type' field
 | BANK_INTERNAL |	Any | Transfer to another bank account at Bank Frick owned by another customer account |
 | SEPA | Euro |	SEPA Payment (Only transactions in Euro to European countries) |
 | FOREIGN	| Any | International Transfer (SWIFT) |
-| RED |	CHF & EUR | Red Payment Slip |
 | QR_BILL | CHF |	QR Bill Payment Slip with QR reference (Only in Switzerland) |
 
 ## ValuationPrice
