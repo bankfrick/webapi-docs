@@ -3,6 +3,18 @@
 Get the list of payment orders based on the search parameters. The user also requires corresponding read privileges for the customer account.
 If a combination of filter parameters are applied, only orders that match all of the conditions are returned.
 
+Here is a brief overview of the transaction state lifecycle:
+
+![Transaction state lifecycle](/images/documentation/bank-frick-transaction-lifecycle.jpg "Transaction state lifecycle")
+
+* **PREPARED**: After a transaction is created via the API, it enters the `PREPARED` state, indicating it is ready for further processing.
+* **IN_PROGRESS**: When the transaction is signed, it moves to the `IN_PROGRESS` state, meaning it is being processed.
+* **EXECUTED**: If the transaction is successfully processed, it moves to the `EXECUTED` state.
+* **BOOKED**: After the transaction is fully processed and finalized by the core banking system, it reaches the `BOOKED` state. `BOOKED` is the final state and it cannot change afterwards.
+* **REJECTED**: A transaction can be marked as `REJECTED` if it is deleted by the user or rejected by the bank.
+* **EXPIRED**: If the transaction is not signed within seven days, it automatically expires and enters the `EXPIRED` state.
+* **DELETED**: If a planned future transaction is deleted by the user before execution, it moves to the `DELETED` state.
+
 ## DELETE
 
 `DELETE /v2/transactions`

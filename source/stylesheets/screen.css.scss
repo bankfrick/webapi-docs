@@ -445,6 +445,7 @@ html, body {
 
   img {
     max-width: 100%;
+    box-shadow: 0 0 31px 5px rgba(0, 0, 0, 0.1)
   }
 
   code {
@@ -551,6 +552,10 @@ html, body {
       color: #eee;
     }
   }
+}
+
+.no-toc {
+  display: none;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
