@@ -110,7 +110,6 @@ The authorization message request body.
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
 | key |	string |	required |	The previously generated API-Key (Personal Access Token) |
-| password |	string | |	The current user password |
 
 ## AuthorizeResponse
 
