@@ -94,7 +94,7 @@ A approval of a transaction.
 
 ## Authorize
 
-> Response
+> Request
 
 ```json          
 {
