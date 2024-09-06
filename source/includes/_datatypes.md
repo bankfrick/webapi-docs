@@ -98,8 +98,7 @@ A approval of a transaction.
 
 ```json          
 {
-  "key" : "YourAPIkeyFromOnlineBanking",
-  "password" : "OnlineBankingPassword"
+  "key" : "YourAPIkeyFromOnlineBanking"
 }
 ```
 
