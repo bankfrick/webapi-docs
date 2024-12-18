@@ -91,6 +91,8 @@ Schemes: https
 
 Message payloads must be signed by the sender of the message and be verified by the receiver. The signature will be transmitted in the ‘Signature’ header field of the HTTP Request/Response. The signature is a Base64-encoded binary SHA signature of the content of the message-body. The 'algorithm' header parameter is used to specify the digital signature algorithm to use when generating the signature. Valid values for this parameter are [rsa-sha512, rsa-sha384, rsa-sha256]. If ‘algorithm’ is not provided by the client the server will assume rsa-sha512.
 
+**Note:** The server accepts only RSA signatures with PKCS#1 v1.5 Padding. Other padding schemes, such as RSA-PSS, are not supported.
+
 ### SSH-Key-Management
 
 The public key of the client must be uploaded to the server using the online banking gui manage ssh key dialog and assigned to an access token. The user must give a unique title respectively a name to the public key. The public key itself can be copied into the input field and added with the "Add SSH-Key" button. The following formats for the public key are accepted:
