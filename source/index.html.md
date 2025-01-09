@@ -85,7 +85,9 @@ Currently 3 environments are available
 The API is available under the following path:<br>
 BaseURL = \<Environment URL\>/webapi/
 
-Schemes: https
+**Schemes:** https
+
+> **Remark:**  Daily maintenance is scheduled between 23:00 and 00:00 (GMT+1), during which you may experience disruptions with the API service.
 
 ## Signatures
 
