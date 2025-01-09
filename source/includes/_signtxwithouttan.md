@@ -1,7 +1,7 @@
 # Sign Transaction without TAN
 
 With this resource, one or multiple transactions/orders can be approved without a TAN challenge. The contact must be eligible for this resource and it might be used to automate the creation and approval of orders without direct user interaction.
-**You can only create an API key with the authorization to sign transactions without a TAN if it has been activated by us for your API key beforehand. If needed kindly get in contact with us at help@bankfrick.li**
+**You can only create an API key with the authorization to sign transactions without a TAN if it has been activated by us for your API key beforehand. If needed kindly get in contact with us at developers@bankfrick.li**
 
 
 ## POST

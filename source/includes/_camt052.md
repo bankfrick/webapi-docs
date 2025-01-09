@@ -1,6 +1,6 @@
 # camt.052
 
-This message is used to download a camt.052 report. This export format only contains booked transactions as intraday information and provides a near real time view of the accounts.
+This message is used to download a camt.052 report. This export format contains booked and pending transactions as intraday information and provides a near real time view of the accounts.
 
 ## GET
 
