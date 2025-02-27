@@ -90,9 +90,9 @@ Schemes: https
 **OpenAPI Specification**
 
 You can download the OpenAPI specification in your preferred format:
-| ---- | ------ | --------- | ----------- | ----------- |
-| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/webapi-openapi.json" download>OpenAPI JSON</a>
-| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/webapi-openapi.yaml" download>OpenAPI YAML</a>
+
+- <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/webapi-openapi.json" download>OpenAPI JSON</a>
+- <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/webapi-openapi.yaml" download>OpenAPI YAML</a>
 
 <aside class="notice">
 Daily maintenance is scheduled between 23:00 and 00:00 (GMT+1), during which you may experience disruptions with the API service.
