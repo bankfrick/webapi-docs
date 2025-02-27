@@ -87,16 +87,16 @@ BaseURL = \<Environment URL\>/webapi/
 
 Schemes: https
 
+<aside class="notice">
+Daily maintenance is scheduled between 23:00 and 00:00 (GMT+1), during which you may experience disruptions with the API service.
+</aside>
+
 ## OpenAPI Specification
 
 Download the OpenAPI specification in your preferred format:
 
 - [OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/webapi-openapi.json)
 - [OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/webapi-openapi.yaml)
-
-<aside class="notice">
-Daily maintenance is scheduled between 23:00 and 00:00 (GMT+1), during which you may experience disruptions with the API service.
-</aside>
 
 ## Signatures
 
