@@ -87,6 +87,10 @@ BaseURL = \<Environment URL\>/webapi/
 
 Schemes: https
 
+You can download the OpenAPI specification in your preferred format:
+- [OpenAPI (YAML)](source\files\webapi-openapi.yaml)
+- [OpenAPI (JSON)](source\files\webapi-openapi.json)
+
 <aside class="notice">
 Daily maintenance is scheduled between 23:00 and 00:00 (GMT+1), during which you may experience disruptions with the API service.
 </aside>

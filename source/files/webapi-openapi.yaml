@@ -1,0 +1,2636 @@
+---
+openapi: 3.0.3
+info:
+  title: BankFrick Onlinebanking WebAPI
+  version: "1.0"
+paths:
+  /psd2-internal/v1/accounts/fundsConfirmation/{accountId}:
+    post:
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                PAYEE:
+                  type: string
+                AMOUNT:
+                  type: number
+                CURRENCYCODE:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /psd2-internal/v1/accounts/getAccountId:
+    post:
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                IBAN:
+                  type: string
+                BBAN:
+                  type: string
+                PAN:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /psd2-internal/v1/accounts/{contactNumber}:
+    get:
+      parameters:
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: includeBalance
+        in: query
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountsDto"
+  /psd2-internal/v1/accounts/{contactNumber}/{accountId}:
+    get:
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: includeBalance
+        in: query
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AccountItemDto"
+  /psd2-internal/v1/custody-accounts/confirm-mifid/{referenceId}/{contactNumber}:
+    post:
+      parameters:
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: referenceId
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/ConfirmMifidDto"
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/custody-accounts/marketorder/{referenceId}:
+    get:
+      parameters:
+      - name: referenceId
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/custody-accounts/{contactNumber}:
+    get:
+      parameters:
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: includeBalance
+        in: query
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustodyAccountsDto"
+    post:
+      parameters:
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMarketordersDto"
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/custody-accounts/{contactNumber}/{accountId}:
+    get:
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: includeBalance
+        in: query
+        schema:
+          type: boolean
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustodyAccountDto"
+  /psd2-internal/v1/custody-accounts/{contactNumber}/{accountId}/transactions:
+    get:
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: state
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/customer/contactnumber:
+    post:
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                USER:
+                  type: string
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/customer/fulfillTan/{contactNumber}:
+    post:
+      parameters:
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                CHALLENGEID:
+                  type: string
+                TAN:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /psd2-internal/v1/customer/requestTan/{contactNumber}:
+    post:
+      parameters:
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: PURPOSE
+        in: query
+        schema:
+          type: string
+      - name: TANMETHOD
+        in: query
+        schema:
+          type: string
+      - name: TRANSACTIONID
+        in: query
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/customer/scaMethods/{contactNumber}:
+    get:
+      parameters:
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /psd2-internal/v1/customer/verifyLogin:
+    post:
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                USER:
+                  type: string
+                PASSWORD:
+                  type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+  /psd2-internal/v1/info:
+    get:
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/instruments:
+    post:
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                contactNumber:
+                  format: int64
+                  type: integer
+                input:
+                  type: string
+                isin:
+                  type: string
+                valoren:
+                  type: string
+                suffix:
+                  type: string
+                type:
+                  $ref: "#/components/schemas/InstrumentTypeGroup"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstrumentSearchResultDto"
+  /psd2-internal/v1/logging:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoggingDto"
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/monitoring/download:
+    get:
+      parameters:
+      - name: eventId
+        in: query
+        schema:
+          format: int64
+          type: integer
+      - name: key
+        in: query
+        schema:
+          type: string
+      - name: messageHash
+        in: query
+        schema:
+          type: string
+      - name: timestamp
+        in: query
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/monitoring/downloadString:
+    get:
+      parameters:
+      - name: eventId
+        in: query
+        schema:
+          format: int64
+          type: integer
+      - name: key
+        in: query
+        schema:
+          type: string
+      - name: messageHash
+        in: query
+        schema:
+          type: string
+      - name: timestamp
+        in: query
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/transactions/paymentorder-status/{transactionId}:
+    get:
+      parameters:
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/State"
+  /psd2-internal/v1/transactions/{contactNumber}/pain001:
+    post:
+      parameters:
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              format: binary
+              type: string
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/transactions/{contactNumber}/payment:
+    post:
+      parameters:
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTransactionsDto"
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/transactions/{contactNumber}/{accountId}:
+    get:
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: customId
+        in: query
+        schema:
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: iban
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: reference
+        in: query
+        schema:
+          type: string
+      - name: searchIban
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      - name: transactionNr
+        in: query
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/transactions/{contactNumber}/{accountId}/camt052:
+    get:
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          $ref: "#/components/schemas/LocalDate"
+      - name: toDate
+        in: query
+        schema:
+          $ref: "#/components/schemas/LocalDate"
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/transactions/{contactNumber}/{accountId}/camt052/11:
+    get:
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          $ref: "#/components/schemas/LocalDate"
+      - name: toDate
+        in: query
+        schema:
+          $ref: "#/components/schemas/LocalDate"
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/transactions/{contactNumber}/{accountId}/camt053:
+    get:
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          $ref: "#/components/schemas/LocalDate"
+      - name: toDate
+        in: query
+        schema:
+          $ref: "#/components/schemas/LocalDate"
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/transactions/{contactNumber}/{accountId}/camt053/11:
+    get:
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          $ref: "#/components/schemas/LocalDate"
+      - name: toDate
+        in: query
+        schema:
+          $ref: "#/components/schemas/LocalDate"
+      responses:
+        "200":
+          description: OK
+  /psd2-internal/v1/transactions/{contactNumber}/{accountId}/{transactionId}:
+    get:
+      parameters:
+      - name: accountId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: contactNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: transactionId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: customId
+        in: query
+        schema:
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: iban
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: reference
+        in: query
+        schema:
+          type: string
+      - name: searchIban
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      - name: transactionNr
+        in: query
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /pushtan/v1/codeScanned:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CodeScannedDto"
+      responses:
+        "200":
+          description: OK
+  /pushtan/v1/disableApp:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DisableAppDto"
+      responses:
+        "200":
+          description: OK
+  /pushtan/v1/fulfillTanChallenge:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FulfillTanChallengeDto"
+      responses:
+        "200":
+          description: OK
+  /pushtan/v1/registerApp:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterAppDto"
+      responses:
+        "200":
+          description: OK
+  /pushtan/v1/rejectTanChallenge:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RejectTanChallengeDto"
+      responses:
+        "200":
+          description: OK
+  /pushtan/v1/retrieveTanChallenge:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RetrieveTanChallengeDto"
+      responses:
+        "200":
+          description: OK
+  /pushtan/v1/updateAppStatus:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAppStatusDto"
+      responses:
+        "200":
+          description: OK
+  /v2/accounts:
+    get:
+      parameters:
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: refCurrency
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/accounts/{customer}:
+    get:
+      parameters:
+      - name: customer
+        in: path
+        required: true
+        schema:
+          pattern: "([0-9]{0,7})?"
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: refCurrency
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/accounts/{customer}/{account}:
+    get:
+      parameters:
+      - name: account
+        in: path
+        required: true
+        schema:
+          pattern: "([0-9]{3}\\.[0-9]{3}\\.[0-9]{3})?"
+          type: string
+      - name: customer
+        in: path
+        required: true
+        schema:
+          pattern: "([0-9]{0,7})?"
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: refCurrency
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/accounts/{customer}/{account}/transactions:
+    get:
+      parameters:
+      - name: account
+        in: path
+        required: true
+        schema:
+          pattern: "([0-9]{3}\\.[0-9]{3}\\.[0-9]{3})?"
+          type: string
+      - name: customer
+        in: path
+        required: true
+        schema:
+          pattern: "([0-9]{0,7})?"
+          type: string
+      - name: customId
+        in: query
+        schema:
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: iban
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: reference
+        in: query
+        schema:
+          type: string
+      - name: searchIban
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      - name: transactionNr
+        in: query
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/accounts/{customer}/{account}/transactions/{orderId}:
+    get:
+      parameters:
+      - name: account
+        in: path
+        required: true
+        schema:
+          pattern: "([0-9]{3}\\.[0-9]{3}\\.[0-9]{3})?"
+          type: string
+      - name: customer
+        in: path
+        required: true
+        schema:
+          pattern: "([0-9]{0,7})?"
+          type: string
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: customId
+        in: query
+        schema:
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: iban
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: reference
+        in: query
+        schema:
+          type: string
+      - name: searchIban
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      - name: transactionNr
+        in: query
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/authorize:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthorizeDto"
+      responses:
+        "200":
+          description: OK
+  /v2/camt052:
+    get:
+      parameters:
+      - name: accountnumber
+        in: query
+        schema:
+          type: string
+      - name: iban
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: reference
+        in: query
+        schema:
+          type: string
+      - name: searchIban
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/camt052/11:
+    get:
+      parameters:
+      - name: accountnumber
+        in: query
+        schema:
+          type: string
+      - name: iban
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: reference
+        in: query
+        schema:
+          type: string
+      - name: searchIban
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/camt053:
+    get:
+      parameters:
+      - name: accountnumber
+        in: query
+        schema:
+          type: string
+      - name: deltaDays
+        in: query
+        schema:
+          type: string
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: iban
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: reference
+        in: query
+        schema:
+          type: string
+      - name: searchIban
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/camt053/11:
+    get:
+      parameters:
+      - name: accountnumber
+        in: query
+        schema:
+          type: string
+      - name: deltaDays
+        in: query
+        schema:
+          type: string
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: iban
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: reference
+        in: query
+        schema:
+          type: string
+      - name: searchIban
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/custodyaccounts:
+    get:
+      parameters:
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/custodyaccounts/{customer}:
+    get:
+      parameters:
+      - name: customer
+        in: path
+        required: true
+        schema:
+          pattern: "((?<=/)[0-9]{0,7})?"
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/custodyaccounts/{customer}-{depot}:
+    get:
+      parameters:
+      - name: customer
+        in: path
+        required: true
+        schema:
+          pattern: "((?<=/)[0-9]{0,7})?"
+          type: string
+      - name: depot
+        in: path
+        required: true
+        schema:
+          pattern: "([0-9]{3})"
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/custodyaccounts/{customer}-{depot}/transactions:
+    get:
+      parameters:
+      - name: customer
+        in: path
+        required: true
+        schema:
+          pattern: "((?<=/)[0-9]{0,7})?"
+          type: string
+      - name: depot
+        in: path
+        required: true
+        schema:
+          pattern: "([0-9]{3})"
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/echo:
+    get:
+      responses:
+        "200":
+          description: OK
+  /v2/echo/{response_code}:
+    get:
+      parameters:
+      - name: response_code
+        in: path
+        required: true
+        schema:
+          format: int32
+          default: "200"
+          type: integer
+      responses:
+        "200":
+          description: OK
+  /v2/info:
+    get:
+      responses:
+        "200":
+          description: OK
+  /v2/pain001:
+    put:
+      requestBody:
+        content:
+          application/xml:
+            schema:
+              format: binary
+              type: string
+      responses:
+        "200":
+          description: OK
+  /v2/requestTan:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestTanDto"
+      responses:
+        "200":
+          description: OK
+    delete:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestTanDeleteDto"
+      responses:
+        "200":
+          description: OK
+  /v2/requestTan/marketorder:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestTanOrderDto"
+      responses:
+        "200":
+          description: OK
+  /v2/signTransactionWithTan:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignTransactionsWithTanDto"
+      responses:
+        "200":
+          description: OK
+  /v2/signTransactionWithTan/marketorder:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignTransactionsWithTanDto"
+      responses:
+        "200":
+          description: OK
+  /v2/signTransactionWithoutTan:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignTransactionsWithoutTanDto"
+      responses:
+        "200":
+          description: OK
+  /v2/signTransactionWithoutTan/marketorder:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignOrdersWithoutTanDto"
+      responses:
+        "200":
+          description: OK
+  /v2/trading:
+    get:
+      parameters:
+      - name: customId
+        in: query
+        schema:
+          type: string
+      - name: depot
+        in: query
+        schema:
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: isin
+        in: query
+        schema:
+          type: string
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      - name: valoren
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+    put:
+      parameters:
+      - name: test
+        in: query
+        schema:
+          default: false
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMarketordersDto"
+      responses:
+        "200":
+          description: OK
+    delete:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteMarketordersDto"
+      responses:
+        "200":
+          description: OK
+  /v2/trading/confirmMifid:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConfirmMifidDto"
+      responses:
+        "200":
+          description: OK
+  /v2/trading/instrument:
+    get:
+      parameters:
+      - name: isin
+        in: query
+        schema:
+          type: string
+      - name: suffix
+        in: query
+        schema:
+          type: string
+      - name: valoren
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/trading/search:
+    get:
+      parameters:
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: input
+        in: query
+        schema:
+          type: string
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: type
+        in: query
+        schema:
+          $ref: "#/components/schemas/InstrumentTypeGroup"
+      responses:
+        "200":
+          description: OK
+  /v2/trading/{marketorderId}:
+    get:
+      parameters:
+      - name: marketorderId
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: customId
+        in: query
+        schema:
+          type: string
+      - name: depot
+        in: query
+        schema:
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: isin
+        in: query
+        schema:
+          type: string
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      - name: valoren
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+  /v2/transactions:
+    get:
+      parameters:
+      - name: customId
+        in: query
+        schema:
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: iban
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: reference
+        in: query
+        schema:
+          type: string
+      - name: searchIban
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      - name: transactionNr
+        in: query
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+    put:
+      parameters:
+      - name: test
+        in: query
+        schema:
+          default: false
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTransactionsDto"
+      responses:
+        "200":
+          description: OK
+    delete:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteTransactionsDto"
+      responses:
+        "200":
+          description: OK
+  /v2/transactions/{orderId}:
+    get:
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      - name: customId
+        in: query
+        schema:
+          type: string
+      - name: firstPosition
+        in: query
+        schema:
+          format: int32
+          default: "0"
+          type: integer
+      - name: fromDate
+        in: query
+        schema:
+          type: string
+      - name: iban
+        in: query
+        schema:
+          type: string
+      - name: maxAmount
+        in: query
+        schema:
+          type: number
+      - name: maxResults
+        in: query
+        schema:
+          format: int32
+          default: "100"
+          type: integer
+      - name: minAmount
+        in: query
+        schema:
+          type: number
+      - name: order
+        in: query
+        schema:
+          default: asc
+          type: string
+      - name: reference
+        in: query
+        schema:
+          type: string
+      - name: searchIban
+        in: query
+        schema:
+          type: string
+      - name: searchName
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: toDate
+        in: query
+        schema:
+          type: string
+      - name: transactionNr
+        in: query
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    AccountItemDto:
+      required:
+      - account
+      - type
+      - customer
+      - currency
+      - balance
+      type: object
+      properties:
+        account:
+          type: string
+        type:
+          type: string
+        category:
+          type: string
+        cashAccountType:
+          $ref: "#/components/schemas/ExternalCashAccountType1Code"
+        iban:
+          type: string
+        customer:
+          type: string
+        currency:
+          type: string
+        balance:
+          type: number
+        available:
+          type: number
+        refCurrency:
+          type: string
+        balanceRefCurrency:
+          type: number
+    AccountsDto:
+      required:
+      - date
+      - moreResults
+      - resultSetSize
+      type: object
+      properties:
+        date:
+          type: string
+        moreResults:
+          type: boolean
+        resultSetSize:
+          format: int32
+          type: integer
+        accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/AccountItemDto"
+    AuthorizeDto:
+      required:
+      - key
+      type: object
+      properties:
+        key:
+          type: string
+        password:
+          type: string
+        validUntil:
+          type: string
+    Charge:
+      enum:
+      - BEN
+      - OUR
+      - SHA
+      type: string
+    CodeScannedDto:
+      required:
+      - language
+      - version
+      - activationCode
+      type: object
+      properties:
+        language:
+          type: string
+        version:
+          type: string
+        activationCode:
+          type: string
+    ConfirmMifidDto:
+      required:
+      - marketorderIds
+      - confirmRiskClassification
+      - confirmKnowledge
+      type: object
+      properties:
+        marketorderIds:
+          type: array
+          items:
+            format: int64
+            type: integer
+        confirmRiskClassification:
+          type: boolean
+        confirmKnowledge:
+          type: boolean
+        depot:
+          type: string
+    CreateMarketorderDepotDto:
+      required:
+      - iban
+      - depot
+      - quantity
+      type: object
+      properties:
+        iban:
+          maxLength: 34
+          type: string
+        depot:
+          maxLength: 11
+          type: string
+        quantity:
+          minimum: 0
+          pattern: "^\\d{1,16}([.]\\d{1,6})?$"
+          type: number
+    CreateMarketorderDto:
+      required:
+      - tradingType
+      - totalQuantity
+      - depot
+      type: object
+      properties:
+        customId:
+          maxLength: 50
+          type: string
+        valoren:
+          maxLength: 12
+          type: string
+        suffix:
+          maxLength: 3
+          type: string
+        isin:
+          maxLength: 12
+          type: string
+        tradingType:
+          $ref: "#/components/schemas/TradingType"
+        totalQuantity:
+          minimum: 0
+          pattern: "^\\d{1,16}([.]\\d{1,6})?$"
+          type: number
+        limit:
+          minimum: 0
+          pattern: "^\\d{1,16}([.]\\d{1,6})?$"
+          type: number
+        validUntil:
+          type: string
+        depot:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreateMarketorderDepotDto"
+    CreateMarketordersDto:
+      required:
+      - marketorders
+      type: object
+      properties:
+        marketorders:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreateMarketorderDto"
+    CreateTransactionDto:
+      required:
+      - type
+      - amount
+      - currency
+      - express
+      - debitor
+      - creditor
+      type: object
+      properties:
+        customId:
+          maxLength: 50
+          type: string
+        type:
+          $ref: "#/components/schemas/Type"
+        amount:
+          minimum: 0.01
+          pattern: "^\\d{1,12}([.]\\d{1,2})?$"
+          type: number
+        currency:
+          maxLength: 3
+          type: string
+        express:
+          type: boolean
+        valuta:
+          type: string
+        valutaIsExecutionDate:
+          type: boolean
+        reference:
+          maxLength: 140
+          type: string
+        charge:
+          $ref: "#/components/schemas/Charge"
+        correspondence:
+          type: boolean
+        orderingCustomer:
+          $ref: "#/components/schemas/OrderingCustomerDto"
+        debitor:
+          $ref: "#/components/schemas/TransactionDebitorAccountDto"
+        creditor:
+          $ref: "#/components/schemas/TransactionCreditorAccountDto"
+    CreateTransactionsDto:
+      required:
+      - transactions
+      type: object
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreateTransactionDto"
+    CustodyAccountDto:
+      required:
+      - custodyAccount
+      - customer
+      type: object
+      properties:
+        date:
+          type: string
+        moreResults:
+          type: boolean
+        resultSetSize:
+          format: int32
+          type: integer
+        custodyAccount:
+          type: string
+        type:
+          type: string
+        customer:
+          type: string
+        refAccount:
+          type: string
+        refCurrency:
+          type: string
+        refIban:
+          type: string
+        positions:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustodyAccountPositionDto"
+    CustodyAccountPositionDto:
+      required:
+      - valorNumber
+      type: object
+      properties:
+        valorNumber:
+          type: string
+        valorName:
+          type: string
+        isin:
+          type: string
+        valorCurrency:
+          type: string
+        currency:
+          type: string
+        currentPrice:
+          type: number
+        quantity:
+          type: number
+        marketValutation:
+          type: number
+        valorCategory:
+          type: string
+        type:
+          $ref: "#/components/schemas/InstrumentTypeGroup"
+        courseDate:
+          type: string
+        acqPrice:
+          type: number
+        acqPriceRefCurrency:
+          type: number
+        avePrice:
+          type: number
+        winLoss:
+          type: number
+        accrInterest:
+          type: number
+        multiplier:
+          type: number
+        maturityDate:
+          type: string
+    CustodyAccountsDto:
+      required:
+      - date
+      - moreResults
+      - resultSetSize
+      type: object
+      properties:
+        date:
+          type: string
+        moreResults:
+          type: boolean
+        resultSetSize:
+          format: int32
+          type: integer
+        accounts:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustodyAccountDto"
+    DeleteMarketordersDto:
+      required:
+      - marketorderIds
+      type: object
+      properties:
+        marketorderIds:
+          uniqueItems: true
+          type: array
+          items:
+            format: int64
+            type: integer
+    DeleteTransactionsDto:
+      required:
+      - orderIds
+      type: object
+      properties:
+        orderIds:
+          uniqueItems: true
+          type: array
+          items:
+            format: int64
+            type: integer
+    DisableAppDto:
+      required:
+      - language
+      - version
+      type: object
+      properties:
+        language:
+          type: string
+        version:
+          type: string
+    ExternalCashAccountType1Code:
+      enum:
+      - CACC
+      - CASH
+      - CHAR
+      - CISH
+      - COMM
+      - CPAC
+      - LLSV
+      - LOAN
+      - MGLD
+      - MOMA
+      - NREX
+      - ODFT
+      - ONDP
+      - OTHR
+      - SACC
+      - SLRY
+      - SVGS
+      - TAXE
+      - TRAN
+      - TRAS
+      type: string
+    FulfillTanChallengeDto:
+      required:
+      - language
+      - version
+      - tan
+      type: object
+      properties:
+        language:
+          type: string
+        version:
+          type: string
+        challengeId:
+          type: string
+        tan:
+          type: string
+    InstrumentDto:
+      required:
+      - valoren
+      type: object
+      properties:
+        valoren:
+          type: string
+        suffix:
+          type: string
+        isin:
+          type: string
+        symbol:
+          type: string
+        name:
+          type: string
+        additionalName:
+          type: string
+        currency:
+          type: string
+        domicile:
+          type: string
+        denomination:
+          type: number
+        type:
+          $ref: "#/components/schemas/InstrumentTypeGroup"
+        canTrade:
+          type: boolean
+        recentPrice:
+          $ref: "#/components/schemas/ValuationPriceDto"
+        issuingDate:
+          type: string
+        maturityDate:
+          type: string
+        capitalization:
+          type: number
+        interestRate:
+          type: number
+        nominal:
+          type: number
+        couponFrequency:
+          format: int32
+          type: integer
+    InstrumentSearchResultDto:
+      required:
+      - moreResults
+      - resultSetSize
+      type: object
+      properties:
+        moreResults:
+          type: boolean
+        resultSetSize:
+          format: int32
+          type: integer
+        instruments:
+          type: array
+          items:
+            $ref: "#/components/schemas/InstrumentDto"
+    InstrumentTypeGroup:
+      enum:
+      - STOCKS
+      - BONDS
+      - STRUCTURED_PRODUCTS
+      - FUNDS
+      - CRYPTO_CURRENCIES
+      type: string
+    LocalDate:
+      format: date
+      type: string
+      example: 2022-03-10
+    LogRecordDto:
+      type: object
+      properties:
+        sequenceNumber:
+          format: int64
+          type: integer
+        message:
+          type: string
+        millis:
+          format: int64
+          type: integer
+        threadID:
+          format: int32
+          type: integer
+    LoggingDto:
+      type: object
+      properties:
+        userId:
+          type: string
+        ip:
+          type: string
+        lastAction:
+          type: string
+        logRecords:
+          type: array
+          items:
+            $ref: "#/components/schemas/LogRecordDto"
+    Method:
+      enum:
+      - SMS_TAN
+      - PUSH_TAN
+      - SECURITY_TOKEN
+      type: string
+    OrderingCustomerDto:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          maxLength: 35
+          type: string
+        address:
+          maxLength: 70
+          type: string
+        postalcode:
+          maxLength: 11
+          type: string
+        city:
+          maxLength: 70
+          type: string
+        country:
+          maxLength: 70
+          type: string
+        province:
+          maxLength: 2
+          type: string
+        provinceName:
+          maxLength: 45
+          type: string
+    RegisterAppDto:
+      required:
+      - language
+      - version
+      - activationCode
+      - contactNumber
+      - password
+      - publicKey
+      - deviceId
+      - deviceType
+      type: object
+      properties:
+        language:
+          type: string
+        version:
+          type: string
+        activationCode:
+          type: string
+        contactNumber:
+          type: string
+        password:
+          type: string
+        publicKey:
+          type: string
+        fcmToken:
+          type: string
+        deviceId:
+          type: string
+        deviceType:
+          type: string
+        deviceName:
+          type: string
+    RejectTanChallengeDto:
+      required:
+      - language
+      - version
+      - challengeId
+      type: object
+      properties:
+        language:
+          type: string
+        version:
+          type: string
+        challengeId:
+          type: string
+    RequestTanDeleteDto:
+      required:
+      - challengeId
+      type: object
+      properties:
+        challengeId:
+          type: string
+    RequestTanDto:
+      required:
+      - method
+      type: object
+      properties:
+        orderIds:
+          uniqueItems: true
+          type: array
+          items:
+            format: int64
+            type: integer
+        customIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        method:
+          $ref: "#/components/schemas/Method"
+        securityTokenSerial:
+          type: string
+    RequestTanOrderDto:
+      required:
+      - method
+      type: object
+      properties:
+        marketorderIds:
+          uniqueItems: true
+          type: array
+          items:
+            format: int64
+            type: integer
+        customIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        method:
+          $ref: "#/components/schemas/Method"
+        securityTokenSerial:
+          type: string
+    RetrieveTanChallengeDto:
+      required:
+      - language
+      - version
+      type: object
+      properties:
+        language:
+          type: string
+        version:
+          type: string
+        challengeId:
+          type: string
+    SignOrdersWithoutTanDto:
+      type: object
+      properties:
+        marketorderIds:
+          uniqueItems: true
+          type: array
+          items:
+            format: int64
+            type: integer
+        customIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        orderIds:
+          uniqueItems: true
+          type: array
+          items:
+            format: int64
+            type: integer
+    SignTransactionsWithTanDto:
+      required:
+      - challengeId
+      - tan
+      type: object
+      properties:
+        challengeId:
+          type: string
+        tan:
+          type: string
+    SignTransactionsWithoutTanDto:
+      type: object
+      properties:
+        orderIds:
+          uniqueItems: true
+          type: array
+          items:
+            format: int64
+            type: integer
+        customIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+    State:
+      enum:
+      - PREPARED
+      - IN_PROGRESS
+      - DELETED
+      - EXPIRED
+      - EXECUTED
+      - REJECTED
+      - ERROR
+      - DELETION_REQUESTED
+      - BOOKED
+      type: string
+    TradingType:
+      enum:
+      - BUY
+      - SELL
+      type: string
+    TransactionCreditorAccountDto:
+      required:
+      - name
+      type: object
+      properties:
+        accountNumber:
+          maxLength: 30
+          type: string
+        name:
+          maxLength: 35
+          type: string
+        address:
+          maxLength: 70
+          type: string
+        postalcode:
+          maxLength: 11
+          type: string
+        city:
+          maxLength: 70
+          type: string
+        country:
+          maxLength: 70
+          type: string
+        iban:
+          maxLength: 34
+          type: string
+        bic:
+          maxLength: 11
+          type: string
+        aba:
+          maxLength: 11
+          type: string
+        creditInstitution:
+          maxLength: 50
+          type: string
+        esr:
+          maxLength: 27
+          type: string
+        qrReference:
+          maxLength: 27
+          type: string
+    TransactionDebitorAccountDto:
+      required:
+      - iban
+      type: object
+      properties:
+        iban:
+          maxLength: 34
+          type: string
+    Type:
+      enum:
+      - INTERNAL
+      - BANK_INTERNAL
+      - SEPA
+      - FOREIGN
+      - RED
+      - ORANGE
+      - QR_BILL
+      type: string
+    UpdateAppStatusDto:
+      required:
+      - language
+      - version
+      type: object
+      properties:
+        language:
+          type: string
+        version:
+          type: string
+        fcmToken:
+          type: string
+        publicKey:
+          type: string
+        deviceId:
+          type: string
+        deviceType:
+          type: string
+        deviceName:
+          type: string
+    ValuationPriceDto:
+      type: object
+      properties:
+        dateTime:
+          type: string
+        price:
+          type: number
+        currency:
+          type: string
+        percentPrice:
+          type: boolean
