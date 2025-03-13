@@ -98,7 +98,9 @@ A approval of a transaction.
 
 ```json          
 {
-  "key" : "YourAPIkeyFromOnlineBanking"
+  "key" : "YourAPIkeyFromOnlineBanking",
+  "password" : "YourPasswordFromOnlineBanking",
+  "validUntil" : "2025-04-01"
 }
 ```
 
@@ -109,6 +111,8 @@ The authorization message request body.
 | name | data type | constraints | description |
 | ---- | --------- | ----------- | ----------- |
 | key |	string |	required |	The previously generated API-Key (Personal Access Token) |
+| password |	string |	optional |	The user contact password |
+| validUntil |	string |	optional |	The date until the generated JWT token is valid. |
 
 ## AuthorizeResponse
 
