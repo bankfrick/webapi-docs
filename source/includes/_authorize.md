@@ -18,7 +18,8 @@ algorithm: ...
                 
 {
   "key" : "1234567890abcdefgHIJKLMN",
-  "password" : "secret"
+  "password" : "secret",
+  "validUntil" : "2025-04-01"
 }
 ```
 
@@ -32,7 +33,8 @@ algorithm: ...
                 
 {
   "key" : "1234567890abcdefgHIJKLMN",
-  "password" : "secret"
+  "password" : "secret",
+  "validUntil" : "2025-04-01"
 }
 ```
 
