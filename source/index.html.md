@@ -20,6 +20,7 @@ includes:
   - signtxwithouttan
   - trading
   - transactions
+  - vban
   - camt052
   - camt053
   - pain001
