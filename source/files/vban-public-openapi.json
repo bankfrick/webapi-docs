@@ -84,6 +84,15 @@
           }
         }
       },
+      "DeactivateVirtualIbanDto" : {
+        "type" : "object",
+        "required" : [ "vban" ],
+        "properties" : {
+          "vban" : {
+            "type" : "string"
+          }
+        }
+      },
       "ErrorResponseDto" : {
         "type" : "object",
         "required" : [ "reason" ],
@@ -110,18 +119,6 @@
           },
           "hasMore" : {
             "type" : "boolean"
-          }
-        }
-      },
-      "ReferenceAccountDto" : {
-        "type" : "object",
-        "required" : [ "vban", "iban" ],
-        "properties" : {
-          "vban" : {
-            "type" : "string"
-          },
-          "iban" : {
-            "type" : "string"
           }
         }
       },
@@ -198,7 +195,7 @@
       },
       "VirtualIbanStateDto" : {
         "type" : "string",
-        "enum" : [ "PREPARED", "ACTIVE" ]
+        "enum" : [ "PREPARED", "ACTIVE", "DEACTIVATED" ]
       },
       "VirtualIbansDto" : {
         "type" : "object",
@@ -223,17 +220,21 @@
         "summary" : "Get virtual IBANs",
         "parameters" : [ {
           "description" : "Filter by list of reference accounts",
-          "example" : "LI4408811MAINACCOUNT1",
+          "example" : [ "LI4408811MAINACCOUNT1" ],
           "name" : "account",
-          "in" : "header",
+          "in" : "query",
           "schema" : {
-            "type" : [ "string", "null" ]
+            "type" : [ "array", "null" ],
+            "uniqueItems" : true,
+            "items" : {
+              "type" : "string"
+            }
           }
         }, {
           "description" : "Page index, default 0",
           "example" : 2,
           "name" : "pageIndex",
-          "in" : "header",
+          "in" : "query",
           "schema" : {
             "type" : [ "string", "null" ]
           }
@@ -241,7 +242,7 @@
           "description" : "Page size, default 100",
           "example" : 10,
           "name" : "pageSize",
-          "in" : "header",
+          "in" : "query",
           "schema" : {
             "type" : [ "string", "null" ]
           }
@@ -306,20 +307,20 @@
         "summary" : "Create virtual IBAN",
         "parameters" : [ {
           "description" : "Algorithm used for signing the request. Supported algorithms: rsa-sha512",
+          "required" : true,
           "name" : "algorithm",
           "in" : "header",
           "schema" : {
-            "type" : "string"
-          },
-          "required" : true
+            "type" : [ "string", "null" ]
+          }
         }, {
           "description" : "Cryptographic fingerprint of request body. Provide used algorithm in <algorithm> header.",
+          "required" : true,
           "name" : "signature",
           "in" : "header",
           "schema" : {
-            "type" : "string"
-          },
-          "required" : true
+            "type" : [ "string", "null" ]
+          }
         } ],
         "requestBody" : {
           "content" : {
@@ -388,31 +389,118 @@
         "tags" : [ "Virtual Ibans Controller" ]
       }
     },
-    "/virtual-ibans/approvals/activation" : {
+    "/virtual-ibans/activations/approvals" : {
       "put" : {
         "summary" : "Approve prepared virtual IBAN",
         "parameters" : [ {
           "description" : "Algorithm used for signing the request. Supported algorithms: rsa-sha512",
+          "required" : true,
           "name" : "algorithm",
           "in" : "header",
           "schema" : {
-            "type" : "string"
-          },
-          "required" : true
+            "type" : [ "string", "null" ]
+          }
         }, {
           "description" : "Cryptographic fingerprint of request body. Provide used algorithm in <algorithm> header.",
+          "required" : true,
           "name" : "signature",
           "in" : "header",
           "schema" : {
-            "type" : "string"
-          },
-          "required" : true
+            "type" : [ "string", "null" ]
+          }
         } ],
         "requestBody" : {
           "content" : {
             "application/json" : {
               "schema" : {
                 "$ref" : "#/components/schemas/ApproveVirtualIbanActivationDto"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "headers" : {
+              "signature" : {
+                "description" : "Cryptographic fingerprint of response body. For calculation method, see <algorithm> header.",
+                "schema" : {
+                  "type" : "string"
+                },
+                "required" : true
+              },
+              "algorithm" : {
+                "description" : "Algorithm used for signing the response. Default: rsa-sha512",
+                "schema" : {
+                  "type" : "string"
+                },
+                "required" : true
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/VirtualIbanDto"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "BAD REQUEST",
+            "headers" : {
+              "signature" : {
+                "description" : "Cryptographic fingerprint of response body. For calculation method, see <algorithm> header.",
+                "schema" : {
+                  "type" : "string"
+                },
+                "required" : true
+              },
+              "algorithm" : {
+                "description" : "Algorithm used for signing the response. Default: rsa-sha512",
+                "schema" : {
+                  "type" : "string"
+                },
+                "required" : true
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags" : [ "Virtual Ibans Controller" ]
+      }
+    },
+    "/virtual-ibans/deactivations" : {
+      "put" : {
+        "summary" : "Deactivate virtual IBAN",
+        "parameters" : [ {
+          "description" : "Algorithm used for signing the request. Supported algorithms: rsa-sha512",
+          "required" : true,
+          "name" : "algorithm",
+          "in" : "header",
+          "schema" : {
+            "type" : [ "string", "null" ]
+          }
+        }, {
+          "description" : "Cryptographic fingerprint of request body. Provide used algorithm in <algorithm> header.",
+          "required" : true,
+          "name" : "signature",
+          "in" : "header",
+          "schema" : {
+            "type" : [ "string", "null" ]
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DeactivateVirtualIbanDto"
               }
             }
           },
@@ -509,100 +597,6 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/VirtualIbanDto"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "BAD REQUEST",
-            "headers" : {
-              "signature" : {
-                "description" : "Cryptographic fingerprint of response body. For calculation method, see <algorithm> header.",
-                "schema" : {
-                  "type" : "string"
-                },
-                "required" : true
-              },
-              "algorithm" : {
-                "description" : "Algorithm used for signing the response. Default: rsa-sha512",
-                "schema" : {
-                  "type" : "string"
-                },
-                "required" : true
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponseDto"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "NOT FOUND",
-            "headers" : {
-              "signature" : {
-                "description" : "Cryptographic fingerprint of response body. For calculation method, see <algorithm> header.",
-                "schema" : {
-                  "type" : "string"
-                },
-                "required" : true
-              },
-              "algorithm" : {
-                "description" : "Algorithm used for signing the response. Default: rsa-sha512",
-                "schema" : {
-                  "type" : "string"
-                },
-                "required" : true
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorResponseDto"
-                }
-              }
-            }
-          }
-        },
-        "tags" : [ "Virtual Ibans Controller" ]
-      }
-    },
-    "/virtual-ibans/{vban}/reference-account" : {
-      "get" : {
-        "summary" : "Get reference account",
-        "parameters" : [ {
-          "name" : "vban",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "headers" : {
-              "signature" : {
-                "description" : "Cryptographic fingerprint of response body. For calculation method, see <algorithm> header.",
-                "schema" : {
-                  "type" : "string"
-                },
-                "required" : true
-              },
-              "algorithm" : {
-                "description" : "Algorithm used for signing the response. Default: rsa-sha512",
-                "schema" : {
-                  "type" : "string"
-                },
-                "required" : true
-              }
-            },
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ReferenceAccountDto"
                 }
               }
             }
