@@ -1,0 +1,636 @@
+---
+openapi: 3.1.0
+components:
+  schemas:
+    ApprovalDto:
+      type: object
+      properties:
+        contactNumber:
+          type: integer
+          format: int64
+        signatureType:
+          $ref: "#/components/schemas/SignatureTypeDto"
+        signatureGroup:
+          type: integer
+          format: int32
+        creationDetails:
+          $ref: "#/components/schemas/CreationDetailsDto"
+      required:
+      - signatureType
+      - creationDetails
+    ApproveVirtualIbanActivationDto:
+      type: object
+      required:
+      - vban
+      properties:
+        vban:
+          type: string
+    ApproveVirtualIbanDeactivationDto:
+      type: object
+      required:
+      - vban
+      properties:
+        vban:
+          type: string
+    CreateVirtualIbanAddressDto:
+      type: object
+      properties:
+        street:
+          type:
+          - string
+          - "null"
+        number:
+          type:
+          - string
+          - "null"
+        city:
+          type:
+          - string
+          - "null"
+        postalCode:
+          type:
+          - string
+          - "null"
+        country:
+          type:
+          - string
+          - "null"
+    CreateVirtualIbanDto:
+      type: object
+      properties:
+        referenceAccountIban:
+          type:
+          - string
+          - "null"
+        name:
+          type:
+          - string
+          - "null"
+        description:
+          type:
+          - string
+          - "null"
+        address:
+          anyOf:
+          - $ref: "#/components/schemas/CreateVirtualIbanAddressDto"
+          - type: "null"
+    CreationDetailsDto:
+      type: object
+      required:
+      - createdBy
+      - createdAt
+      properties:
+        createdBy:
+          type: string
+        createdAt:
+          $ref: "#/components/schemas/UtcTimestampDto"
+    DeactivateVirtualIbanDto:
+      type: object
+      required:
+      - vban
+      properties:
+        vban:
+          type: string
+    ErrorResponseDto:
+      type: object
+      required:
+      - reason
+      properties:
+        reason:
+          type: string
+        status:
+          type: integer
+          format: int32
+    PaginationDto:
+      type: object
+      properties:
+        totalCount:
+          type: integer
+          format: int64
+        pageIndex:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        hasMore:
+          type: boolean
+    SignatureTypeDto:
+      type: string
+      enum:
+      - INDIVIDUAL
+      - COLLECTIVE_TWO
+      - COLLECTIVE_THREE
+      - COLLECTIVE_FOUR
+    UtcTimestampDto:
+      type: string
+      description: Timestamp in ISO 8601 format
+      format: date-time
+      example: 2021-10-24T13:24:13.541Z
+    VirtualIbanAddressDto:
+      type: object
+      required:
+      - street
+      - number
+      - city
+      - postalCode
+      - country
+      properties:
+        street:
+          type: string
+        number:
+          type: string
+        city:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+    VirtualIbanDto:
+      type: object
+      required:
+      - createdAt
+      - createdBy
+      - vban
+      - referenceAccountIban
+      - state
+      - activationApprovals
+      - deactivationApprovals
+      properties:
+        createdAt:
+          $ref: "#/components/schemas/UtcTimestampDto"
+        createdBy:
+          type: string
+        vban:
+          type: string
+        referenceAccountIban:
+          type: string
+        name:
+          type:
+          - string
+          - "null"
+        description:
+          type:
+          - string
+          - "null"
+        address:
+          anyOf:
+          - $ref: "#/components/schemas/VirtualIbanAddressDto"
+          - type: "null"
+        state:
+          $ref: "#/components/schemas/VirtualIbanStateDto"
+        activationApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
+        deactivationApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
+    VirtualIbanStateDto:
+      type: string
+      enum:
+      - PREPARED
+      - ACTIVE
+      - DEACTIVATION_REQUESTED
+      - DEACTIVATED
+    VirtualIbansDto:
+      type: object
+      required:
+      - virtualIbans
+      - pagination
+      properties:
+        virtualIbans:
+          type: array
+          items:
+            $ref: "#/components/schemas/VirtualIbanDto"
+        pagination:
+          $ref: "#/components/schemas/PaginationDto"
+paths:
+  /virtual-ibans:
+    get:
+      summary: Get virtual IBANs
+      parameters:
+      - description: Filter by list of reference accounts
+        example:
+        - LI4408811MAINACCOUNT1
+        name: account
+        in: query
+        schema:
+          type:
+          - array
+          - "null"
+          uniqueItems: true
+          items:
+            type: string
+      - description: "Page index, default 0"
+        example: "2"
+        name: pageIndex
+        in: query
+        schema:
+          type:
+          - string
+          - "null"
+      - description: "Page size, default 100"
+        example: "10"
+        name: pageSize
+        in: query
+        schema:
+          type:
+          - string
+          - "null"
+      - description: Filter by list of Virtual IBAN states
+        example:
+        - ACTIVE
+        schema:
+          type:
+          - array
+          - "null"
+          uniqueItems: true
+          items:
+            type: string
+            enum:
+            - PREPARED
+            - ACTIVE
+            - DEACTIVATION_REQUESTED
+            - DEACTIVATED
+        name: state
+        in: query
+      responses:
+        "200":
+          description: OK
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VirtualIbansDto"
+        "400":
+          description: BAD REQUEST
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      tags:
+      - Virtual Ibans Controller
+    post:
+      summary: Create virtual IBAN
+      parameters:
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512"
+        required: true
+        name: algorithm
+        in: header
+        schema:
+          type:
+          - string
+          - "null"
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        required: true
+        name: signature
+        in: header
+        schema:
+          type:
+          - string
+          - "null"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateVirtualIbanDto"
+        required: true
+      responses:
+        "201":
+          description: CREATED
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VirtualIbanDto"
+        "400":
+          description: BAD REQUEST
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      tags:
+      - Virtual Ibans Controller
+  /virtual-ibans/activations/approvals:
+    put:
+      summary: Approve prepared virtual IBAN
+      parameters:
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512"
+        required: true
+        name: algorithm
+        in: header
+        schema:
+          type:
+          - string
+          - "null"
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        required: true
+        name: signature
+        in: header
+        schema:
+          type:
+          - string
+          - "null"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApproveVirtualIbanActivationDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VirtualIbanDto"
+        "400":
+          description: BAD REQUEST
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      tags:
+      - Virtual Ibans Controller
+  /virtual-ibans/deactivations:
+    put:
+      summary: Deactivate virtual IBAN
+      parameters:
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512"
+        required: true
+        name: algorithm
+        in: header
+        schema:
+          type:
+          - string
+          - "null"
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        required: true
+        name: signature
+        in: header
+        schema:
+          type:
+          - string
+          - "null"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeactivateVirtualIbanDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VirtualIbanDto"
+        "400":
+          description: BAD REQUEST
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      tags:
+      - Virtual Ibans Controller
+  /virtual-ibans/deactivations/approvals:
+    put:
+      summary: Approve deactivation of virtual IBAN
+      parameters:
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512"
+        required: true
+        name: algorithm
+        in: header
+        schema:
+          type:
+          - string
+          - "null"
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        required: true
+        name: signature
+        in: header
+        schema:
+          type:
+          - string
+          - "null"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApproveVirtualIbanDeactivationDto"
+        required: true
+      responses:
+        "200":
+          description: OK
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VirtualIbanDto"
+        "400":
+          description: BAD REQUEST
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      tags:
+      - Virtual Ibans Controller
+  /virtual-ibans/{vban}:
+    get:
+      summary: Read virtual IBAN
+      parameters:
+      - name: vban
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VirtualIbanDto"
+        "400":
+          description: BAD REQUEST
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+        "404":
+          description: NOT FOUND
+          headers:
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              schema:
+                type: string
+              required: true
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              schema:
+                type: string
+              required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+      tags:
+      - Virtual Ibans Controller
+info:
+  title: Bank Frick VBAN API
+  version: 0.1.0
+servers:
+- url: https://api.bankfrick.li/vban
+- url: https://api-test.bankfrick.li/vban
