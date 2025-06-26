@@ -986,9 +986,7 @@ The status of MIFID confirmation
   "country" : "Russia"
 }
 ```
-
 Detail information about an ordering customer. Only relevant for correspondence payments.
-
 
 **Properties**
 
@@ -999,6 +997,37 @@ Detail information about an ordering customer. Only relevant for correspondence 
 | postalcode | string | required, max size: 11, min size: 0 | Postalcode of the ordering customer address |
 | city | string | required, max size: 70, min size: 0 | City of the ordering customer address |
 | country | string | 	required, max size: 70, min size: 0 | Country of the ordering customer |
+
+## PurposeOfPayment
+
+> Example
+
+```json          
+{
+  "purposeofpayment" : "Investment related"
+}
+```
+The purposeOfPayment field is required if the transfer currency is USD. The value must be from a predefined list of permitted purposes. Free text is not allowed.
+
+**Purpose of payments**
+
+| Name of the purpose | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| Purchase of Goods |	string | required if currency = USD, predefined values only | Purchase of all kinds of physical goods or merchandise.	|
+| Purchase of Services | string | required if currency = USD, predefined values only | Payment for all types of services rendered by third parties. |
+| Professional fees | string | required if currency = USD, predefined values only | Payment of fees for any kind of professional services. |
+| Payroll or Personnel | string | required if currency = USD, predefined values only | Salary or compensation payments for employees or personnel. |
+| Payment loan or deposit | string | required if currency = USD, predefined values only | Any loan repayments or deposit-related transactions. |
+| Bill payment | string | required if currency = USD, predefined values only | Payment of various types of bills or invoices. |
+| Research or Development | string | required if currency = USD, predefined values only | Funding for any kind of research or development activity. |
+| Business venture | string | required if currency = USD, predefined values only | Payments related to any form of business activity or venture. |
+| Intercompany payment | string | required if currency = USD, predefined values only | Transfers of funds between related corporate entities. |
+| Charitable donation | string | required if currency = USD, predefined values only | Donations to charitable or non-profit organizations. |
+| Purchase real estate | string | required if currency = USD, predefined values only | Payment for purchasing any type of real estate or property. |
+| Estate settlement | string | required if currency = USD, predefined values only | Payments related to inheritance or settlement of estates. |
+| Government related | string | required if currency = USD, predefined values only | Payments involving any government-related purposes or institutions. |
+| Investment related | string | required if currency = USD, predefined values only | Transactions related to financial investments of any kind. |
+| Liquidity Management | string | required if currency = USD, predefined values only | Fund transfers for managing liquidity or internal treasury operations. |
 
 ## RequestTan
 
