@@ -1004,30 +1004,30 @@ Detail information about an ordering customer. Only relevant for correspondence 
 
 ```json          
 {
-  "purposeofpayment" : "Investment related"
+  "purposeofpayment" : "POGD"
 }
 ```
-The purposeOfPayment field is required if the transfer currency is USD. The value must be from a predefined list of permitted purposes. Free text is not allowed.
+The purposeOfPayment field is required if the transfer currency is USD. The value must be selected from a predefined list of permitted purpose codes. Free text is not allowed – only the corresponding short code (e.g. POGD for Purchase of Goods) must be used.
 
 **Purpose of payments**
 
-| Name of the purpose | data type | constraints | description |
-| ---- | --------- | ----------- | ----------- |
-| Purchase of Goods |	string | required if currency = USD, predefined values only | Purchase of all kinds of physical goods or merchandise.	|
-| Purchase of Services | string | required if currency = USD, predefined values only | Payment for all types of services rendered by third parties. |
-| Professional fees | string | required if currency = USD, predefined values only | Payment of fees for any kind of professional services. |
-| Payroll or Personnel | string | required if currency = USD, predefined values only | Salary or compensation payments for employees or personnel. |
-| Payment loan or deposit | string | required if currency = USD, predefined values only | Any loan repayments or deposit-related transactions. |
-| Bill payment | string | required if currency = USD, predefined values only | Payment of various types of bills or invoices. |
-| Research or Development | string | required if currency = USD, predefined values only | Funding for any kind of research or development activity. |
-| Business venture | string | required if currency = USD, predefined values only | Payments related to any form of business activity or venture. |
-| Intercompany payment | string | required if currency = USD, predefined values only | Transfers of funds between related corporate entities. |
-| Charitable donation | string | required if currency = USD, predefined values only | Donations to charitable or non-profit organizations. |
-| Purchase real estate | string | required if currency = USD, predefined values only | Payment for purchasing any type of real estate or property. |
-| Estate settlement | string | required if currency = USD, predefined values only | Payments related to inheritance or settlement of estates. |
-| Government related | string | required if currency = USD, predefined values only | Payments involving any government-related purposes or institutions. |
-| Investment related | string | required if currency = USD, predefined values only | Transactions related to financial investments of any kind. |
-| Liquidity Management | string | required if currency = USD, predefined values only | Fund transfers for managing liquidity or internal treasury operations. |
+| Code | Name of the purpose | data type | constraints | description |
+| ---- | ------------------- | --------- | ----------- | ----------- |
+| POGD | Purchase of Goods |	string | required if currency = USD, predefined values only | Purchase of all kinds of physical goods or merchandise.	|
+| POSV | Purchase of Services | string | required if currency = USD, predefined values only | Payment for all types of services rendered by third parties. |
+| PFEE | Professional fees | string | required if currency = USD, predefined values only | Payment of fees for any kind of professional services. |
+| PERS | Payroll or Personnel | string | required if currency = USD, predefined values only | Salary or compensation payments for employees or personnel. |
+| LODP | Payment loan or deposit | string | required if currency = USD, predefined values only | Any loan repayments or deposit-related transactions. |
+| BILL | Bill payment | string | required if currency = USD, predefined values only | Payment of various types of bills or invoices. |
+| RNDV | Research or Development | string | required if currency = USD, predefined values only | Funding for any kind of research or development activity. |
+| BVEN | Business venture | string | required if currency = USD, predefined values only | Payments related to any form of business activity or venture. |
+| ICPY | Intercompany payment | string | required if currency = USD, predefined values only | Transfers of funds between related corporate entities. |
+| CHDN | Charitable donation | string | required if currency = USD, predefined values only | Donations to charitable or non-profit organizations. |
+| PROP | Purchase real estate | string | required if currency = USD, predefined values only | Payment for purchasing any type of real estate or property. |
+| ESTH | Estate settlement | string | required if currency = USD, predefined values only | Payments related to inheritance or settlement of estates. |
+| GOVP | Government related | string | required if currency = USD, predefined values only | Payments involving any government-related purposes or institutions. |
+| INVP | Investment related | string | required if currency = USD, predefined values only | Transactions related to financial investments of any kind. |
+| LIQM | Liquidity Management | string | required if currency = USD, predefined values only | Fund transfers for managing liquidity or internal treasury operations. |
 
 ## RequestTan
 
