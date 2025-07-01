@@ -1004,7 +1004,7 @@ Detail information about an ordering customer. Only relevant for correspondence 
 
 ```json          
 {
-  "purposeofpayment" : "POGD"
+  "purposeOfPayment" : "POGD"
 }
 ```
 The purposeOfPayment field is required if the transfer currency is USD. The value must be selected from a predefined list of permitted purpose codes. Free text is not allowed – only the corresponding short code (e.g. POGD for Purchase of Goods) must be used.
