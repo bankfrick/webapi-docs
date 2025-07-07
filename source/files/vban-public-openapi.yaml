@@ -126,7 +126,8 @@ components:
       type: string
       description: Timestamp in ISO 8601 format
       format: date-time
-      example: 2021-10-24T13:24:13.541Z
+      examples:
+      - 2021-10-24T13:24:13.541Z
     VirtualIbanAddressDto:
       type: object
       required:
