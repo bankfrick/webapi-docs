@@ -1,4 +1,4 @@
-# Virtual IBAN `beta`
+# Virtual IBAN
 
 This API allows for creation, managing, and deactivation of associations between virtual IBANs (vIBANs) and reference
 accounts (IBANs). This also includes the approval procedure for the activation and deactivation of vIBANs.
