@@ -1015,21 +1015,21 @@ The purposeOfPayment field is currently optional when the transfer currency is U
 
 | Code | Name of the purpose | data type | constraints | description |
 | ---- | ------------------- | --------- | ----------- | ----------- |
-| POGD | Purchase of Goods |	string | required if currency = USD, predefined values only | Purchase of all kinds of physical goods or merchandise.	|
-| POSV | Purchase of Services | string | required if currency = USD, predefined values only | Payment for all types of services rendered by third parties. |
-| PFEE | Professional fees | string | required if currency = USD, predefined values only | Payment of fees for any kind of professional services. |
-| PERS | Payroll or Personnel | string | required if currency = USD, predefined values only | Salary or compensation payments for employees or personnel. |
-| LODP | Payment loan or deposit | string | required if currency = USD, predefined values only | Any loan repayments or deposit-related transactions. |
-| BILL | Bill payment | string | required if currency = USD, predefined values only | Payment of various types of bills or invoices. |
-| RNDV | Research or Development | string | required if currency = USD, predefined values only | Funding for any kind of research or development activity. |
-| BVEN | Business venture | string | required if currency = USD, predefined values only | Payments related to any form of business activity or venture. |
-| ICPY | Intercompany payment | string | required if currency = USD, predefined values only | Transfers of funds between related corporate entities. |
-| CHDN | Charitable donation | string | required if currency = USD, predefined values only | Donations to charitable or non-profit organizations. |
-| PROP | Purchase real estate | string | required if currency = USD, predefined values only | Payment for purchasing any type of real estate or property. |
-| ESTH | Estate settlement | string | required if currency = USD, predefined values only | Payments related to inheritance or settlement of estates. |
-| GOVP | Government related | string | required if currency = USD, predefined values only | Payments involving any government-related purposes or institutions. |
-| INVP | Investment related | string | required if currency = USD, predefined values only | Transactions related to financial investments of any kind. |
-| LIQM | Liquidity Management | string | required if currency = USD, predefined values only | Fund transfers for managing liquidity or internal treasury operations. |
+| POGD | Purchase of Goods |	string | Optional (required if currency = USD in future); predefined values only | Purchase of all kinds of physical goods or merchandise.	|
+| POSV | Purchase of Services | string | Optional (required if currency = USD in future); predefined values only | Payment for all types of services rendered by third parties. |
+| PFEE | Professional fees | string | Optional (required if currency = USD in future); predefined values only | Payment of fees for any kind of professional services. |
+| PERS | Payroll or Personnel | string | Optional (required if currency = USD in future); predefined values only | Salary or compensation payments for employees or personnel. |
+| LODP | Payment loan or deposit | string | Optional (required if currency = USD in future); predefined values only | Any loan repayments or deposit-related transactions. |
+| BILL | Bill payment | string | Optional (required if currency = USD in future); predefined values only | Payment of various types of bills or invoices. |
+| RNDV | Research or Development | string | Optional (required if currency = USD in future); predefined values only | Funding for any kind of research or development activity. |
+| BVEN | Business venture | string | Optional (required if currency = USD in future); predefined values only | Payments related to any form of business activity or venture. |
+| ICPY | Intercompany payment | string | Optional (required if currency = USD in future); predefined values only | Transfers of funds between related corporate entities. |
+| CHDN | Charitable donation | string | Optional (required if currency = USD in future); predefined values only | Donations to charitable or non-profit organizations. |
+| PROP | Purchase real estate | string | Optional (required if currency = USD in future); predefined values only | Payment for purchasing any type of real estate or property. |
+| ESTH | Estate settlement | string | Optional (required if currency = USD in future); predefined values only | Payments related to inheritance or settlement of estates. |
+| GOVP | Government related | string | Optional (required if currency = USD in future); predefined values only | Payments involving any government-related purposes or institutions. |
+| INVP | Investment related | string | Optional (required if currency = USD in future); predefined values only | Transactions related to financial investments of any kind. |
+| LIQM | Liquidity Management | string | Optional (required if currency = USD in future); predefined values only | Fund transfers for managing liquidity or internal treasury operations. |
 
 ## RequestTan
 
