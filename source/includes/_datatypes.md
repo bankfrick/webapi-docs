@@ -235,6 +235,7 @@ The create marketorder request body.
     "valuta" : "2019-04-28",
     "valutaIsExecutionDate" : true,
     "reference" : "some individual text",
+    "purposeOfPayment" : "POGD",
     "charge" : "SHA",
     "debitor" : {
       "iban" : "LI6808811000000001234"
@@ -250,6 +251,7 @@ The create marketorder request body.
     "currency" : "EUR",
     "express" : true,
     "reference" : "some individual text",
+    "purposeOfPayment" : "POGD",
     "charge" : "SHA",
     "debitor" : {
       "iban" : "LI6808811000000001234"
