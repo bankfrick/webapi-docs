@@ -1007,7 +1007,7 @@ Detail information about an ordering customer. Only relevant for correspondence 
   "purposeOfPayment" : "POGD"
 }
 ```
-The purposeOfPayment field is required if the transfer currency is USD. The value must be selected from a predefined list of permitted purpose codes. Free text is not allowed – only the corresponding short code (e.g. POGD for Purchase of Goods) must be used.
+The purposeOfPayment field is currently optional when the transfer currency is USD. However, it will become mandatory in a future release. The value must be selected from a predefined list of permitted purpose codes. Free text is not allowed – only the corresponding short code (e.g. POGD for Purchase of Goods) must be used.
 
 **Purpose of payments**
 
@@ -1197,6 +1197,7 @@ The trading types.
     "valuta" : "2019-04-28",
     "valutaIsExecutionDate" : true,
     "reference" : "some individual text",
+    "purposeOfPayment" : "POGD",
     "charge" : "SHA",
     "debitor" : {
       "iban" : "LI6808811000000001234"
@@ -1224,6 +1225,7 @@ A single transaction instance to be created.
 | valutaIsExecutionDate | boolean | | Indicates if the valuta date is the requested execution date (true) or desired value date (false). If not set it will be the requested execution date (default) |
 | reference |	string |	max size: 140, min size: 0 |	The reference text or individual note |
 | charge |	[Charge](#data-types-charge)	| required when type FOREIGN | 	The charging type |
+| purposeOfPayment | string | optional when currency is USD (currently). Will become mandatory in a future release. Must be selected from a predefined list of codes (e.g. POGD for Purchase of Goods). | The purpose or reason for the transaction. |
 | correspondence | boolean | | Must be set to true in case of correspondence payment |
 | orderingCustomer | [OrderingCustomer](#data-types-orderingcustomer) | | In case of correspondence payment information about the ordering customer must be given |
 | debitor |	[TransactionDebitorAccount](#data-types-transactiondebitoraccount) |	required |	The client information about the transaction |
