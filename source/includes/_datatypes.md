@@ -986,9 +986,7 @@ The status of MIFID confirmation
   "country" : "Russia"
 }
 ```
-
 Detail information about an ordering customer. Only relevant for correspondence payments.
-
 
 **Properties**
 
@@ -999,6 +997,37 @@ Detail information about an ordering customer. Only relevant for correspondence 
 | postalcode | string | required, max size: 11, min size: 0 | Postalcode of the ordering customer address |
 | city | string | required, max size: 70, min size: 0 | City of the ordering customer address |
 | country | string | 	required, max size: 70, min size: 0 | Country of the ordering customer |
+
+## PurposeOfPayment
+
+> Example
+
+```json          
+{
+  "purposeOfPayment" : "POGD"
+}
+```
+The purposeOfPayment field is currently optional when the transfer currency is USD. However, it will become mandatory in a future release. The value must be selected from a predefined list of permitted purpose codes. Free text is not allowed – only the corresponding short code (e.g. POGD for Purchase of Goods) must be used.
+
+**Purpose of payments**
+
+| Code | Name of the purpose | data type | constraints | description |
+| ---- | ------------------- | --------- | ----------- | ----------- |
+| POGD | Purchase of Goods |	string | required if currency = USD, predefined values only | Purchase of all kinds of physical goods or merchandise.	|
+| POSV | Purchase of Services | string | required if currency = USD, predefined values only | Payment for all types of services rendered by third parties. |
+| PFEE | Professional fees | string | required if currency = USD, predefined values only | Payment of fees for any kind of professional services. |
+| PERS | Payroll or Personnel | string | required if currency = USD, predefined values only | Salary or compensation payments for employees or personnel. |
+| LODP | Payment loan or deposit | string | required if currency = USD, predefined values only | Any loan repayments or deposit-related transactions. |
+| BILL | Bill payment | string | required if currency = USD, predefined values only | Payment of various types of bills or invoices. |
+| RNDV | Research or Development | string | required if currency = USD, predefined values only | Funding for any kind of research or development activity. |
+| BVEN | Business venture | string | required if currency = USD, predefined values only | Payments related to any form of business activity or venture. |
+| ICPY | Intercompany payment | string | required if currency = USD, predefined values only | Transfers of funds between related corporate entities. |
+| CHDN | Charitable donation | string | required if currency = USD, predefined values only | Donations to charitable or non-profit organizations. |
+| PROP | Purchase real estate | string | required if currency = USD, predefined values only | Payment for purchasing any type of real estate or property. |
+| ESTH | Estate settlement | string | required if currency = USD, predefined values only | Payments related to inheritance or settlement of estates. |
+| GOVP | Government related | string | required if currency = USD, predefined values only | Payments involving any government-related purposes or institutions. |
+| INVP | Investment related | string | required if currency = USD, predefined values only | Transactions related to financial investments of any kind. |
+| LIQM | Liquidity Management | string | required if currency = USD, predefined values only | Fund transfers for managing liquidity or internal treasury operations. |
 
 ## RequestTan
 
@@ -1168,6 +1197,7 @@ The trading types.
     "valuta" : "2019-04-28",
     "valutaIsExecutionDate" : true,
     "reference" : "some individual text",
+    "purposeOfPayment" : "POGD",
     "charge" : "SHA",
     "debitor" : {
       "iban" : "LI6808811000000001234"
@@ -1195,6 +1225,7 @@ A single transaction instance to be created.
 | valutaIsExecutionDate | boolean | | Indicates if the valuta date is the requested execution date (true) or desired value date (false). If not set it will be the requested execution date (default) |
 | reference |	string |	max size: 140, min size: 0 |	The reference text or individual note |
 | charge |	[Charge](#data-types-charge)	| required when type FOREIGN | 	The charging type |
+| purposeOfPayment | string | optional when currency is USD (currently). Will become mandatory in a future release. Must be selected from a predefined list of codes (e.g. POGD for Purchase of Goods). | The purpose or reason for the transaction. |
 | correspondence | boolean | | Must be set to true in case of correspondence payment |
 | orderingCustomer | [OrderingCustomer](#data-types-orderingcustomer) | | In case of correspondence payment information about the ordering customer must be given |
 | debitor |	[TransactionDebitorAccount](#data-types-transactiondebitoraccount) |	required |	The client information about the transaction |

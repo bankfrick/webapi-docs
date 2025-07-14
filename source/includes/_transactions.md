@@ -265,6 +265,7 @@ algorithm: ...
     "valuta" : "2020-01-03",
     "valutaIsExecutionDate" : true,
     "reference" : "some individual text",
+    "purposeOfPayment" : "POGD",
     "charge" : "SHA",
     "debitor" : {
       "iban" : "LI6808811000000001234"
@@ -296,6 +297,7 @@ algorithm: ...
     "valuta" : "2020-01-03",
     "valutaIsExecutionDate" : true,
     "reference" : "some individual text",
+    "purposeOfPayment" : "POGD",
     "charge" : "SHA",
     "debitor" : {
       "iban" : "LI6808811000000001234"
@@ -331,6 +333,7 @@ algorithm: ...
     "valutaIsExecutionDate" : true,
     "express" : false,
     "reference" : "some individual text",
+    "purposeOfPayment" : "POGD",
     "debitor" : {
       "accountNumber" : "00012345/001.000.001",
       "iban" : "LI6808811000000001234"
