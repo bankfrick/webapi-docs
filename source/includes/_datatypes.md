@@ -1227,7 +1227,7 @@ A single transaction instance to be created.
 | valutaIsExecutionDate | boolean | | Indicates if the valuta date is the requested execution date (true) or desired value date (false). If not set it will be the requested execution date (default) |
 | reference |	string |	max size: 140, min size: 0 |	The reference text or individual note |
 | charge |	[Charge](#data-types-charge)	| required when type FOREIGN | 	The charging type |
-| purposeOfPayment | string | optional when currency is USD (currently). Will become mandatory in a future release. Must be selected from a predefined list of codes (e.g. POGD for Purchase of Goods). | The purpose or reason for the transaction. |
+| purposeOfPayment | [PurposeOfPayment](#data-types-purposeofpayment) | optional when currency is USD (currently). Will become mandatory in a future release. Must be selected from a predefined list of codes (e.g. POGD for Purchase of Goods). | The purpose or reason for the transaction. |
 | correspondence | boolean | | Must be set to true in case of correspondence payment |
 | orderingCustomer | [OrderingCustomer](#data-types-orderingcustomer) | | In case of correspondence payment information about the ordering customer must be given |
 | debitor |	[TransactionDebitorAccount](#data-types-transactiondebitoraccount) |	required |	The client information about the transaction |
