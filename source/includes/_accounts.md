@@ -227,6 +227,7 @@ algorithm: ...
     "valutaIsExecutionDate" : true,
     "express" : false,
     "reference" : "Invoice number 123",
+    "purposeOfPayment" : "POGD",
     "debitor" : {
       "accountNumber" : "0012345/001.000.001",
       "iban" : "LI6808811000000012345"

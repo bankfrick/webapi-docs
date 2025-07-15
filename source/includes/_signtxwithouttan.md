@@ -59,6 +59,7 @@ algorithm: ...
     "valuta" : "2018-08-02",
     "express" : false,
     "reference" : "Invoice number 123",
+    "purposeOfPayment" : "POGD",
     "debitor" : {
       "accountNumber" : "00012345/001.000.001",
       "iban" : "LI6808811000000001234"
