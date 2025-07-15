@@ -72,6 +72,7 @@ algorithm: ...
     "valutaIsExecutionDate" : true,
     "express" : false,
     "reference" : "Invoice number 123",
+    "purposeOfPayment" : "POGD",
     "debitor" : {
       "accountNumber" : "00012345/001.000.001",
       "iban" : "LI6808811000000001234"
@@ -179,6 +180,7 @@ algorithm: ...
       "valuta": "2020-04-01",
       "bookingDate": "2020-04-01",
       "reference": "Payment to Satoshi Nakamoto",
+      "purposeOfPayment" : "POGD",
       "debitor": {
         "name": "Michael Tester",
         "iban": "LI6808811000000001234",
