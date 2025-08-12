@@ -6,7 +6,11 @@ accounts (IBANs). This also includes the approval procedure for the activation a
 Users need to be authenticated using the `authorize` endpoint of the web API with scope `account`.
 Creating, approving, and deactivation of vIBANs requires signing permissions.
 
-All details are specified in the openApi specs below:
+<aside class="notice">
 
 - [OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/vban-public-openapi.json)
 - [OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/vban-public-openapi.yaml)
+
+</aside>
+
+
