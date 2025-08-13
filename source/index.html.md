@@ -135,7 +135,7 @@ Now, you are able to generate a personal API-Key for an application which uses t
 
 An API-Key is a personalized access token which will be generated once by the server using the settings provided by the contact. The settings describe the name, expire date and scope of the access token. Also a client public key must be defined which will be used by the server to validate the signature of the messages send by the client.
 
-A generated access token will be displayed after a successful entered TAN challenge for a limited amount of time. After that, the token cannot be accessed again. Changing a token would require to delete the old token and create a new one. You are responsible to save and handle the access key securely. 
+A generated access token will be displayed after a successful entered TAN challenge for a limited amount of time. After that, the token cannot be accessed again. You are responsible to save and handle the access key securely. 
 Additionally, you can limit the access to the WebAPI of your account to a specific IP address or subnet. For that, the firewall must be configured accordingly so that your IP address is passed to the application server (transparent proxy) in the “X-FORWARDED-FOR” or any other suitable request header field.
 
 ![Upload API Keys](/images/documentation/bank-frick-webapi-upload-ssh-keys.png "Upload API Keys")
