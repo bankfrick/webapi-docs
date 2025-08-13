@@ -1,0 +1,6 @@
+[build]
+  command = "bundle exec middleman build --clean"
+  publish = "build"
+
+[build.environment]
+  RUBY_VERSION = "3.2.3"
