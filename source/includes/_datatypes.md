@@ -1403,6 +1403,7 @@ The transactions beneficiary account information.
 | accountNumber	| string |	max size: 30, min size: 0 |	The account number of the recipient (instead of IBAN, only [type](#data-types-type) = FOREIGN ) |
 | aba | string | max size: 11, min size: 0 | The aba routing number of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | iban |	string |	max size: 34, min size: 0	| The iban of the recipient account |
+| vban |	string |	max size: 21, min size: 0	| The vban of the recipient account |
 | name |	string |	required, max size: 35, min size: 0   |	The name of the recipient |
 | address |	string |	max size: 70, min size: 0  | Address information of the recipient (e.g. Street), for international transfers or payments in USD, GBP and CAD |
 | postalcode |	string |	max size: 11, min size: 0   |	Postalcode of the recipient address, for international transfers or payments in USD, GBP and CAD |
