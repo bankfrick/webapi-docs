@@ -1259,13 +1259,13 @@ A single transaction instance to be created.
     "name" : "Satoshi Nakamoto",
     "address" : "Street 100",
     "iban" : "CH10001000111000100110",
-    "vban" : "LI4608811V0SQYF98VWJU",
     "bic" : "ZKBKCHZZ80A",
     "creditInstitution" : "Zuercher Kantonalbank"
   },
   "creditor" : {
     "name" : "Satoshi Nakamoto",
     "iban" : "LI6808811000000001234",
+    "vban" : "LI4608811V0SQYF98VWJU",
     "bic" : "BFRILI22XXX",
     "creditInstitution" : "Bank Frick and Co. AG"
    }
@@ -1345,7 +1345,6 @@ A single transaction existing instance.
 {
   "accountNumber" : "00012345678",
   "iban" : "DE12500105170648489890",
-  "vban" : "LI4608811V0SQYF98VWJU",
   "name" : "Satoshi Nakamoto",
 	"address" : "Street 100",
 	"postalcode" : "150004",
@@ -1383,6 +1382,7 @@ Debitor or creditor account information of the transaction.
 {
   "accountNumber" : "00012345678",
   "iban" : "DE12500105170648489890",
+  "vban" : "LI4608811V0SQYF98VWJU",
   "name" : "Satoshi Nakamoto",
 	"address" : "Street 100",
 	"postalcode" : "150004",
@@ -1498,13 +1498,13 @@ The transactions client account information.
       "debitor": {
         "name": "Michael Tester",
         "iban": "LI6808811000000001234",
-        "vban": "LI4608811V0SQYF98VWJU",
         "bic": "BFRILI22XXX",
         "creditInstitution": "Bank Frick and Co. AG"
       },
       "creditor": {
         "name": "Satoshi Nakamoto",
         "iban": "DE12500105170648489890",
+        "vban": "LI4608811V0SQYF98VWJU",
         "bic": "INGDDEFFXXX",
         "creditInstitution": "ING-DiBa GERMANY"
       }
