@@ -184,6 +184,7 @@ algorithm: ...
       "debitor": {
         "name": "Michael Tester",
         "iban": "LI6808811000000001234",
+        "vban": "LI4608811V0SQYF98VWJU",
         "bic": "BFRILI22XXX",
         "creditInstitution": "Bank Frick and Co. AG"
       },
