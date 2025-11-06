@@ -172,27 +172,28 @@ algorithm: ...
       "orderId": 12345,
       "transactionNr": "1234567",
       "serviceType": "SIC",
-      "transactionCode": "102-Transfer int. with Avis/Geb",
+      "transactionCode": "100 - Transfer account to account",
       "state": "BOOKED",
-      "amount": -200.00,
+      "amount": 10060.00,
       "totalAmount": 10060.00,
       "currency": "CHF",
       "valuta": "2020-04-01",
       "bookingDate": "2020-04-01",
       "reference": "Payment to Satoshi Nakamoto",
+      "direction": "incoming",
       "purposeOfPayment" : "POGD",
       "debitor": {
         "name": "Michael Tester",
         "iban": "LI6808811000000001234",
-        "vban": "LI4608811V0SQYF98VWJU",
         "bic": "BFRILI22XXX",
         "creditInstitution": "Bank Frick and Co. AG"
       },
       "creditor": {
         "name": "Satoshi Nakamoto",
-        "iban": "DE12500105170648489890",
-        "bic": "INGDDEFFXXX",
-        "creditInstitution": "ING-DiBa GERMANY"
+        "iban": "LI6808811000000004321",
+        "vban": "LI4608811V0SQYF98VWJU",
+        "bic": "BFRILI22XXX",
+        "creditInstitution": "Bank Frick and Co. AG"
       }
     }
   ]
