@@ -4,7 +4,7 @@
         <GrpHdr>
             <!-- NOTE: Change the last number to reupload the file -->
             <MsgId>SWIFT_AccNr-1001</MsgId>
-            <CreDtTm>2022-05-16T08:00:00</CreDtTm>
+            <CreDtTm>2025-05-16T08:00:00</CreDtTm>
             <NbOfTxs>1</NbOfTxs>
             <CtrlSum>100.00</CtrlSum>
             <InitgPty>
@@ -15,14 +15,15 @@
             <PmtInfId>1</PmtInfId>
             <PmtMtd>TRF</PmtMtd>
             <BtchBookg>true</BtchBookg>
-            <ReqdExctnDt>2024-05-16</ReqdExctnDt>
+            <!-- Must be today or a future date -->
+            <ReqdExctnDt>2025-11-11</ReqdExctnDt>
             <Dbtr>
                 <Nm>Your Customer</Nm>
             </Dbtr>
             <DbtrAcct>
                 <Id>
-                    <!-- NOTE: Change here to your IBAN -->
-                    <IBAN>LI47088110104056K000E</IBAN>
+                    <!-- NOTE: Replace with a syntactically valid IBAN of your account -->
+                    <IBAN>LI12XXXX0000000000XXX</IBAN>
                 </Id>
             </DbtrAcct>
             <DbtrAgt>
@@ -37,6 +38,7 @@
                     <EndToEndId>Your EndtoEndId_1</EndToEndId>
                 </PmtId>
                 <Amt>
+                    <!-- Any currency allowed for foreign SWIFT, example USD -->
                     <InstdAmt Ccy="USD">100.00</InstdAmt>
                 </Amt>
                 <CdtrAgt>
@@ -63,6 +65,10 @@
                         </Othr>
                     </Id>
                 </CdtrAcct>
+                <RmtInf>
+                    <!-- Payment reference -->
+                    <Ustrd>Payment Reference</Ustrd>
+                </RmtInf>
             </CdtTrfTxInf>
         </PmtInf>
     </CstmrCdtTrfInitn>
