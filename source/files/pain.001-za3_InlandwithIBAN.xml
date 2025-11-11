@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
     <CstmrCdtTrfInitn>
         <GrpHdr>
             <!-- NOTE: Change the last number to reupload the file -->
@@ -15,14 +16,15 @@
             <PmtInfId>1</PmtInfId>
             <PmtMtd>TRF</PmtMtd>
             <BtchBookg>true</BtchBookg>
-            <ReqdExctnDt>2024-05-16</ReqdExctnDt>
+            <!-- NOTE: Must be today or a future date -->
+            <ReqdExctnDt>2025-01-15</ReqdExctnDt>
             <Dbtr>
                 <Nm>Your Customer</Nm>
             </Dbtr>
             <DbtrAcct>
                 <Id>
-                    <!-- NOTE: Change here to your IBAN -->
-                    <IBAN>LI47088110104056K000E</IBAN>
+                    <!-- NOTE: Replace with a syntactically valid IBAN of your account -->
+                    <IBAN>LI12XXXX0000000000XXX</IBAN>
                 </Id>
             </DbtrAcct>
             <DbtrAgt>
@@ -42,14 +44,23 @@
                     </LclInstrm>
                 </PmtTpInf>
                 <Amt>
+                    <!-- Domestic foreign currency (example GBP) -->
                     <InstdAmt Ccy="GBP">100.00</InstdAmt>
                 </Amt>
                 <Cdtr>
                     <Nm>Your Customer</Nm>
+                    <!-- For foreign currencies like GBP, creditor address is required -->
+                    <PstlAdr>
+                        <StrtNm>Example Street</StrtNm>
+                        <BldgNb>1</BldgNb>
+                        <PstCd>8000</PstCd>
+                        <TwnNm>Zurich</TwnNm>
+                        <Ctry>CH</Ctry>
+                    </PstlAdr>
                 </Cdtr>
                 <CdtrAcct>
                     <Id>
-                        <!-- Recipient IBAN -->
+                        <!-- Recipient IBAN in CH/LI -->
                         <IBAN>CH0200781125534343504</IBAN>
                     </Id>
                 </CdtrAcct>

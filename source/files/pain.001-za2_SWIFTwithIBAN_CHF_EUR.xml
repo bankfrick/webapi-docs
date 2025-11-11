@@ -22,8 +22,8 @@
             </Dbtr>
             <DbtrAcct>
                 <Id>
-                    <!-- NOTE: Change here to your IBAN -->
-                    <IBAN>LI47088110104056K000E</IBAN>
+                    <!-- NOTE: Replace with a syntactically valid IBAN of your account -->
+                    <IBAN>LI12XXXX0000000000XXX</IBAN>
                 </Id>
             </DbtrAcct>
             <DbtrAgt>
