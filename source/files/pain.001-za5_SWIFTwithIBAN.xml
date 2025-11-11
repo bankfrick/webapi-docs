@@ -11,48 +11,71 @@
                 <Nm>Your Company</Nm>
             </InitgPty>
         </GrpHdr>
+
         <PmtInf>
             <PmtInfId>1</PmtInfId>
             <PmtMtd>TRF</PmtMtd>
             <BtchBookg>true</BtchBookg>
-            <ReqdExctnDt>2024-05-16</ReqdExctnDt>
+
+            <!-- Must be today or a future date -->
+            <ReqdExctnDt>2025-11-11</ReqdExctnDt>
+
             <Dbtr>
                 <Nm>Your Customer</Nm>
             </Dbtr>
+
             <DbtrAcct>
                 <Id>
-                    <!-- NOTE: Change here to your IBAN -->
-                    <IBAN>LI47088110104056K000E</IBAN>
+                    <!-- NOTE: Replace with a syntactically valid IBAN of your account -->
+                    <IBAN>LI12XXXX0000000000XXX</IBAN>
                 </Id>
             </DbtrAcct>
+
             <DbtrAgt>
                 <FinInstnId>
                     <!-- NOTE: Always the same Bank Frick BIC -->
                     <BIC>BFRILI22</BIC>
                 </FinInstnId>
             </DbtrAgt>
+
             <CdtTrfTxInf>
                 <PmtId>
                     <InstrId>Your unique ID_1</InstrId>
                     <EndToEndId>Your EndtoEndId_1</EndToEndId>
                 </PmtId>
-                <PmtTpInf>
-                    <LclInstrm>
-                        <Prtry>CH03</Prtry>
-                    </LclInstrm>
-                </PmtTpInf>
+
+                <!-- No SEPA service level, no CHxx local instrument for foreign SWIFT -->
                 <Amt>
+                    <!-- Any currency allowed for foreign SWIFT, example EUR -->
                     <InstdAmt Ccy="EUR">100.00</InstdAmt>
                 </Amt>
+
+                <!-- CdtrAgt must come BEFORE Cdtr and CdtrAcct -->
+                <CdtrAgt>
+                    <FinInstnId>
+                        <BIC>NCBKSAJEXXX</BIC>
+                    </FinInstnId>
+                </CdtrAgt>
+
                 <Cdtr>
                     <Nm>Your Customer</Nm>
+                    <!-- For foreign SWIFT payments, creditor address is recommended/required -->
+                    <PstlAdr>
+                        <StrtNm>King Fahd Road</StrtNm>
+                        <BldgNb>120</BldgNb>
+                        <PstCd>12271</PstCd>
+                        <TwnNm>Riyadh</TwnNm>
+                        <Ctry>SA</Ctry>
+                    </PstlAdr>
                 </Cdtr>
+
                 <CdtrAcct>
                     <Id>
                         <!-- Recipient IBAN -->
-                        <IBAN>EG490059000400000100015700242</IBAN>
+                        <IBAN>SA4420000001234567891234</IBAN>
                     </Id>
                 </CdtrAcct>
+
                 <RmtInf>
                     <!-- Payment reference -->
                     <Ustrd>Payment Reference</Ustrd>
