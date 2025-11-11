@@ -16,7 +16,7 @@
             <PmtMtd>TRF</PmtMtd>
             <BtchBookg>true</BtchBookg>
             <!-- NOTE: Use today's or a future date -->
-            <ReqdExctnDt>2025-11-16</ReqdExctnDt>
+            <ReqdExctnDt>2025-11-11</ReqdExctnDt>
             <Dbtr>
                 <Nm>Your Customer</Nm>
             </Dbtr>
