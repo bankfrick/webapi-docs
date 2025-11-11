@@ -15,7 +15,8 @@
             <PmtInfId>1</PmtInfId>
             <PmtMtd>TRF</PmtMtd>
             <BtchBookg>true</BtchBookg>
-            <ReqdExctnDt>2024-05-16</ReqdExctnDt>
+            <!-- NOTE: Use today's or a future date -->
+            <ReqdExctnDt>2025-11-16</ReqdExctnDt>
             <Dbtr>
                 <Nm>Your Customer</Nm>
             </Dbtr>
