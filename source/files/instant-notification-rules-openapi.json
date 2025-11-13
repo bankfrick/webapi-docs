@@ -1,0 +1,244 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/topics/instant-transactions/rules": {
+      "get": {
+        "tags": [
+          "instant-transactions-topic-rules-controller"
+        ],
+        "operationId": "listRules",
+        "parameters": [
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 100
+            }
+          },
+          {
+            "name": "pageIndex",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstantTransactionsRulesDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "instant-transactions-topic-rules-controller"
+        ],
+        "operationId": "createRule",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInstantTransactionsRuleDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/InstantTransactionsRuleDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateInstantTransactionsRuleDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "customerNumber": {
+            "type": "string"
+          },
+          "targets": {
+            "$ref": "#/components/schemas/NotificationTargetsDto"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstantTransactionsEventDto"
+            }
+          }
+        },
+        "required": [
+          "customerNumber",
+          "events",
+          "name",
+          "targets"
+        ]
+      },
+      "InstantTransactionsEventDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "INSTANT_TRANSACTION_RECEIVED",
+              "INSTANT_TRANSACTION_SUCCESS",
+              "INSTANT_TRANSACTION_FAILURE"
+            ]
+          }
+        },
+        "required": [
+          "type"
+        ]
+      },
+      "NotificationTargetsDto": {
+        "type": "object",
+        "properties": {
+          "webhookUrls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "webhookUrls"
+        ]
+      },
+      "InstantTransactionsRuleDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "INACTIVE"
+            ]
+          },
+          "name": {
+            "type": "string"
+          },
+          "customerNumber": {
+            "type": "string"
+          },
+          "targets": {
+            "$ref": "#/components/schemas/NotificationTargetsDto"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstantTransactionsEventDto"
+            }
+          },
+          "createdBy": {
+            "type": "string",
+            "example": "Contact 1234567"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModifiedBy": {
+            "type": "string",
+            "example": "Contact 1234567"
+          },
+          "lastModifiedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "customerNumber",
+          "events",
+          "id",
+          "name",
+          "status",
+          "targets"
+        ]
+      },
+      "InstantTransactionsRulesDto": {
+        "type": "object",
+        "properties": {
+          "rules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InstantTransactionsRuleDto"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/PaginationDto"
+          }
+        },
+        "required": [
+          "pagination",
+          "rules"
+        ]
+      },
+      "PaginationDto": {
+        "type": "object",
+        "properties": {
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasMore": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "hasMore",
+          "pageIndex",
+          "pageSize",
+          "totalCount"
+        ]
+      }
+    }
+  }
+}
