@@ -19,6 +19,7 @@ includes:
   - signtxwithouttan
   - trading
   - transactions
+  - instanttransactions
   - vban
   - camt052
   - camt053
