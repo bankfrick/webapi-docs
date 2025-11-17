@@ -3,15 +3,12 @@
   "info": {
     "title": "Bank Frick Webhook Contract",
     "description": "This specification describes the HTTP POST requests that Bank Frick\nwill send to customer-configured webhook URLs.\n\nCustomers should implement an HTTPS endpoint that accepts the WebhookPayload structure.\nThe webhook URL is configured per notification rule and can be any HTTPS endpoint.",
-    "contact": {
-      "name": "Bank Frick"
-    },
-    "version": "0.0.1"
+    "version": "0.1.0"
   },
   "servers": [
     {
-      "url": "http://localhost:8081",
-      "description": "Generated server url"
+      "url": "https://example.com/api/webhooks/bankfrick",
+      "description": "Example webhook endpoint (replace with your actual endpoint)"
     }
   ],
   "paths": {},
@@ -54,6 +51,33 @@
           "iban",
           "timestamp"
         ]
+      },
+      "ProblemDetail": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri"
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
       }
     }
   },
@@ -64,7 +88,7 @@
         "description": "Bank Frick will POST webhook notifications to the URL you configure in your notification rule.\n\nYou can configure any HTTPS endpoint URL. The path is entirely up to you.\n\nExample URLs:\n- https://your-domain.com/api/webhooks/bankfrick\n- https://your-domain.com/notifications\n- https://api.your-service.com/v1/incoming-webhooks",
         "parameters": [
           {
-            "name": "algorithm",
+            "name": "Algorithm",
             "in": "header",
             "description": "Signature algorithm used to sign the webhook payload",
             "required": true,
@@ -77,7 +101,7 @@
             }
           },
           {
-            "name": "signature",
+            "name": "Signature",
             "in": "header",
             "description": "Base64-encoded RSA signature of the webhook payload. Verify using the public key to ensure the webhook came from Bank Frick",
             "required": true,
@@ -99,26 +123,140 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Webhook received and processed successfully"
+          "204": {
+            "description": "Webhook received and accepted for processing"
           },
           "408": {
-            "description": "Request Timeout - webhook will be retried"
+            "description": "Request Timeout - webhook will be retried",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "timeout": {
+                    "description": "timeout",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Request Timeout",
+                      "status": 408,
+                      "detail": "The request timed out",
+                      "instance": "/webhooks/bankfrick"
+                    }
+                  }
+                }
+              }
+            }
           },
           "429": {
-            "description": "Too Many Requests - webhook will be retried"
+            "description": "Too Many Requests - webhook will be retried",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "too_many_requests": {
+                    "description": "too_many_requests",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Too Many Requests",
+                      "status": 429,
+                      "detail": "Too many requests have been received",
+                      "instance": "/webhooks/bankfrick"
+                    }
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal Server Error - webhook will be retried"
+            "description": "Internal Server Error - webhook will be retried",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "internal_server_error": {
+                    "description": "internal_server_error",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Internal Server Error",
+                      "status": 500,
+                      "detail": "An unexpected error occurred while processing your request",
+                      "instance": "/webhooks/bankfrick"
+                    }
+                  }
+                }
+              }
+            }
           },
           "502": {
-            "description": "Bad Gateway - webhook will be retried"
+            "description": "Bad Gateway - webhook will be retried",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "bad_gateway": {
+                    "description": "bad_gateway",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Bad Gateway",
+                      "status": 502,
+                      "detail": "Bad gateway error occurred",
+                      "instance": "/webhooks/bankfrick"
+                    }
+                  }
+                }
+              }
+            }
           },
           "503": {
-            "description": "Service Unavailable - webhook will be retried"
+            "description": "Service Unavailable - webhook will be retried",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "service_unavailable": {
+                    "description": "service_unavailable",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Service Unavailable",
+                      "status": 503,
+                      "detail": "The service is temporarily unavailable",
+                      "instance": "/webhooks/bankfrick"
+                    }
+                  }
+                }
+              }
+            }
           },
           "504": {
-            "description": "Gateway Timeout - webhook will be retried"
+            "description": "Gateway Timeout - webhook will be retried",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "gateway_timeout": {
+                    "description": "gateway_timeout",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Gateway Timeout",
+                      "status": 504,
+                      "detail": "Gateway timeout occurred",
+                      "instance": "/webhooks/bankfrick"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }

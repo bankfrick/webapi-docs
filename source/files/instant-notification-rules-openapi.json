@@ -1,13 +1,18 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI definition",
-    "version": "v0"
+    "title": "Notification Rule Service API",
+    "description": "API for managing notification rules. Allows to define notification targets (e.g. a webhook URL) endpoints that receive notifications when specific transaction events occur.",
+    "version": "0.1.0"
   },
   "servers": [
     {
-      "url": "http://localhost:8080",
-      "description": "Generated server url"
+      "url": "https://api-test.bankfrick.li/onlinebanking/notifications",
+      "description": "Test"
+    },
+    {
+      "url": "https://api.bankfrick.li/onlinebanking/notifications",
+      "description": "Production"
     }
   ],
   "paths": {
@@ -16,6 +21,8 @@
         "tags": [
           "instant-transactions-topic-rules-controller"
         ],
+        "summary": "List instant transaction notification rules",
+        "description": "Retrieves a paginated list of notification rules for the authenticated user",
         "operationId": "listRules",
         "parameters": [
           {
@@ -41,22 +48,120 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Rules found",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InstantTransactionsRulesDto"
                 }
               }
             }
+          },
+          "401": {
+            "description": "Missing or invalid authentication",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "description": "unauthorized",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "detail": "Authentication failure: header missing",
+                      "instance": "/topics/instant-transactions/rules"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient permissions",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "forbidden": {
+                    "description": "forbidden",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Forbidden",
+                      "status": 403,
+                      "detail": "Insufficient permissions for this operation",
+                      "instance": "/topics/instant-transactions/rules"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "internal_server_error": {
+                    "description": "internal_server_error",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Internal Server Error",
+                      "status": 500,
+                      "detail": "An unexpected error occurred while processing your request",
+                      "instance": "/topics/instant-transactions/rules"
+                    }
+                  }
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "post": {
         "tags": [
           "instant-transactions-topic-rules-controller"
         ],
+        "summary": "Create a new instant transaction notification rule",
+        "description": "Creates a new notification rule that defines which transactions trigger notifications.",
         "operationId": "createRule",
+        "parameters": [
+          {
+            "name": "Algorithm",
+            "in": "header",
+            "description": "Signature algorithm used to sign the webhook payload",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "rsa-sha512"
+              ],
+              "example": "rsa-sha512"
+            }
+          },
+          {
+            "name": "Signature",
+            "in": "header",
+            "description": "Base64-encoded RSA signature of the webhook payload. Verify using the public key to ensure the webhook came from Bank Frick",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "MEUCIQDf...truncated..."
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -69,16 +174,109 @@
         },
         "responses": {
           "201": {
-            "description": "Created",
+            "description": "Rule created successfully",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InstantTransactionsRuleDto"
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid webhook URL or invalid input",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "invalid_webhook_url": {
+                    "description": "invalid_webhook_url",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Bad Request",
+                      "status": 400,
+                      "detail": "Invalid webhook URL: not a valid URL",
+                      "instance": "/topics/instant-transactions/rules"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid authentication",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "unauthorized": {
+                    "description": "unauthorized",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Unauthorized",
+                      "status": 401,
+                      "detail": "Authentication failure: header missing",
+                      "instance": "/topics/instant-transactions/rules"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Insufficient permissions",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "forbidden": {
+                    "description": "forbidden",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Forbidden",
+                      "status": 403,
+                      "detail": "Insufficient permissions for this operation",
+                      "instance": "/topics/instant-transactions/rules"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                },
+                "examples": {
+                  "internal_server_error": {
+                    "description": "internal_server_error",
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Internal Server Error",
+                      "status": 500,
+                      "detail": "An unexpected error occurred while processing your request",
+                      "instance": "/topics/instant-transactions/rules"
+                    }
+                  }
+                }
+              }
+            }
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     }
   },
@@ -86,18 +284,25 @@
     "schemas": {
       "CreateInstantTransactionsRuleDto": {
         "type": "object",
+        "description": "Request to create a new instant transaction notification rule",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the rule",
+            "example": "All incoming instant transactions"
           },
           "customerNumber": {
-            "type": "string"
+            "type": "string",
+            "description": "Customer number that that this rule applies to",
+            "example": "0123456"
           },
           "targets": {
-            "$ref": "#/components/schemas/NotificationTargetsDto"
+            "$ref": "#/components/schemas/NotificationTargetsDto",
+            "description": "Notification targets (e.g. a webhook) for this rule"
           },
           "events": {
             "type": "array",
+            "description": "List of transaction events that trigger this rule",
             "items": {
               "$ref": "#/components/schemas/InstantTransactionsEventDto"
             }
@@ -112,25 +317,34 @@
       },
       "InstantTransactionsEventDto": {
         "type": "object",
+        "description": "Transaction event that triggers a rule",
         "properties": {
           "type": {
-            "type": "string",
-            "enum": [
-              "INSTANT_TRANSACTION_RECEIVED",
-              "INSTANT_TRANSACTION_SUCCESS",
-              "INSTANT_TRANSACTION_FAILURE"
-            ]
+            "$ref": "#/components/schemas/InstantTransactionsEventTypeDto",
+            "description": "Type of instant transaction event"
           }
         },
         "required": [
           "type"
         ]
       },
+      "InstantTransactionsEventTypeDto": {
+        "type": "string",
+        "description": "Type of instant transaction event",
+        "enum": [
+          "INSTANT_TRANSACTION_RECEIVED"
+        ]
+      },
       "NotificationTargetsDto": {
         "type": "object",
+        "description": "Notification targets for a rule",
         "properties": {
           "webhookUrls": {
             "type": "array",
+            "description": "List of webhook URLs that will receive notifications",
+            "example": [
+              "https://api.example.com/webhooks/transactions"
+            ],
             "items": {
               "type": "string"
             }
@@ -142,29 +356,36 @@
       },
       "InstantTransactionsRuleDto": {
         "type": "object",
+        "description": "Instant transaction notification rule",
         "properties": {
           "id": {
             "type": "string",
-            "format": "uuid"
+            "format": "uuid",
+            "description": "Unique identifier of the rule"
           },
           "status": {
             "type": "string",
+            "description": "Current status of the rule (ACTIVE or INACTIVE)",
             "enum": [
               "ACTIVE",
               "INACTIVE"
             ]
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the rule"
           },
           "customerNumber": {
-            "type": "string"
+            "type": "string",
+            "description": "Customer number that that this rule applies to"
           },
           "targets": {
-            "$ref": "#/components/schemas/NotificationTargetsDto"
+            "$ref": "#/components/schemas/NotificationTargetsDto",
+            "description": "Notification targets for this rule"
           },
           "events": {
             "type": "array",
+            "description": "Transaction events that trigger this rule",
             "items": {
               "$ref": "#/components/schemas/InstantTransactionsEventDto"
             }
@@ -195,17 +416,47 @@
           "targets"
         ]
       },
+      "ProblemDetail": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "format": "uri"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string",
+            "format": "uri"
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        }
+      },
       "InstantTransactionsRulesDto": {
         "type": "object",
+        "description": "Paginated list of instant transaction notification rules",
         "properties": {
           "rules": {
             "type": "array",
+            "description": "List of rules on this page",
             "items": {
               "$ref": "#/components/schemas/InstantTransactionsRuleDto"
             }
           },
           "pagination": {
-            "$ref": "#/components/schemas/PaginationDto"
+            "$ref": "#/components/schemas/PaginationDto",
+            "description": "Pagination metadata"
           }
         },
         "required": [
@@ -215,21 +466,30 @@
       },
       "PaginationDto": {
         "type": "object",
+        "description": "Pagination metadata",
         "properties": {
           "totalCount": {
             "type": "integer",
-            "format": "int64"
+            "format": "int64",
+            "description": "Total number of items across all pages",
+            "example": 101
           },
           "pageIndex": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "Index of the current page (0-based)",
+            "example": 0
           },
           "pageSize": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "description": "Number of items per page",
+            "example": 100
           },
           "hasMore": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether there are more items available on subsequent pages",
+            "example": true
           }
         },
         "required": [
@@ -238,6 +498,14 @@
           "pageSize",
           "totalCount"
         ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "description": "JWT token from Online Banking WebAPI",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
