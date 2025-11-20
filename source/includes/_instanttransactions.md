@@ -16,7 +16,7 @@ A `POST` request is used to create a new rule.
 #### Requirements
 
 - the rule MUST specify at least one webhook URL
-- webhook urls MUST explicitly use the `https://` scheme
+- webhook URLs MUST explicitly use the `https://` scheme
 - the rule MUST specify at least one event type
 
 #### Event Types
