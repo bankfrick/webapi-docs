@@ -188,6 +188,142 @@ paths:
                     instance: /topics/instant-transactions/rules
       security:
         - bearerAuth: []
+  /topics/instant-transactions/rules/deactivation:
+    post:
+      tags:
+        - instant-transactions-topic-rules-controller
+      summary: Deactivate an instant transaction notification rule
+      description: Deactivate an instant transaction notification rule which the authenticated
+        user is allowed to manage
+      operationId: deactivateRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeactivateInstantTransactionsRuleDto"
+        required: true
+      responses:
+        "200":
+          description: Rule deactivated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstantTransactionsRuleDto"
+        "401":
+          description: Missing or invalid authentication
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                unauthorized:
+                  description: unauthorized
+                  value:
+                    type: about:blank
+                    title: Unauthorized
+                    status: 401
+                    detail: "Authentication failure: header missing"
+                    instance: /topics/instant-transactions/rules/deactivation
+        "403":
+          description: Insufficient permissions
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                forbidden:
+                  description: forbidden
+                  value:
+                    type: about:blank
+                    title: Forbidden
+                    status: 403
+                    detail: Insufficient permissions for this operation
+                    instance: /topics/instant-transactions/rules/deactivation
+        "500":
+          description: Internal server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                internal_server_error:
+                  description: internal_server_error
+                  value:
+                    type: about:blank
+                    title: Internal Server Error
+                    status: 500
+                    detail: An unexpected error occurred while processing your request
+                    instance: /topics/instant-transactions/rules/deactivation
+      security:
+        - bearerAuth: []
+  /topics/instant-transactions/rules/activation:
+    post:
+      tags:
+        - instant-transactions-topic-rules-controller
+      summary: Activate an instant transaction notification rule
+      description: Activate an instant transaction notification rule which the authenticated
+        user is allowed to manage
+      operationId: activateRule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ActivateInstantTransactionsRuleDto"
+        required: true
+      responses:
+        "200":
+          description: Rule activated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstantTransactionsRuleDto"
+        "401":
+          description: Missing or invalid authentication
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                unauthorized:
+                  description: unauthorized
+                  value:
+                    type: about:blank
+                    title: Unauthorized
+                    status: 401
+                    detail: "Authentication failure: header missing"
+                    instance: /topics/instant-transactions/rules/activation
+        "403":
+          description: Insufficient permissions
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                forbidden:
+                  description: forbidden
+                  value:
+                    type: about:blank
+                    title: Forbidden
+                    status: 403
+                    detail: Insufficient permissions for this operation
+                    instance: /topics/instant-transactions/rules/activation
+        "500":
+          description: Internal server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                internal_server_error:
+                  description: internal_server_error
+                  value:
+                    type: about:blank
+                    title: Internal Server Error
+                    status: 500
+                    detail: An unexpected error occurred while processing your request
+                    instance: /topics/instant-transactions/rules/activation
+      security:
+        - bearerAuth: []
 components:
   schemas:
     CreateInstantTransactionsRuleDto:
@@ -308,6 +444,30 @@ components:
         properties:
           type: object
           additionalProperties: {}
+    DeactivateInstantTransactionsRuleDto:
+      type: object
+      description: Request to deactivate an existing instant transaction notification
+        rule
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Rule ID
+          example: d73102e6-4741-4998-9bda-24f54200be84
+      required:
+        - id
+    ActivateInstantTransactionsRuleDto:
+      type: object
+      description: Request to activate an existing instant transaction notification
+        rule
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Rule ID
+          example: d73102e6-4741-4998-9bda-24f54200be84
+      required:
+        - id
     InstantTransactionsRulesDto:
       type: object
       description: Paginated list of instant transaction notification rules

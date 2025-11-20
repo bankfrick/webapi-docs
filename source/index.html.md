@@ -144,17 +144,18 @@ Additionally, you can limit the access to the WebAPI of your account to a specif
 
 ![Manage API Keys](/images/documentation/bank-frick-webapi-manage-api-keys.png "Manage API Keys")
 
-## WebHooks for Instant Transactions
+## Webhooks for Instant Transactions
 
 For our clients that use instant transactions, we offer a new notification mechanism which allows us to inform about
 instant transaction events in near real-time.
 
-This new feature is currently only accessible via Rest API. Instructions can be found [&rarr; here](#instant-transaction-notifications).
+This new feature is currently only accessible via Rest API. Instructions can be found 
+[&rarr; here](#instant-transaction-notification-rules).
 
 Please note: Only instant transaction events can be selected as triggers. 
-For other types of transactions, please use the ["classic" notifications rules](#webhooks-classic) (see below).
+For other types of transactions, please use the ["classic" webhooks](#getting-started-webhooks-classic) (see below).
 
-### Webhooks Classic
+## Webhooks Classic
 
 This dialog shows an overview of all created and active notification rules. You are able to define notification rules to be informed when a criteria matches, e.g. a charge or credit entry on an account or an executed payment order. New rules can be created, edited or deleted at any time. 
 
