@@ -14,43 +14,215 @@
   "paths": {},
   "components": {
     "schemas": {
+      "AccountDto": {
+        "type": "object",
+        "description": "Account details",
+        "properties": {
+          "Id": {
+            "$ref": "#/components/schemas/AccountIdDto",
+            "description": "Account identification"
+          }
+        }
+      },
+      "AccountIdDto": {
+        "type": "object",
+        "description": "Account identification",
+        "properties": {
+          "IBAN": {
+            "type": "string",
+            "description": "Account ID (IBAN)",
+            "example": "LI21088110101234567890"
+          }
+        }
+      },
+      "AgentDto": {
+        "type": "object",
+        "description": "Agent (bank) information",
+        "properties": {
+          "FinancialInstitution": {
+            "$ref": "#/components/schemas/FinancialInstitutionDto",
+            "description": "Financial institution details"
+          }
+        }
+      },
+      "FinancialInstitutionDto": {
+        "type": "object",
+        "description": "Financial institution information",
+        "properties": {
+          "BIC": {
+            "type": "string",
+            "description": "BIC code",
+            "example": "BFRILI22XXX"
+          }
+        }
+      },
+      "PartyDto": {
+        "type": "object",
+        "description": "Party information (creditor or debtor)",
+        "properties": {
+          "Name": {
+            "type": "string",
+            "description": "Name of the party",
+            "example": "John Smith"
+          },
+          "PostalAddress": {
+            "$ref": "#/components/schemas/PostalAddressDto",
+            "description": "Postal address of the party"
+          }
+        }
+      },
+      "PostalAddressDto": {
+        "type": "object",
+        "description": "Postal address information",
+        "properties": {
+          "BuildingNumber": {
+            "type": "string",
+            "description": "Building number",
+            "example": 42
+          },
+          "Country": {
+            "type": "string",
+            "description": "Country code",
+            "example": "LU"
+          },
+          "CountrySubDivision": {
+            "type": "string",
+            "description": "Country subdivision",
+            "example": "Luxembourg District"
+          },
+          "Department": {
+            "type": "string",
+            "description": "Department",
+            "example": "Finance Department"
+          },
+          "DistrictName": {
+            "type": "string",
+            "description": "District name",
+            "example": "Centre"
+          },
+          "Postbox": {
+            "type": "string",
+            "description": "Post box",
+            "example": "PO Box 123"
+          },
+          "PostalCode": {
+            "type": "string",
+            "description": "Postal code",
+            "example": "L-1234"
+          },
+          "Room": {
+            "type": "string",
+            "description": "Room",
+            "example": "Room 301"
+          },
+          "StreetName": {
+            "type": "string",
+            "description": "Street name",
+            "example": "Avenue de la Liberté"
+          },
+          "SubDepartment": {
+            "type": "string",
+            "description": "Sub-department",
+            "example": "Accounting"
+          },
+          "TownLocationName": {
+            "type": "string",
+            "description": "Town location name",
+            "example": "City Center"
+          },
+          "TownName": {
+            "type": "string",
+            "description": "Town name",
+            "example": "Luxembourg"
+          },
+          "AddressLine": {
+            "type": "array",
+            "description": "Unstructured address lines",
+            "example": [
+              "Avenue de la Liberté 42",
+              "3rd Floor"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RemittanceInformationDto": {
+        "type": "object",
+        "description": "Remittance information",
+        "properties": {
+          "UnstructuredReference": {
+            "type": "array",
+            "description": "Unstructured remittance references",
+            "example": [
+              "INV-2025-001789",
+              "Payment for services"
+            ],
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "TransactionAmountDto": {
+        "type": "object",
+        "description": "Transaction amount",
+        "properties": {
+          "Currency": {
+            "type": "string",
+            "description": "Currency code",
+            "example": "EUR"
+          },
+          "Amount": {
+            "type": "string",
+            "description": "Amount value",
+            "example": 150.5
+          }
+        }
+      },
       "WebhookPayloadDto": {
         "type": "object",
-        "description": "Webhook notification payload sent to customer endpoints",
+        "description": "Webhook notification payload with ISO 20022 transaction data",
         "properties": {
-          "eventDescription": {
+          "AcceptanceDateTime": {
             "type": "string",
-            "description": "Description of the event that triggered the notification",
-            "example": "Instant transaction received"
+            "description": "Acceptance date and time",
+            "example": "2025-11-18T15:41:46.141Z"
           },
-          "customerNumber": {
-            "type": "string",
-            "description": "Seven-digit customer number at Bank Frick",
-            "example": 1234567
+          "Creditor": {
+            "$ref": "#/components/schemas/PartyDto",
+            "description": "Creditor party information"
           },
-          "customerName": {
-            "type": "string",
-            "description": "Full name of the customer",
-            "example": "ACME Corporation"
+          "CreditorAccount": {
+            "$ref": "#/components/schemas/AccountDto",
+            "description": "Creditor account details"
           },
-          "iban": {
-            "type": "string",
-            "description": "IBAN of the account",
-            "example": "LI1234567890123456789"
+          "CreditorAgent": {
+            "$ref": "#/components/schemas/AgentDto",
+            "description": "Creditor agent (bank) information"
           },
-          "timestamp": {
-            "type": "string",
-            "description": "Transaction timestamp in ISO 8601 format",
-            "example": "2025-10-21T10:00:00Z"
+          "Debtor": {
+            "$ref": "#/components/schemas/PartyDto",
+            "description": "Debtor party information"
+          },
+          "DebtorAccount": {
+            "$ref": "#/components/schemas/AccountDto",
+            "description": "Debtor account details"
+          },
+          "DebtorAgent": {
+            "$ref": "#/components/schemas/AgentDto",
+            "description": "Debtor agent (bank) information"
+          },
+          "TransactionAmount": {
+            "$ref": "#/components/schemas/TransactionAmountDto",
+            "description": "Transaction amount and currency"
+          },
+          "RemittanceInformation": {
+            "$ref": "#/components/schemas/RemittanceInformationDto",
+            "description": "Remittance information"
           }
-        },
-        "required": [
-          "customerName",
-          "customerNumber",
-          "eventDescription",
-          "iban",
-          "timestamp"
-        ]
+        }
       },
       "ProblemDetail": {
         "type": "object",
@@ -117,6 +289,146 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/WebhookPayloadDto"
+              },
+              "examples": {
+                "instant_payment_received_address_lines": {
+                  "summary": "Instant payment received with unstructured address lines in postal address",
+                  "description": "instant_payment_received_address_lines",
+                  "value": {
+                    "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
+                    "Creditor": {
+                      "Name": "Bank Frick Ltd",
+                      "PostalAddress": {
+                        "TownName": "Vaduz",
+                        "Country": "LI",
+                        "AddressLine": [
+                          "Sägerstrasse 6",
+                          "Suite 500",
+                          "Banking District",
+                          "Treasury Department",
+                          "International Payments",
+                          "PO Box 123",
+                          "Vaduz, LI 9490"
+                        ]
+                      }
+                    },
+                    "CreditorAccount": {
+                      "Id": {
+                        "IBAN": "LI08088110102720K000E"
+                      }
+                    },
+                    "CreditorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22"
+                      }
+                    },
+                    "Debtor": {
+                      "Name": "John Smith",
+                      "PostalAddress": {
+                        "TownName": "Luxembourg",
+                        "Country": "LU",
+                        "AddressLine": [
+                          "Boulevard de la Foire 42",
+                          "Room 301",
+                          "Finance Department",
+                          "Payment Operations",
+                          "Downtown Luxembourg",
+                          "PO Box 456",
+                          "Luxembourg, LU L-2411"
+                        ]
+                      }
+                    },
+                    "DebtorAccount": {
+                      "Id": {
+                        "IBAN": "LU280019400644750000"
+                      }
+                    },
+                    "DebtorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "ARSPLU21"
+                      }
+                    },
+                    "TransactionAmount": {
+                      "Currency": "EUR",
+                      "Amount": 150.5
+                    },
+                    "RemittanceInformation": {
+                      "UnstructuredReference": [
+                        "INV-2025-001789"
+                      ]
+                    }
+                  }
+                },
+                "instant_payment_received_structured_address": {
+                  "summary": "Instant payment received with structured address fields in postal address",
+                  "description": "instant_payment_received_structured_address",
+                  "value": {
+                    "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
+                    "Creditor": {
+                      "Name": "Bank Frick Ltd",
+                      "PostalAddress": {
+                        "StreetName": "Sägerstrasse",
+                        "BuildingNumber": "6",
+                        "PostalCode": "9490",
+                        "TownName": "Vaduz",
+                        "Country": "LI",
+                        "CountrySubDivision": "Vaduz District",
+                        "Department": "Treasury",
+                        "DistrictName": "Upper Vaduz",
+                        "Postbox": "PO Box 123",
+                        "Room": "Suite 500",
+                        "SubDepartment": "International Payments",
+                        "TownLocationName": "Banking District"
+                      }
+                    },
+                    "CreditorAccount": {
+                      "Id": {
+                        "IBAN": "LI08088110102720K000E"
+                      }
+                    },
+                    "CreditorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22"
+                      }
+                    },
+                    "Debtor": {
+                      "Name": "John Smith",
+                      "PostalAddress": {
+                        "StreetName": "Boulevard de la Foire",
+                        "BuildingNumber": "42",
+                        "PostalCode": "L-2411",
+                        "TownName": "Luxembourg",
+                        "Country": "LU",
+                        "CountrySubDivision": "Luxembourg District",
+                        "Department": "Finance Department",
+                        "DistrictName": "Centre",
+                        "Postbox": "PO Box 456",
+                        "Room": "Room 301",
+                        "SubDepartment": "Payment Operations",
+                        "TownLocationName": "Downtown Luxembourg"
+                      }
+                    },
+                    "DebtorAccount": {
+                      "Id": {
+                        "IBAN": "LU280019400644750000"
+                      }
+                    },
+                    "DebtorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "ARSPLU21"
+                      }
+                    },
+                    "TransactionAmount": {
+                      "Currency": "EUR",
+                      "Amount": 150.5
+                    },
+                    "RemittanceInformation": {
+                      "UnstructuredReference": [
+                        "INV-2025-001789"
+                      ]
+                    }
+                  }
+                }
               }
             }
           },
