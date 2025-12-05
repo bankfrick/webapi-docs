@@ -1,0 +1,444 @@
+openapi: 3.1.0
+info:
+  title: Bank Frick Webhook Contract
+  description: |-
+    This specification describes the HTTP POST requests that Bank Frick
+    will send to customer-configured webhook URLs.
+
+    Customers should implement an HTTPS endpoint that accepts the WebhookPayload structure.
+    The webhook URL is configured per notification rule and can be any HTTPS endpoint.
+  version: 0.1.0
+servers:
+- url: https://example.com/api/webhooks/bankfrick
+  description: Example webhook endpoint (replace with your actual endpoint)
+paths: {}
+components:
+  schemas:
+    AccountDto:
+      type: object
+      description: Account details
+      properties:
+        Id:
+          $ref: "#/components/schemas/AccountIdDto"
+          description: Account identification
+    AccountIdDto:
+      type: object
+      description: Account identification
+      properties:
+        IBAN:
+          type: string
+          description: Account ID (IBAN). Max 34 characters per Pain.008. ISO-8859-1
+            character set
+          example: LI0000000000000000000
+    AgentDto:
+      type: object
+      description: Agent (bank) information
+      properties:
+        FinancialInstitution:
+          $ref: "#/components/schemas/FinancialInstitutionDto"
+          description: Financial institution details
+    FinancialInstitutionDto:
+      type: object
+      description: Financial institution information
+      properties:
+        BIC:
+          type: string
+          description: "BIC code. 8 or 11 characters per Pain.008 (format: 6 letters\
+            \ + 2 alphanumeric + optional 3 alphanumeric). ISO-8859-1 character set"
+          example: EXMPLI22XXX
+    PartyDto:
+      type: object
+      description: Party information (creditor or debtor)
+      properties:
+        Name:
+          type: string
+          description: Name of the party. Max 70 characters per Pain.008. ISO-8859-1
+            character set
+          example: Jane Doe
+        PostalAddress:
+          $ref: "#/components/schemas/PostalAddressDto"
+          description: Postal address of the party
+    PostalAddressDto:
+      type: object
+      description: Postal address information
+      properties:
+        BuildingNumber:
+          type: string
+          description: Building number. Max 16 characters per Pain.008. ISO-8859-1
+            character set
+          example: 42
+        Country:
+          type: string
+          description: "Country code. ISO 3166-1 alpha-2, 2 uppercase letters"
+          example: LU
+        CountrySubDivision:
+          type: string
+          description: Country subdivision. Max 35 characters per Pain.008. ISO-8859-1
+            character set
+          example: Sample District
+        Department:
+          type: string
+          description: Department. Max 70 characters per Pain.008. ISO-8859-1 character
+            set
+          example: Accounting Department
+        DistrictName:
+          type: string
+          description: District name. Max 35 characters per Pain.008. ISO-8859-1 character
+            set
+          example: City Center
+        Postbox:
+          type: string
+          description: Post box. Max 16 characters per Pain.008. ISO-8859-1 character
+            set
+          example: PO Box 100
+        PostalCode:
+          type: string
+          description: Postal code. Max 16 characters per Pain.008. ISO-8859-1 character
+            set
+          example: L-1234
+        Room:
+          type: string
+          description: Room. Max 70 characters per Pain.008. ISO-8859-1 character
+            set
+          example: Room 101
+        StreetName:
+          type: string
+          description: Street name. Max 70 characters per Pain.008. ISO-8859-1 character
+            set
+          example: Commerce Avenue
+        SubDepartment:
+          type: string
+          description: Sub-department. Max 70 characters per Pain.008. ISO-8859-1
+            character set
+          example: Payment Operations
+        TownLocationName:
+          type: string
+          description: Town location name. Max 35 characters per Pain.008. ISO-8859-1
+            character set
+          example: Business District
+        TownName:
+          type: string
+          description: Town name. Max 35 characters per Pain.008. ISO-8859-1 character
+            set
+          example: Sample Town
+        AddressLine:
+          type: array
+          description: "Unstructured address lines. Max 7 lines per Pain.008, each\
+            \ line max 70 characters. ISO-8859-1 character set"
+          example:
+          - Commerce Avenue 42
+          - Floor 3
+          items:
+            type: string
+    RemittanceInformationDto:
+      type: object
+      description: Remittance information
+      properties:
+        UnstructuredReference:
+          type: array
+          description: Unstructured remittance references. Each element max 140 characters
+            per Pain.008. ISO-8859-1 character set
+          example:
+          - INV-2025-0001
+          - Payment for services
+          items:
+            type: string
+    TransactionAmountDto:
+      type: object
+      description: Transaction amount
+      properties:
+        Currency:
+          type: string
+          description: Currency code. 3-letter ISO 4217 code
+          example: EUR
+        Amount:
+          type: string
+          description: Amount value. Should be positive per Pain.008
+          example: 100.0
+    WebhookPayloadDto:
+      type: object
+      description: Webhook notification payload with ISO 20022 transaction data
+      properties:
+        AcceptanceDateTime:
+          type: string
+          description: Acceptance date and time
+          example: 2025-11-18T15:41:46.141Z
+        Creditor:
+          $ref: "#/components/schemas/PartyDto"
+          description: Creditor party information
+        CreditorAccount:
+          $ref: "#/components/schemas/AccountDto"
+          description: Creditor account details
+        CreditorAgent:
+          $ref: "#/components/schemas/AgentDto"
+          description: Creditor agent (bank) information
+        Debtor:
+          $ref: "#/components/schemas/PartyDto"
+          description: Debtor party information
+        DebtorAccount:
+          $ref: "#/components/schemas/AccountDto"
+          description: Debtor account details
+        DebtorAgent:
+          $ref: "#/components/schemas/AgentDto"
+          description: Debtor agent (bank) information
+        TransactionAmount:
+          $ref: "#/components/schemas/TransactionAmountDto"
+          description: Transaction amount and currency
+        RemittanceInformation:
+          $ref: "#/components/schemas/RemittanceInformationDto"
+          description: Remittance information
+    ProblemDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+          format: int32
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri
+        properties:
+          type: object
+          additionalProperties: {}
+webhooks:
+  notificationWebhook:
+    post:
+      summary: Webhook notification
+      description: |-
+        Bank Frick will POST webhook notifications to the URL you configure in your notification rule.
+
+        You can configure any HTTPS endpoint URL. The path is entirely up to you.
+
+        Example URLs:
+        - https://your-domain.com/api/webhooks/bankfrick
+        - https://your-domain.com/notifications
+        - https://api.your-service.com/v1/incoming-webhooks
+      parameters:
+      - name: Algorithm
+        in: header
+        description: Signature algorithm used to sign the webhook payload
+        required: true
+        schema:
+          type: string
+          enum:
+          - rsa-sha512
+          example: rsa-sha512
+      - name: Signature
+        in: header
+        description: Base64-encoded RSA signature of the webhook payload. Verify using
+          the public key to ensure the webhook came from Bank Frick
+        required: true
+        schema:
+          type: string
+          example: MEUCIQDf...truncated...
+      requestBody:
+        description: Webhook notification payload
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebhookPayloadDto"
+            examples:
+              instant_payment_received_address_lines:
+                summary: Instant payment received with unstructured address lines
+                  in postal address
+                description: instant_payment_received_address_lines
+                value:
+                  AcceptanceDateTime: 2025-11-18T15:41:46.141Z
+                  Creditor:
+                    Name: Example Bank AG
+                    PostalAddress:
+                      TownName: Example City
+                      Country: LI
+                      AddressLine:
+                      - Main Street 123
+                      - Floor 5
+                      - Building A
+                      - Finance Division
+                      - Payment Processing
+                      - PO Box 100
+                      - "Example City, LI 9490"
+                  CreditorAccount:
+                    Id:
+                      IBAN: LI0000000000000000000
+                  CreditorAgent:
+                    FinancialInstitution:
+                      BIC: EXMPLI22XXX
+                  Debtor:
+                    Name: Jane Doe
+                    PostalAddress:
+                      TownName: Sample Town
+                      Country: LU
+                      AddressLine:
+                      - Commerce Avenue 42
+                      - Room 101
+                      - Accounting Department
+                      - Payment Operations
+                      - Business District
+                      - PO Box 200
+                      - "Sample Town, LU L-1234"
+                  DebtorAccount:
+                    Id:
+                      IBAN: LU000000000000000000
+                  DebtorAgent:
+                    FinancialInstitution:
+                      BIC: SMPBLU22XXX
+                  TransactionAmount:
+                    Currency: EUR
+                    Amount: 100.0
+                  RemittanceInformation:
+                    UnstructuredReference:
+                    - INV-2025-0001
+              instant_payment_received_structured_address:
+                summary: Instant payment received with structured address fields in
+                  postal address
+                description: instant_payment_received_structured_address
+                value:
+                  AcceptanceDateTime: 2025-11-18T15:41:46.141Z
+                  Creditor:
+                    Name: Example Bank AG
+                    PostalAddress:
+                      StreetName: Main Street
+                      BuildingNumber: "123"
+                      PostalCode: "9490"
+                      TownName: Example City
+                      Country: LI
+                      CountrySubDivision: Example District
+                      Department: Treasury
+                      DistrictName: Central District
+                      Postbox: PO Box 100
+                      Room: Floor 5
+                      SubDepartment: Payment Processing
+                      TownLocationName: Business District
+                  CreditorAccount:
+                    Id:
+                      IBAN: LI0000000000000000000
+                  CreditorAgent:
+                    FinancialInstitution:
+                      BIC: EXMPLI22XXX
+                  Debtor:
+                    Name: Jane Doe
+                    PostalAddress:
+                      StreetName: Commerce Avenue
+                      BuildingNumber: "42"
+                      PostalCode: L-1234
+                      TownName: Sample Town
+                      Country: LU
+                      CountrySubDivision: Sample District
+                      Department: Accounting Department
+                      DistrictName: City Center
+                      Postbox: PO Box 200
+                      Room: Room 101
+                      SubDepartment: Payment Operations
+                      TownLocationName: Business District
+                  DebtorAccount:
+                    Id:
+                      IBAN: LU000000000000000000
+                  DebtorAgent:
+                    FinancialInstitution:
+                      BIC: SMPBLU22XXX
+                  TransactionAmount:
+                    Currency: EUR
+                    Amount: 100.0
+                  RemittanceInformation:
+                    UnstructuredReference:
+                    - INV-2025-0001
+        required: true
+      responses:
+        "204":
+          description: Webhook received and accepted for processing
+        "408":
+          description: Request Timeout - webhook will be retried
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                timeout:
+                  description: timeout
+                  value:
+                    type: about:blank
+                    title: Request Timeout
+                    status: 408
+                    detail: The request timed out
+                    instance: /api/webhooks
+        "429":
+          description: Too Many Requests - webhook will be retried
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                too_many_requests:
+                  description: too_many_requests
+                  value:
+                    type: about:blank
+                    title: Too Many Requests
+                    status: 429
+                    detail: Too many requests have been received
+                    instance: /api/webhooks
+        "500":
+          description: Internal Server Error - webhook will be retried
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                internal_server_error:
+                  description: internal_server_error
+                  value:
+                    type: about:blank
+                    title: Internal Server Error
+                    status: 500
+                    detail: An unexpected error occurred while processing your request
+                    instance: /api/webhooks
+        "502":
+          description: Bad Gateway - webhook will be retried
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                bad_gateway:
+                  description: bad_gateway
+                  value:
+                    type: about:blank
+                    title: Bad Gateway
+                    status: 502
+                    detail: Bad gateway error occurred
+                    instance: /api/webhooks
+        "503":
+          description: Service Unavailable - webhook will be retried
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                service_unavailable:
+                  description: service_unavailable
+                  value:
+                    type: about:blank
+                    title: Service Unavailable
+                    status: 503
+                    detail: The service is temporarily unavailable
+                    instance: /api/webhooks
+        "504":
+          description: Gateway Timeout - webhook will be retried
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                gateway_timeout:
+                  description: gateway_timeout
+                  value:
+                    type: about:blank
+                    title: Gateway Timeout
+                    status: 504
+                    detail: Gateway timeout occurred
+                    instance: /api/webhooks
