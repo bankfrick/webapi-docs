@@ -30,8 +30,8 @@
         "properties": {
           "IBAN": {
             "type": "string",
-            "description": "Account ID (IBAN)",
-            "example": "LI21088110101234567890"
+            "description": "Account ID (IBAN). Max 34 characters per Pain.008. ISO-8859-1 character set",
+            "example": "LI0000000000000000000"
           }
         }
       },
@@ -51,8 +51,8 @@
         "properties": {
           "BIC": {
             "type": "string",
-            "description": "BIC code",
-            "example": "BFRILI22XXX"
+            "description": "BIC code. 8 or 11 characters per Pain.008 (format: 6 letters + 2 alphanumeric + optional 3 alphanumeric). ISO-8859-1 character set",
+            "example": "EXMPLI22XXX"
           }
         }
       },
@@ -62,8 +62,8 @@
         "properties": {
           "Name": {
             "type": "string",
-            "description": "Name of the party",
-            "example": "John Smith"
+            "description": "Name of the party. Max 70 characters per Pain.008. ISO-8859-1 character set",
+            "example": "Jane Doe"
           },
           "PostalAddress": {
             "$ref": "#/components/schemas/PostalAddressDto",
@@ -77,70 +77,70 @@
         "properties": {
           "BuildingNumber": {
             "type": "string",
-            "description": "Building number",
+            "description": "Building number. Max 16 characters per Pain.008. ISO-8859-1 character set",
             "example": 42
           },
           "Country": {
             "type": "string",
-            "description": "Country code",
+            "description": "Country code. ISO 3166-1 alpha-2, 2 uppercase letters",
             "example": "LU"
           },
           "CountrySubDivision": {
             "type": "string",
-            "description": "Country subdivision",
-            "example": "Luxembourg District"
+            "description": "Country subdivision. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "example": "Sample District"
           },
           "Department": {
             "type": "string",
-            "description": "Department",
-            "example": "Finance Department"
+            "description": "Department. Max 70 characters per Pain.008. ISO-8859-1 character set",
+            "example": "Accounting Department"
           },
           "DistrictName": {
             "type": "string",
-            "description": "District name",
-            "example": "Centre"
+            "description": "District name. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "example": "City Center"
           },
           "Postbox": {
             "type": "string",
-            "description": "Post box",
-            "example": "PO Box 123"
+            "description": "Post box. Max 16 characters per Pain.008. ISO-8859-1 character set",
+            "example": "PO Box 100"
           },
           "PostalCode": {
             "type": "string",
-            "description": "Postal code",
+            "description": "Postal code. Max 16 characters per Pain.008. ISO-8859-1 character set",
             "example": "L-1234"
           },
           "Room": {
             "type": "string",
-            "description": "Room",
-            "example": "Room 301"
+            "description": "Room. Max 70 characters per Pain.008. ISO-8859-1 character set",
+            "example": "Room 101"
           },
           "StreetName": {
             "type": "string",
-            "description": "Street name",
-            "example": "Avenue de la Liberté"
+            "description": "Street name. Max 70 characters per Pain.008. ISO-8859-1 character set",
+            "example": "Commerce Avenue"
           },
           "SubDepartment": {
             "type": "string",
-            "description": "Sub-department",
-            "example": "Accounting"
+            "description": "Sub-department. Max 70 characters per Pain.008. ISO-8859-1 character set",
+            "example": "Payment Operations"
           },
           "TownLocationName": {
             "type": "string",
-            "description": "Town location name",
-            "example": "City Center"
+            "description": "Town location name. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "example": "Business District"
           },
           "TownName": {
             "type": "string",
-            "description": "Town name",
-            "example": "Luxembourg"
+            "description": "Town name. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "example": "Sample Town"
           },
           "AddressLine": {
             "type": "array",
-            "description": "Unstructured address lines",
+            "description": "Unstructured address lines. Max 7 lines per Pain.008, each line max 70 characters. ISO-8859-1 character set",
             "example": [
-              "Avenue de la Liberté 42",
-              "3rd Floor"
+              "Commerce Avenue 42",
+              "Floor 3"
             ],
             "items": {
               "type": "string"
@@ -154,9 +154,9 @@
         "properties": {
           "UnstructuredReference": {
             "type": "array",
-            "description": "Unstructured remittance references",
+            "description": "Unstructured remittance references. Each element max 140 characters per Pain.008. ISO-8859-1 character set",
             "example": [
-              "INV-2025-001789",
+              "INV-2025-0001",
               "Payment for services"
             ],
             "items": {
@@ -171,13 +171,13 @@
         "properties": {
           "Currency": {
             "type": "string",
-            "description": "Currency code",
+            "description": "Currency code. 3-letter ISO 4217 code",
             "example": "EUR"
           },
           "Amount": {
             "type": "string",
-            "description": "Amount value",
-            "example": 150.5
+            "description": "Amount value. Should be positive per Pain.008",
+            "example": 100.0
           }
         }
       },
@@ -297,64 +297,64 @@
                   "value": {
                     "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
                     "Creditor": {
-                      "Name": "Bank Frick Ltd",
+                      "Name": "Example Bank AG",
                       "PostalAddress": {
-                        "TownName": "Vaduz",
+                        "TownName": "Example City",
                         "Country": "LI",
                         "AddressLine": [
-                          "Sägerstrasse 6",
-                          "Suite 500",
-                          "Banking District",
-                          "Treasury Department",
-                          "International Payments",
-                          "PO Box 123",
-                          "Vaduz, LI 9490"
+                          "Main Street 123",
+                          "Floor 5",
+                          "Building A",
+                          "Finance Division",
+                          "Payment Processing",
+                          "PO Box 100",
+                          "Example City, LI 9490"
                         ]
                       }
                     },
                     "CreditorAccount": {
                       "Id": {
-                        "IBAN": "LI08088110102720K000E"
+                        "IBAN": "LI0000000000000000000"
                       }
                     },
                     "CreditorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "BFRILI22"
+                        "BIC": "EXMPLI22XXX"
                       }
                     },
                     "Debtor": {
-                      "Name": "John Smith",
+                      "Name": "Jane Doe",
                       "PostalAddress": {
-                        "TownName": "Luxembourg",
+                        "TownName": "Sample Town",
                         "Country": "LU",
                         "AddressLine": [
-                          "Boulevard de la Foire 42",
-                          "Room 301",
-                          "Finance Department",
+                          "Commerce Avenue 42",
+                          "Room 101",
+                          "Accounting Department",
                           "Payment Operations",
-                          "Downtown Luxembourg",
-                          "PO Box 456",
-                          "Luxembourg, LU L-2411"
+                          "Business District",
+                          "PO Box 200",
+                          "Sample Town, LU L-1234"
                         ]
                       }
                     },
                     "DebtorAccount": {
                       "Id": {
-                        "IBAN": "LU280019400644750000"
+                        "IBAN": "LU000000000000000000"
                       }
                     },
                     "DebtorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "ARSPLU21"
+                        "BIC": "SMPBLU22XXX"
                       }
                     },
                     "TransactionAmount": {
                       "Currency": "EUR",
-                      "Amount": 150.5
+                      "Amount": 100.0
                     },
                     "RemittanceInformation": {
                       "UnstructuredReference": [
-                        "INV-2025-001789"
+                        "INV-2025-0001"
                       ]
                     }
                   }
@@ -365,66 +365,66 @@
                   "value": {
                     "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
                     "Creditor": {
-                      "Name": "Bank Frick Ltd",
+                      "Name": "Example Bank AG",
                       "PostalAddress": {
-                        "StreetName": "Sägerstrasse",
-                        "BuildingNumber": "6",
+                        "StreetName": "Main Street",
+                        "BuildingNumber": "123",
                         "PostalCode": "9490",
-                        "TownName": "Vaduz",
+                        "TownName": "Example City",
                         "Country": "LI",
-                        "CountrySubDivision": "Vaduz District",
+                        "CountrySubDivision": "Example District",
                         "Department": "Treasury",
-                        "DistrictName": "Upper Vaduz",
-                        "Postbox": "PO Box 123",
-                        "Room": "Suite 500",
-                        "SubDepartment": "International Payments",
-                        "TownLocationName": "Banking District"
+                        "DistrictName": "Central District",
+                        "Postbox": "PO Box 100",
+                        "Room": "Floor 5",
+                        "SubDepartment": "Payment Processing",
+                        "TownLocationName": "Business District"
                       }
                     },
                     "CreditorAccount": {
                       "Id": {
-                        "IBAN": "LI08088110102720K000E"
+                        "IBAN": "LI0000000000000000000"
                       }
                     },
                     "CreditorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "BFRILI22"
+                        "BIC": "EXMPLI22XXX"
                       }
                     },
                     "Debtor": {
-                      "Name": "John Smith",
+                      "Name": "Jane Doe",
                       "PostalAddress": {
-                        "StreetName": "Boulevard de la Foire",
+                        "StreetName": "Commerce Avenue",
                         "BuildingNumber": "42",
-                        "PostalCode": "L-2411",
-                        "TownName": "Luxembourg",
+                        "PostalCode": "L-1234",
+                        "TownName": "Sample Town",
                         "Country": "LU",
-                        "CountrySubDivision": "Luxembourg District",
-                        "Department": "Finance Department",
-                        "DistrictName": "Centre",
-                        "Postbox": "PO Box 456",
-                        "Room": "Room 301",
+                        "CountrySubDivision": "Sample District",
+                        "Department": "Accounting Department",
+                        "DistrictName": "City Center",
+                        "Postbox": "PO Box 200",
+                        "Room": "Room 101",
                         "SubDepartment": "Payment Operations",
-                        "TownLocationName": "Downtown Luxembourg"
+                        "TownLocationName": "Business District"
                       }
                     },
                     "DebtorAccount": {
                       "Id": {
-                        "IBAN": "LU280019400644750000"
+                        "IBAN": "LU000000000000000000"
                       }
                     },
                     "DebtorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "ARSPLU21"
+                        "BIC": "SMPBLU22XXX"
                       }
                     },
                     "TransactionAmount": {
                       "Currency": "EUR",
-                      "Amount": 150.5
+                      "Amount": 100.0
                     },
                     "RemittanceInformation": {
                       "UnstructuredReference": [
-                        "INV-2025-001789"
+                        "INV-2025-0001"
                       ]
                     }
                   }
@@ -453,7 +453,7 @@
                       "title": "Request Timeout",
                       "status": 408,
                       "detail": "The request timed out",
-                      "instance": "/webhooks/bankfrick"
+                      "instance": "/api/webhooks"
                     }
                   }
                 }
@@ -475,7 +475,7 @@
                       "title": "Too Many Requests",
                       "status": 429,
                       "detail": "Too many requests have been received",
-                      "instance": "/webhooks/bankfrick"
+                      "instance": "/api/webhooks"
                     }
                   }
                 }
@@ -497,7 +497,7 @@
                       "title": "Internal Server Error",
                       "status": 500,
                       "detail": "An unexpected error occurred while processing your request",
-                      "instance": "/webhooks/bankfrick"
+                      "instance": "/api/webhooks"
                     }
                   }
                 }
@@ -519,7 +519,7 @@
                       "title": "Bad Gateway",
                       "status": 502,
                       "detail": "Bad gateway error occurred",
-                      "instance": "/webhooks/bankfrick"
+                      "instance": "/api/webhooks"
                     }
                   }
                 }
@@ -541,7 +541,7 @@
                       "title": "Service Unavailable",
                       "status": 503,
                       "detail": "The service is temporarily unavailable",
-                      "instance": "/webhooks/bankfrick"
+                      "instance": "/api/webhooks"
                     }
                   }
                 }
@@ -563,7 +563,7 @@
                       "title": "Gateway Timeout",
                       "status": 504,
                       "detail": "Gateway timeout occurred",
-                      "instance": "/webhooks/bankfrick"
+                      "instance": "/api/webhooks"
                     }
                   }
                 }
