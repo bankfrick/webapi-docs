@@ -134,8 +134,8 @@
         "tags": [
           "instant-transactions-topic-rules-controller"
         ],
-        "summary": "Create a new instant transaction notification rule",
-        "description": "Creates a new notification rule that defines which transactions trigger notifications.",
+        "summary": "Create new instant transaction notification rules",
+        "description": "Create new notification rules that define which transaction events trigger notifications.",
         "operationId": "createRule",
         "parameters": [
           {
@@ -166,7 +166,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateInstantTransactionsRuleDto"
+                "$ref": "#/components/schemas/CreateInstantTransactionsRulesDto"
               }
             }
           },
@@ -174,11 +174,11 @@
         },
         "responses": {
           "201": {
-            "description": "Rule created successfully",
+            "description": "Rules created successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/InstantTransactionsRuleDto"
+                  "$ref": "#/components/schemas/CreatedInstantTransactionsRulesDto"
                 }
               }
             }
@@ -488,19 +488,25 @@
   },
   "components": {
     "schemas": {
-      "CreateInstantTransactionsRuleDto": {
+      "CreateInstantTransactionsRulesDto": {
         "type": "object",
-        "description": "Request to create a new instant transaction notification rule",
+        "description": "Request to create new instant transaction notification rules",
         "properties": {
           "name": {
             "type": "string",
             "description": "Name of the rule",
             "example": "All incoming instant transactions"
           },
-          "customerNumber": {
-            "type": "string",
-            "description": "Customer number that that this rule applies to",
-            "example": "0123456"
+          "accountNumbers": {
+            "type": "array",
+            "description": "Account numbers (IBANs) that this rule applies to",
+            "example": [
+              "LI6208811MABBVH6B9X0N",
+              "LI3408811MAJOD8ZBK7DU"
+            ],
+            "items": {
+              "type": "string"
+            }
           },
           "targets": {
             "$ref": "#/components/schemas/NotificationTargetsDto",
@@ -515,7 +521,7 @@
           }
         },
         "required": [
-          "customerNumber",
+          "accountNumbers",
           "events",
           "name",
           "targets"
@@ -545,19 +551,30 @@
         "type": "object",
         "description": "Notification targets for a rule",
         "properties": {
-          "webhookUrls": {
+          "webhookUrl": {
+            "type": "string",
+            "description": "Webhook URL that will receive notifications",
+            "example": "https://api.example.com/webhooks/transactions"
+          }
+        },
+        "required": [
+          "webhookUrl"
+        ]
+      },
+      "CreatedInstantTransactionsRulesDto": {
+        "type": "object",
+        "description": "List of instant transaction notification rules",
+        "properties": {
+          "rules": {
             "type": "array",
-            "description": "List of webhook URLs that will receive notifications",
-            "example": [
-              "https://api.example.com/webhooks/transactions"
-            ],
+            "description": "List of rules that were created by the request",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/InstantTransactionsRuleDto"
             }
           }
         },
         "required": [
-          "webhookUrls"
+          "rules"
         ]
       },
       "InstantTransactionsRuleDto": {
@@ -581,9 +598,9 @@
             "type": "string",
             "description": "Name of the rule"
           },
-          "customerNumber": {
+          "accountNumber": {
             "type": "string",
-            "description": "Customer number that that this rule applies to"
+            "description": "Account number (IBAN) that this rule applies to"
           },
           "targets": {
             "$ref": "#/components/schemas/NotificationTargetsDto",
@@ -614,7 +631,7 @@
           }
         },
         "required": [
-          "customerNumber",
+          "accountNumber",
           "events",
           "id",
           "name",

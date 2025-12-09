@@ -9,10 +9,9 @@ e.g. when an incoming instant transaction has been booked.
 
 This is managed by rules, which can specify for which customer and which notification types which webhook URLs will be
 posted to.
-To be able to create such rules, users need to be authenticated and have access to the customer the rule will apply to.
+To be able to create such rules, users need to be authenticated and have access to all accounts the rule will apply to.
 
-A single rule can send to multiple webhooks (e.g. a logging endpoint and a Slack channel), and it can notify about one
-or multiple event types.
+A single rule can notify about one or multiple event types.
 
 ### Notification Rules Full Specifications
 
@@ -68,9 +67,10 @@ Algorithm: ...
 Body: see full specifications
 ```
 
-## Create Rule
+## Create Rules
 
-A new rule can be created to notify about selected events for a given customer.
+New rules can be created to notify about selected events for given accounts.
+One rule will be created for each listed account.
 
 > Request
 
@@ -117,6 +117,7 @@ Body: see full specifications
 - the rule MUST specify at least one webhook URL
 - webhook URLs MUST explicitly use the `https://` scheme
 - the rule MUST specify at least one event type
+- the acting user MUST have access to ALL listed accounts
 
 ## Deactivate Rule
 
