@@ -81,7 +81,8 @@ BaseURL = \<Environment URL\>/webapi/
 Schemes: https
 
 <aside class="notice">
-Daily maintenance is scheduled between 23:00 and 00:00 (GMT+1), during which you may experience disruptions with the API service.
+Between 11:00 p.m. and 4:00 a.m. (GMT+1), daily maintenance is performed in the __test__ and __sandbox__ environments.
+During this period, interruptions of the API service may occur, but the API will not be continuously unavailable.
 </aside>
 
 ## OpenAPI Specification
