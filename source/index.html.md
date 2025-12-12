@@ -81,7 +81,7 @@ BaseURL = \<Environment URL\>/webapi/
 Schemes: https
 
 <aside class="notice">
-Between 11:00 p.m. and 4:00 a.m. (GMT+1), daily maintenance is performed in the __test__ and __sandbox__ environments.
+Between 11:00 p.m. and 4:00 a.m. (GMT+1), daily maintenance is performed in the **test** and **sandbox** environments.
 During this period, interruptions of the API service may occur, but the API will not be continuously unavailable.
 </aside>
 
