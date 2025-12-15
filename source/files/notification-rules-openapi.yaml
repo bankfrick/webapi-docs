@@ -27,6 +27,7 @@ paths:
           type: integer
           format: int32
           default: 100
+          minimum: 1
       - name: pageIndex
         in: query
         required: false
@@ -34,6 +35,7 @@ paths:
           type: integer
           format: int32
           default: 0
+          minimum: 0
       responses:
         "200":
           description: Rules found
@@ -334,14 +336,21 @@ components:
           type: string
           description: Name of the rule
           example: All incoming instant transactions
+          maxLength: 255
+          minLength: 3
         accountNumbers:
           type: array
           description: Account numbers (IBANs) that this rule applies to
           example:
-          - LI6208811MABBVH6B9X0N
-          - LI3408811MAJOD8ZBK7DU
+          - LI6808811000000001234
+          - LI11188110101101K001E
+          - LI12345610609195K000E
           items:
             type: string
+            minLength: 1
+          maxItems: 25
+          minItems: 1
+          uniqueItems: true
         targets:
           $ref: "#/components/schemas/NotificationTargetsDto"
           description: Notification targets (e.g. a webhook) for this rule
@@ -350,6 +359,8 @@ components:
           description: List of transaction events that trigger this rule
           items:
             $ref: "#/components/schemas/InstantTransactionsEventDto"
+          minItems: 1
+          uniqueItems: true
       required:
       - accountNumbers
       - events
@@ -375,8 +386,15 @@ components:
       properties:
         webhookUrl:
           type: string
-          description: Webhook URL that will receive notifications
+          format: uri
+          description: |-
+            Webhook URL that will receive notifications.
+            Requirements:
+            - Must use HTTPS protocol
+            - Must point to a publicly resolvable domain (no IP addresses)
           example: https://api.example.com/webhooks/transactions
+          maxLength: 2048
+          minLength: 1
       required:
       - webhookUrl
     CreatedInstantTransactionsRulesDto:
