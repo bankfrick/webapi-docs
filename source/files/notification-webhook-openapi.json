@@ -314,12 +314,12 @@
                     },
                     "CreditorAccount": {
                       "Id": {
-                        "IBAN": "LI0000000000000000000"
+                        "IBAN": "LI6808811000000001234"
                       }
                     },
                     "CreditorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "EXMPLI22XXX"
+                        "BIC": "BFRILI22XXX"
                       }
                     },
                     "Debtor": {
@@ -340,12 +340,12 @@
                     },
                     "DebtorAccount": {
                       "Id": {
-                        "IBAN": "LU000000000000000000"
+                        "IBAN": "LI11188110101101K001E"
                       }
                     },
                     "DebtorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "SMPBLU22XXX"
+                        "BIC": "BFRILI22XXX"
                       }
                     },
                     "TransactionAmount": {
@@ -383,12 +383,12 @@
                     },
                     "CreditorAccount": {
                       "Id": {
-                        "IBAN": "LI0000000000000000000"
+                        "IBAN": "LI6808811000000001234"
                       }
                     },
                     "CreditorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "EXMPLI22XXX"
+                        "BIC": "BFRILI22XXX"
                       }
                     },
                     "Debtor": {
@@ -410,12 +410,12 @@
                     },
                     "DebtorAccount": {
                       "Id": {
-                        "IBAN": "LU000000000000000000"
+                        "IBAN": "LI11188110101101K001E"
                       }
                     },
                     "DebtorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "SMPBLU22XXX"
+                        "BIC": "BFRILI22XXX"
                       }
                     },
                     "TransactionAmount": {

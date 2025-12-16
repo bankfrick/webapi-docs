@@ -265,10 +265,10 @@ webhooks:
                       - "Example City, LI 9490"
                   CreditorAccount:
                     Id:
-                      IBAN: LI0000000000000000000
+                      IBAN: LI6808811000000001234
                   CreditorAgent:
                     FinancialInstitution:
-                      BIC: EXMPLI22XXX
+                      BIC: BFRILI22XXX
                   Debtor:
                     Name: Jane Doe
                     PostalAddress:
@@ -284,10 +284,10 @@ webhooks:
                       - "Sample Town, LU L-1234"
                   DebtorAccount:
                     Id:
-                      IBAN: LU000000000000000000
+                      IBAN: LI11188110101101K001E
                   DebtorAgent:
                     FinancialInstitution:
-                      BIC: SMPBLU22XXX
+                      BIC: BFRILI22XXX
                   TransactionAmount:
                     Currency: EUR
                     Amount: 100.0
@@ -317,10 +317,10 @@ webhooks:
                       TownLocationName: Business District
                   CreditorAccount:
                     Id:
-                      IBAN: LI0000000000000000000
+                      IBAN: LI6808811000000001234
                   CreditorAgent:
                     FinancialInstitution:
-                      BIC: EXMPLI22XXX
+                      BIC: BFRILI22XXX
                   Debtor:
                     Name: Jane Doe
                     PostalAddress:
@@ -338,10 +338,10 @@ webhooks:
                       TownLocationName: Business District
                   DebtorAccount:
                     Id:
-                      IBAN: LU000000000000000000
+                      IBAN: LI11188110101101K001E
                   DebtorAgent:
                     FinancialInstitution:
-                      BIC: SMPBLU22XXX
+                      BIC: BFRILI22XXX
                   TransactionAmount:
                     Currency: EUR
                     Amount: 100.0
