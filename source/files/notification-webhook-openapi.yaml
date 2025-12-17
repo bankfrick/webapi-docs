@@ -7,7 +7,7 @@ info:
 
     Customers should implement an HTTPS endpoint that accepts the WebhookPayload structure.
     The webhook URL is configured per notification rule and can be any HTTPS endpoint.
-  version: 0.1.0
+  version: 1.0.0
 servers:
 - url: https://example.com/api/webhooks/bankfrick
   description: Example webhook endpoint (replace with your actual endpoint)
