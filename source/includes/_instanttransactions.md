@@ -3,7 +3,7 @@
 Instant transactions can trigger near real-time notifications (similar to
 regular [Webhooks](#getting-started-webhooks-classic)).
 
-Clients can [create notification rules](#instant-transaction-notification-rules-create-rule) that instruct the system
+Clients can [create notification rules](#instant-transaction-notification-rules-create-rules) that instruct the system
 to perform Rest calls to the defined custom URLs upon selected events,
 e.g. when an incoming instant transaction has been booked.
 
