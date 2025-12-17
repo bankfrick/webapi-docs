@@ -4,7 +4,7 @@ info:
   description: API for managing notification rules. Allows to define notification
     targets (e.g. a webhook URL) endpoints that receive notifications when specific
     transaction events occur.
-  version: 0.1.0
+  version: 1.0.0
 servers:
 - url: https://api-test.bankfrick.li/onlinebanking/notifications
   description: Test

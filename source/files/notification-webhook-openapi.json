@@ -3,7 +3,7 @@
   "info": {
     "title": "Bank Frick Webhook Contract",
     "description": "This specification describes the HTTP POST requests that Bank Frick\nwill send to customer-configured webhook URLs.\n\nCustomers should implement an HTTPS endpoint that accepts the WebhookPayload structure.\nThe webhook URL is configured per notification rule and can be any HTTPS endpoint.",
-    "version": "0.1.0"
+    "version": "1.0.0"
   },
   "servers": [
     {
