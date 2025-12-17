@@ -15,13 +15,13 @@ A single rule can notify about one or multiple event types.
 
 ### Notification Rules Full Specifications
 
-- [Notification Rules OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/SDE-1164-document-instant-transaction-notifications/source/files/notification-rules-openapi.json)
-- [Notification Rules OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/SDE-1164-document-instant-transaction-notifications/source/files/notification-rules-openapi.yaml)
+- [Notification Rules OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/notification-rules-openapi.json)
+- [Notification Rules OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/notification-rules-openapi.yaml)
 
 ### Webhooks Specifications
 
-- [Webhooks OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/SDE-1164-document-instant-transaction-notifications/source/files/notification-webhook-openapi.json)
-- [Webhooks OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/SDE-1164-document-instant-transaction-notifications/source/files/notification-webhook-openapi.yaml)
+- [Webhooks OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/notification-webhook-openapi.json)
+- [Webhooks OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/notification-webhook-openapi.yaml)
 
 ## List Rules
 
