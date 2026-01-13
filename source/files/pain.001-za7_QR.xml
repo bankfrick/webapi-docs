@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd  pain.001.001.03.ch.02.xsd">
+  <CstmrCdtTrfInitn>
+    <GrpHdr>
+      <!-- NOTE: Change the last number to reupload the file -->
+      <MsgId>QR-1001</MsgId>
+      <CreDtTm>2026-01-12T09:29:05</CreDtTm>
+      <NbOfTxs>1</NbOfTxs>
+      <CtrlSum>100.00</CtrlSum>
+      <InitgPty>
+        <Nm>Your Company</Nm>
+      </InitgPty>
+    </GrpHdr>
+    <PmtInf>
+      <PmtInfId>1</PmtInfId>
+      <PmtMtd>TRF</PmtMtd>
+      <BtchBookg>true</BtchBookg>
+      <!-- Must be today or a future date -->
+      <ReqdExctnDt>2026-01-12</ReqdExctnDt>
+      <Dbtr>
+        <Nm>Your Company</Nm>
+      </Dbtr>
+      <DbtrAcct>
+        <Id>
+          <!-- NOTE: Replace with a syntactically valid IBAN of your account -->
+          <IBAN>LI12XXXX0000000000XXX</IBAN>
+        </Id>
+      </DbtrAcct>
+      <DbtrAgt>
+        <FinInstnId>
+          <!-- NOTE: Always the same Bank Frick BIC -->
+          <BIC>BFRILI22</BIC>
+        </FinInstnId>
+      </DbtrAgt>
+      <CdtTrfTxInf>
+        <PmtId>
+          <InstrId>Your unique ID_1</InstrId>
+          <EndToEndId>Your EndtoEndId_1</EndToEndId>
+        </PmtId>
+        <Amt>
+          <InstdAmt Ccy="CHF">100.00</InstdAmt>
+        </Amt>
+        <Cdtr>
+          <Nm>Customer Company</Nm>
+          <PstlAdr>
+            <StrtNm>Example Street</StrtNm>
+            <BldgNb>10</BldgNb>
+            <PstCd>9496</PstCd>
+            <TwnNm>Balzers</TwnNm>
+            <Ctry>LI</Ctry>
+          </PstlAdr>
+        </Cdtr>
+        <CdtrAcct>
+          <Id>
+            <!-- Recipient QR-IBAN -->
+            <IBAN>CH12XXXX0000000000XXX</IBAN>
+          </Id>
+        </CdtrAcct>
+        <RmtInf>
+          <Strd>
+            <CdtrRefInf>
+              <Tp>
+                <CdOrPrtry>
+                  <Prtry>QRR</Prtry>
+                </CdOrPrtry>
+              </Tp>
+              <!-- QR Reference-->
+              <Ref>000000000000000000026020662</Ref>
+            </CdtrRefInf>
+          </Strd>
+        </RmtInf>
+      </CdtTrfTxInf>
+    </PmtInf>
+  </CstmrCdtTrfInitn>
+</Document>

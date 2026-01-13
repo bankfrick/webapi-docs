@@ -50,6 +50,7 @@ Upload a pain.001 message. Note that errors respectively the status regarding pa
 | <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/master/source/files/pain.001-za4_SEPA.xml" download>SEPA Payment</a> |  | IBAN in Europe |   | EUR |
 | <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/master/source/files/pain.001-za5_SWIFTwithIBAN.xml" download>Foreign Payment (SWIFT)</a> |  | IBAN | BIC | Any Currency |
 | <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/master/source/files/pain.001-za6_SWIFTwithAccountNr.xml" download>Foreign Payment (SWIFT)</a> |  | Account Number | BIC | Any Currency |
+| <a href="https://raw.githubusercontent.com/bankfrick/webapi-docs/master/source/files/pain.001-za7_QR.xml" download>QR Payment</a> |  | IBAN in CH/LI | | CHF/EUR |
 
 ## Response
 
