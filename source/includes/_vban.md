@@ -8,5 +8,5 @@ Creating, approving, and deactivation of vIBANs requires signing permissions.
 
 All details are specified in the openApi specs below:
 
-- [OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/vban-public-openapi.json)
-- [OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/vban-public-openapi.yaml)
+- [OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/openapi/vban-public-openapi.json)
+- [OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/openapi/vban-public-openapi.yaml)
