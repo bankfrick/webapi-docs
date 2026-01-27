@@ -90,8 +90,8 @@ During this period, interruptions of the API service may occur, but the API will
 
 Download the OpenAPI specification in your preferred format:
 
-- [OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/webapi-openapi.json)
-- [OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/webapi-openapi.yaml)
+- [OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/openapi/webapi-openapi.json)
+- [OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/openapi/webapi-openapi.yaml)
 
 ## Signatures
 
