@@ -23,6 +23,9 @@ A single rule can notify about one or multiple event types.
 - [Webhooks OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/openapi/notification-webhook-openapi.json)
 - [Webhooks OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/openapi/notification-webhook-openapi.yaml)
 
+Note: We do not consider adding new fields to the above defined Webhook specifications as breaking change.
+Consumers should thus tolerate additional/unknown fields in the payload.
+
 ## List Rules
 
 Retrieve a list of rules the current user can see/edit.

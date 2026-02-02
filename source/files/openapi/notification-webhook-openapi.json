@@ -3,7 +3,7 @@
   "info": {
     "title": "Bank Frick Webhook Contract",
     "description": "This specification describes the HTTP POST requests that Bank Frick\nwill send to customer-configured webhook URLs.\n\nCustomers should implement an HTTPS endpoint that accepts the WebhookPayload structure.\nThe webhook URL is configured per notification rule and can be any HTTPS endpoint.",
-    "version": "1.0.0"
+    "version": "1.2.0"
   },
   "servers": [
     {
@@ -45,6 +45,21 @@
           }
         }
       },
+      "CreditorReferenceInformationDto": {
+        "type": "object",
+        "properties": {
+          "Reference": {
+            "type": "string",
+            "description": "Creditor reference information. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "example": "ABC 123 DEF 456"
+          },
+          "CodeOrIssuer": {
+            "type": "string",
+            "description": "Creditor reference type code (1-4 characters), or name of the proprietary issuer. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "example": "CODE"
+          }
+        }
+      },
       "CustomerDto": {
         "type": "object",
         "description": "Bank Frick Customer information",
@@ -61,6 +76,14 @@
           }
         }
       },
+      "EventTypeDto": {
+        "type": "string",
+        "description": "Type of event that triggered the notification:\n  - INSTANT_TRANSACTION_RECEIVED: Event triggered when an instant transaction is received\n  - INSTANT_TRANSACTION_EXECUTED: Event triggered when an outgoing instant transaction is successfully executed",
+        "enum": [
+          "INSTANT_TRANSACTION_RECEIVED",
+          "INSTANT_TRANSACTION_EXECUTED"
+        ]
+      },
       "FinancialInstitutionDto": {
         "type": "object",
         "description": "Financial institution information",
@@ -69,6 +92,11 @@
             "type": "string",
             "description": "BIC code. 8 or 11 characters per Pain.008 (format: 6 letters + 2 alphanumeric + optional 3 alphanumeric). ISO-8859-1 character set",
             "example": "EXMPLI22XXX"
+          },
+          "Name": {
+            "type": "string",
+            "description": "Name of the financial institution. Max 140 characters per Pain.008. ISO-8859-1 character set",
+            "example": "Example Bank AG"
           }
         }
       },
@@ -204,6 +232,22 @@
             "items": {
               "type": "string"
             }
+          },
+          "StructuredReference": {
+            "type": "array",
+            "description": "Structured remittance information",
+            "items": {
+              "$ref": "#/components/schemas/StructuredRemittanceInformationDto"
+            }
+          }
+        }
+      },
+      "StructuredRemittanceInformationDto": {
+        "type": "object",
+        "properties": {
+          "CreditorReferenceInformation": {
+            "$ref": "#/components/schemas/CreditorReferenceInformationDto",
+            "description": "Creditor reference information"
           }
         }
       },
@@ -237,6 +281,10 @@
             "description": "Unique ID of event, can be used for deduplication of messages",
             "example": "cb23c1b7-9fbf-4c95-b9a2-bbdbeda05a00"
           },
+          "EventType": {
+            "$ref": "#/components/schemas/EventTypeDto",
+            "description": "Type of event that triggered the notification"
+          },
           "Customer": {
             "$ref": "#/components/schemas/CustomerDto",
             "description": "Bank Frick customer information"
@@ -268,6 +316,11 @@
           "TransactionAmount": {
             "$ref": "#/components/schemas/TransactionAmountDto",
             "description": "Transaction amount and currency"
+          },
+          "SettlementDate": {
+            "type": "string",
+            "description": "Date of settlement",
+            "example": "2025-12-18Z"
           },
           "PaymentIdentification": {
             "$ref": "#/components/schemas/PaymentIdentificationDto",
@@ -348,9 +401,10 @@
               "examples": {
                 "instant_payment_received_address_lines": {
                   "summary": "Instant payment received with unstructured address lines in postal address",
-                  "description": "instant_payment_received_address_lines",
+                  "description": "An incoming instant payment (pacs.008) where the debtor\u0027s postal address is provided using free-form address lines (AdrLine) rather than structured fields. This format is common when the originating bank does not support structured addresses.",
                   "value": {
                     "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
+                    "EventType": "INSTANT_TRANSACTION_RECEIVED",
                     "Creditor": {
                       "Name": "Example Bank AG",
                       "PostalAddress": {
@@ -416,9 +470,10 @@
                 },
                 "instant_payment_received_structured_address": {
                   "summary": "Instant payment received with structured address fields in postal address",
-                  "description": "instant_payment_received_structured_address",
+                  "description": "An incoming instant payment (pacs.008) where the debtor\u0027s postal address is provided using structured fields such as street name, building number, postal code, town, and country. This format provides better data quality for address validation and processing.",
                   "value": {
                     "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
+                    "EventType": "INSTANT_TRANSACTION_RECEIVED",
                     "Creditor": {
                       "Name": "Example Bank AG",
                       "PostalAddress": {
@@ -443,7 +498,8 @@
                     },
                     "CreditorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "BFRILI22XXX"
+                        "BIC": "BFRILI22XXX",
+                        "Name": "Bank Frick AG"
                       }
                     },
                     "Debtor": {
@@ -470,16 +526,95 @@
                     },
                     "DebtorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "BFRILI22XXX"
+                        "BIC": "BFRILI22XXX",
+                        "Name": "Bank Frick AG"
                       }
                     },
                     "TransactionAmount": {
                       "Currency": "EUR",
                       "Amount": 100.0
                     },
+                    "SettlementDate": "2025-11-19Z",
                     "RemittanceInformation": {
                       "UnstructuredReference": [
                         "INV-2025-0001"
+                      ]
+                    }
+                  }
+                },
+                "instant_payment_received_structured_remittance_information": {
+                  "summary": "Instant payment received with structured remittance information",
+                  "description": "An incoming instant payment (pacs.008) containing structured remittance information with creditor reference (e.g., ISO 11649 RF creditor reference). Useful for automated reconciliation and invoice matching.",
+                  "value": {
+                    "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
+                    "EventType": "INSTANT_TRANSACTION_RECEIVED",
+                    "Creditor": {
+                      "Name": "Example Bank AG",
+                      "PostalAddress": {
+                        "TownName": "Example City",
+                        "Country": "LI",
+                        "AddressLine": [
+                          "Main Street 123",
+                          "Floor 5",
+                          "Building A",
+                          "Finance Division",
+                          "Payment Processing",
+                          "PO Box 100",
+                          "Example City, LI 9490"
+                        ]
+                      }
+                    },
+                    "CreditorAccount": {
+                      "Id": {
+                        "IBAN": "LI6808811000000001234"
+                      }
+                    },
+                    "CreditorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22XXX",
+                        "Name": "Bank Frick AG"
+                      }
+                    },
+                    "Debtor": {
+                      "Name": "Jane Doe",
+                      "PostalAddress": {
+                        "TownName": "Sample Town",
+                        "Country": "LU",
+                        "AddressLine": [
+                          "Commerce Avenue 42",
+                          "Room 101",
+                          "Accounting Department",
+                          "Payment Operations",
+                          "Business District",
+                          "PO Box 200",
+                          "Sample Town, LU L-1234"
+                        ]
+                      }
+                    },
+                    "DebtorAccount": {
+                      "Id": {
+                        "IBAN": "LI11188110101101K001E"
+                      }
+                    },
+                    "DebtorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22XXX",
+                        "Name": "Bank Frick AG"
+                      }
+                    },
+                    "TransactionAmount": {
+                      "Currency": "EUR",
+                      "Amount": 100.0
+                    },
+                    "SettlementDate": "2025-11-19Z",
+                    "RemittanceInformation": {
+                      "StructuredReference": [
+                        {
+                          "CreditorReferenceInformation": {
+                            "Reference": "INV-2025-0001",
+                            "CodeOrIssuer": "ABCD"
+                          }
+                        }
                       ]
                     }
                   }
