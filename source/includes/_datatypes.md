@@ -1233,7 +1233,7 @@ A single transaction instance to be created.
 | debitor |	[TransactionDebitorAccount](#data-types-transactiondebitoraccount) |	required |	The client information about the transaction |
 | creditor |	[TransactionCreditorAccount](#data-types-transactioncreditoraccount) |	required |	The beneficiary information about the transaction |
 
-For **type = SEPA_INSTANT** (test only, beta), the fields `express`, `valuta`, `valutaIsExecutionDate`, `charge` and `purposeOfPayment` must not be sent; only `currency` = `"EUR"` is allowed; debitor only EUR accounts; creditor only with IBAN (no accountNumber, ABA or qrReference; **no Bank Frick IBAN**). See [SEPA Instant (Beta)](#sepa-instant-beta) in Transactions.
+For **type = SEPA_INSTANT** (test only, beta), the fields `express`, `valuta`, `valutaIsExecutionDate`, `charge` and `purposeOfPayment` must not be sent; only `currency` = `"EUR"` is allowed; debitor only EUR accounts; creditor only with IBAN (**no Bank Frick IBAN**). See [SEPA Instant (Beta)](#sepa-instant-beta) in Transactions.
 
 ## Transaction (existing instance)
 
