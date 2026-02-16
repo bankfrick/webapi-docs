@@ -426,7 +426,7 @@ The server sets `valutaIsExecutionDate` to `true` and `charge` to `SHA` automati
 | correspondence | boolean | | As type SEPA |
 | orderingCustomer | object | | As type SEPA |
 | debitor | object | required | As type SEPA; **only EUR accounts** allowed |
-| creditor | object | required | As type SEPA; **IBAN only** (no accountNumber, no ABA, no QR reference). **Bank Frick IBANs are not allowed** (no transfers to own Bank Frick accounts). |
+| creditor | object | required | As type SEPA; **IBAN only - Bank Frick IBANs are not allowed** |
 
 ### Example PUT (SEPA_INSTANT)
 
