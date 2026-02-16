@@ -223,7 +223,7 @@ If a combination of filter parameters are applied, only orders that match all of
 | searchName | query | (optional) Filter for the beneficiary name, this parameter should be URL-Encoded.
 | status | query | (optional) Filter for for transaction status. The status of transactions that where created in the context of online banking can be one of (PREPARED, IN_PROGRESS, DELETED, EXPIRED, EXECUTED, REJECTED, DELETION_REQUESTED). **The status of booked transactions on the account is BOOKED. Note: BOOKED transactions (as known from the camt053 export) can only be queried by setting this filter to BOOKED otherwise only transactions that were created in the context of online banking are returned.**
 | toDate | query | (optional) Ending date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD.
-| type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, FOREIGN, RED, ORANGE). Only relevant for transactions that were created in the context of online banking.
+| type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, SEPA_INSTANT, FOREIGN, RED, ORANGE). Only relevant for transactions that were created in the context of online banking. **SEPA_INSTANT** is only available in the **test** environment (beta).
 
 **Response Codes**
 
@@ -393,3 +393,141 @@ Create new payment orders similar to the create payment order dialogs within the
 | ---- | ----------- |
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
+
+## SEPA Instant (Beta)
+
+<aside class="notice">
+<strong>Availability:</strong> SEPA Instant Payment is only available in the <strong>test</strong> environment and is currently in <strong>beta</strong>. It is not offered in production.
+</aside>
+
+The transaction type **SEPA_INSTANT** enables near real-time SEPA transfers. The behaviour and validation are largely aligned with type [SEPA](#data-types-type); the following differences apply.
+
+### Request (PUT) – differences from SEPA
+
+The following keys must **not** be sent for `type: "SEPA_INSTANT"` and are treated as unknown (validation error if sent):
+
+- `express`
+- `valuta`
+- `valutaIsExecutionDate`
+- `charge`
+- `purposeOfPayment`
+
+The server sets `valutaIsExecutionDate` to `true` and `charge` to `SHA` automatically.
+
+### Validations for type SEPA_INSTANT
+
+| name | data type | constraints | comment |
+| ---- | --------- | ----------- | ------- |
+| customId | string | required, max size: 50, min size: 0 | As type SEPA |
+| type | string | required | `"SEPA_INSTANT"` |
+| amount | number | required, min: 0.01, max digits: 12 (integer), 2 (fraction) | As type SEPA |
+| currency | string | required, max size: 3, min size: 0 | **Only `"EUR"` allowed** |
+| reference | string | max size: 140, min size: 0 | As type SEPA |
+| correspondence | boolean | | As type SEPA |
+| orderingCustomer | object | | As type SEPA |
+| debitor | object | required | As type SEPA; **only EUR accounts** allowed |
+| creditor | object | required | As type SEPA; **IBAN only** (no accountNumber, no ABA, no QR reference). **Bank Frick IBANs are not allowed** (no transfers to own Bank Frick accounts). |
+
+### Example PUT (SEPA_INSTANT)
+
+> Request
+
+```shell--test
+PUT https://olbtest.bankfrick.li/webapi/v2/transactions
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+{
+    "transactions" : [ {
+        "customId" : "A4711",
+        "type" : "SEPA_INSTANT",
+        "amount" : 1000.00,
+        "currency" : "EUR",
+        "reference" : "some individual text",
+        "correspondence": true,
+        "orderingCustomer": {
+            "name": "Sven",
+            "address": "Bahnhofstrasse 99",
+            "postalcode": "10001",
+            "city": "Zürich",
+            "country": "CH"
+        },
+        "debitor" : {
+            "iban" : "LI680881100000000123E"
+        },
+        "creditor" : {
+            "name" : "Satoshi Nakamoto",
+            "address": "Bahnhofstrasse 1",
+            "postalcode": "39576",
+            "city": "Stendal",
+            "country": "Germany",
+            "iban" : "DE12500105170648489890"
+        }
+    } ]
+}
+```
+
+```shell--production
+SEPA_INSTANT is not available in production. Use the test environment.
+```
+
+> Response
+
+```shell
+HTTP/1.1 200 OK
+Content-Type: application/json
+Signature: ...
+algorithm: ...
+
+{
+    "moreResults": false,
+    "resultSetSize": 1,
+    "transactions": [
+        {
+            "orderId": 53567,
+            "customId": "A4711",
+            "type": "SEPA_INSTANT",
+            "state": "PREPARED",
+            "amount": 1000.00,
+            "currency": "EUR",
+            "valuta": "2025-09-11",
+            "valutaIsExecutionDate": true,
+            "express": false,
+            "reference": "some individual text",
+            "charge": "SHA",
+            "correspondence": true,
+            "direction": "outgoing",
+            "orderingCustomer": {
+                "name": "Sven",
+                "address": "Bahnhofstrasse 99",
+                "postalcode": "10001",
+                "city": "Zuerich",
+                "country": "CH"
+            },
+            "debitor": {
+                "accountNumber": "0123456/001.000.978",
+                "name": "Max Mustermann",
+                "iban": "LI680881100000000123E"
+            },
+            "creditor": {
+                "name" : "Satoshi Nakamoto",
+                "address": "Bahnhofstrasse 1",
+                "postalcode": "39576",
+                "city": "Stendal",
+                "country": "Germany",
+                "iban" : "DE12500105170648489890",
+                "bic": "DRESDEFF200",
+                "creditInstitution": "COMMERZBANK AG (FORMERLY DRESDNER BANK AG)"
+            },
+            "creator": "10751 Max Mustermann",
+            "createDate": "2025-09-11T11:52:13",
+            "right": "73 - Bevollmächtigter einzeln",
+            "groupPolicy": "No constraint",
+            "quorum": 1
+        }
+    ]
+}
+```
