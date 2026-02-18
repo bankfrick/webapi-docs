@@ -3749,7 +3749,7 @@
         }
       },
       "Type" : {
-        "enum" : [ "INTERNAL", "BANK_INTERNAL", "SEPA", "FOREIGN", "RED", "ORANGE", "QR_BILL" ],
+        "enum" : [ "INTERNAL", "BANK_INTERNAL", "SEPA", "SEPA_INSTANT", "FOREIGN", "QR_BILL" ],
         "type" : "string"
       },
       "UpdateAppStatusDto" : {

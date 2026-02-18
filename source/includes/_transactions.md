@@ -223,7 +223,7 @@ If a combination of filter parameters are applied, only orders that match all of
 | searchName | query | (optional) Filter for the beneficiary name, this parameter should be URL-Encoded.
 | status | query | (optional) Filter for for transaction status. The status of transactions that where created in the context of online banking can be one of (PREPARED, IN_PROGRESS, DELETED, EXPIRED, EXECUTED, REJECTED, DELETION_REQUESTED). **The status of booked transactions on the account is BOOKED. Note: BOOKED transactions (as known from the camt053 export) can only be queried by setting this filter to BOOKED otherwise only transactions that were created in the context of online banking are returned.**
 | toDate | query | (optional) Ending date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD.
-| type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, SEPA_INSTANT, FOREIGN, RED, ORANGE). Only relevant for transactions that were created in the context of online banking. **SEPA_INSTANT** is only available in the **test** environment (beta).
+| type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, SEPA_INSTANT, FOREIGN, QR_BILL). Only relevant for transactions that were created in the context of online banking. **SEPA_INSTANT** is only available in the **test** environment (beta).
 
 **Response Codes**
 
