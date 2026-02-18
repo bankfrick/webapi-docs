@@ -402,7 +402,7 @@ Create new payment orders similar to the create payment order dialogs within the
 
 The transaction type **SEPA_INSTANT** enables near real-time SEPA transfers. The behaviour and validation are largely aligned with type [SEPA](#data-types-type); the following differences apply.
 
-### Request (PUT) – differences from SEPA
+**Request (PUT) – differences from SEPA**
 
 The following keys must **not** be sent for `type: "SEPA_INSTANT"` and are treated as unknown (validation error if sent):
 
@@ -413,8 +413,6 @@ The following keys must **not** be sent for `type: "SEPA_INSTANT"` and are treat
 - `purposeOfPayment`
 
 The server sets `valutaIsExecutionDate` to `true` and `charge` to `SHA` automatically.
-
-### Example PUT (SEPA_INSTANT)
 
 > Request
 
@@ -518,7 +516,7 @@ algorithm: ...
 }
 ```
 
-### Validations for type SEPA_INSTANT
+**Validations for type SEPA_INSTANT**
 
 | name | data type | constraints | comment |
 | ---- | --------- | ----------- | ------- |
