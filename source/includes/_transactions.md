@@ -414,20 +414,6 @@ The following keys must **not** be sent for `type: "SEPA_INSTANT"` and are treat
 
 The server sets `valutaIsExecutionDate` to `true` and `charge` to `SHA` automatically.
 
-### Validations for type SEPA_INSTANT
-
-| name | data type | constraints | comment |
-| ---- | --------- | ----------- | ------- |
-| customId | string | required, max size: 50, min size: 0 | As type SEPA |
-| type | string | required | `"SEPA_INSTANT"` |
-| amount | number | required, min: 0.01, max digits: 12 (integer), 2 (fraction) | As type SEPA |
-| currency | string | required, max size: 3, min size: 0 | **Only `"EUR"` allowed** |
-| reference | string | max size: 140, min size: 0 | As type SEPA |
-| correspondence | boolean | | As type SEPA |
-| orderingCustomer | object | | As type SEPA |
-| debitor | object | required | As type SEPA; **only EUR accounts** allowed |
-| creditor | object | required | As type SEPA; **IBAN only - Bank Frick IBANs are not allowed** |
-
 ### Example PUT (SEPA_INSTANT)
 
 > Request
@@ -531,3 +517,17 @@ algorithm: ...
     ]
 }
 ```
+
+### Validations for type SEPA_INSTANT
+
+| name | data type | constraints | comment |
+| ---- | --------- | ----------- | ------- |
+| customId | string | required, max size: 50, min size: 0 | As type SEPA |
+| type | string | required | `"SEPA_INSTANT"` |
+| amount | number | required, min: 0.01, max digits: 12 (integer), 2 (fraction) | As type SEPA |
+| currency | string | required, max size: 3, min size: 0 | **Only `"EUR"` allowed** |
+| reference | string | max size: 140, min size: 0 | As type SEPA |
+| correspondence | boolean | | As type SEPA |
+| orderingCustomer | object | | As type SEPA |
+| debitor | object | required | As type SEPA; **only EUR accounts** allowed |
+| creditor | object | required | As type SEPA; **IBAN only - Bank Frick IBANs are not allowed** |
