@@ -116,15 +116,6 @@ Upload a pain.001 message. Note that errors respectively the status regarding pa
 | ---- | ------ | --------- | ----------- |
 | CdtrAcct/Id/Othr/IBAN | string
 
-<aside class="notice">The following attributes are only relevant when using <code>Domestic Payment (Switzerland) - ESR (Orange payment slip)</code></aside>
-
-**Transaction**
-
-| Path | Format | Mandatory | Description |
-| ---- | ------ | --------- | ----------- |
-| PmtTpInf/LclInstrm/Prtry | string |  | If used, then „Code“ must not be present. |
-| CdtrAcct/Id/Othr/Id | string |  | Must be used if "Other" is used. |
-| RmtInf/Strd/CdtrRefInf/Ref | string
 
 <aside class="notice">The following attributes are only relevant when using <code>Domestic Payment (Switzerland)- SWIFT with IBAN</code></aside>
 

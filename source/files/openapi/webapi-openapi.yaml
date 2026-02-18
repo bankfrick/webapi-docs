@@ -2598,9 +2598,8 @@ components:
       - INTERNAL
       - BANK_INTERNAL
       - SEPA
+      - SEPA_INSTANT
       - FOREIGN
-      - RED
-      - ORANGE
       - QR_BILL
       type: string
     UpdateAppStatusDto:
