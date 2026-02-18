@@ -449,11 +449,11 @@ algorithm: ...
         "reference" : "some individual text",
         "correspondence": true,
         "orderingCustomer": {
-            "name": "Sven",
-            "address": "Bahnhofstrasse 99",
-            "postalcode": "10001",
-            "city": "Zürich",
-            "country": "CH"
+            "name": "Max Muster",
+            "address": "Street 100",
+            "postalcode": "101000",
+            "city": "Berlin",
+            "country": "DE"
         },
         "debitor" : {
             "iban" : "LI680881100000000123E"
@@ -501,11 +501,11 @@ algorithm: ...
             "correspondence": true,
             "direction": "outgoing",
             "orderingCustomer": {
-                "name": "Sven",
-                "address": "Bahnhofstrasse 99",
-                "postalcode": "10001",
-                "city": "Zuerich",
-                "country": "CH"
+                "name": "Max Muster",
+                "address": "Street 100",
+                "postalcode": "101000",
+                "city": "Berlin",
+                "country": "DE"
             },
             "debitor": {
                 "accountNumber": "0123456/001.000.978",

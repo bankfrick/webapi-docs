@@ -984,8 +984,8 @@ The status of MIFID confirmation
   "name" : "Max Muster",
   "address" : "Street 100",
   "postalcode" : "101000",
-  "city" : "Moscow",
-  "country" : "Russia"
+  "city" : "Berlin",
+  "country" : "Germany"
 }
 ```
 Detail information about an ordering customer. Only relevant for correspondence payments.
