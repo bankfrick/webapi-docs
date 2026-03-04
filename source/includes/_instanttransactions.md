@@ -23,7 +23,21 @@ A single rule can notify about one or multiple event types.
 - [Webhooks OpenAPI JSON](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/openapi/notification-webhook-openapi.json)
 - [Webhooks OpenAPI YAML](https://raw.githubusercontent.com/bankfrick/webapi-docs/refs/heads/master/source/files/openapi/notification-webhook-openapi.yaml)
 
-Note: We do not consider adding new fields to the above defined Webhook specifications as breaking change.
+#### Expected Performance
+
+The configured webhook target is expected to respond within 3 seconds on average,
+and the call will time out after 10 seconds (values may change in the future).
+If the target fails to send back a success status within this time, the call will automatically be retried twice 
+with a delay of a few seconds. After that, the webhook call will be marked as failed and not be retried anymore.
+
+We reserve the right to declare a webhook target as unsuitable for receiving notifications.
+This may, for example, happen if the target is repeatedly not reachable or consistently fails to reach the
+expected performance goal.
+In such cases, the system will automatically deactivate rules that use this target.
+
+#### Breaking Changes
+
+We do not consider adding new fields to the Webhook specifications defined above as breaking change.
 Consumers should thus tolerate additional/unknown fields in the payload.
 
 ## List Rules
