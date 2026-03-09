@@ -1,9 +1,9 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Bank Frick Webhook Contract",
     "description": "This specification describes the HTTP POST requests that Bank Frick\nwill send to customer-configured webhook URLs.\n\nCustomers should implement an HTTPS endpoint that accepts the WebhookPayload structure.\nThe webhook URL is configured per notification rule and can be any HTTPS endpoint.",
-    "version": "1.2.0"
+    "title": "Bank Frick Webhook Contract",
+    "version": "1.4.0"
   },
   "servers": [
     {
@@ -30,7 +30,7 @@
         "properties": {
           "IBAN": {
             "type": "string",
-            "description": "Account ID (IBAN). Max 34 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Account ID (IBAN). Max 34 characters as per pain.008. ISO-8859-1 character set",
             "example": "LI0000000000000000000"
           }
         }
@@ -48,15 +48,15 @@
       "CreditorReferenceInformationDto": {
         "type": "object",
         "properties": {
-          "Reference": {
-            "type": "string",
-            "description": "Creditor reference information. Max 35 characters per Pain.008. ISO-8859-1 character set",
-            "example": "ABC 123 DEF 456"
-          },
           "CodeOrIssuer": {
             "type": "string",
-            "description": "Creditor reference type code (1-4 characters), or name of the proprietary issuer. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Creditor reference type code (1-4 characters), or name of the proprietary issuer. Max 35 characters as per pain.008. ISO-8859-1 character set",
             "example": "CODE"
+          },
+          "Reference": {
+            "type": "string",
+            "description": "Creditor reference information. Max 35 characters as per pain.008. ISO-8859-1 character set",
+            "example": "ABC 123 DEF 456"
           }
         }
       },
@@ -64,24 +64,25 @@
         "type": "object",
         "description": "Bank Frick Customer information",
         "properties": {
-          "Number": {
-            "type": "string",
-            "description": "Bank Frick customer number",
-            "example": "0123456"
-          },
           "Name": {
             "type": "string",
             "description": "Name of the customer",
             "example": "ACME Inc."
+          },
+          "Number": {
+            "type": "string",
+            "description": "Bank Frick customer number",
+            "example": "0123456"
           }
         }
       },
       "EventTypeDto": {
         "type": "string",
-        "description": "Type of event that triggered the notification:\n  - INSTANT_TRANSACTION_RECEIVED: Event triggered when an instant transaction is received\n  - INSTANT_TRANSACTION_EXECUTED: Event triggered when an outgoing instant transaction is successfully executed",
+        "description": "Type of event that triggered the notification:\n  - INSTANT_TRANSACTION_RECEIVED: Event triggered when an instant transaction is received\n  - INSTANT_TRANSACTION_EXECUTED: Event triggered when an outgoing instant transaction is successfully executed\n  - INSTANT_TRANSACTION_REJECTED: Event triggered when an outgoing instant transaction is rejected",
         "enum": [
           "INSTANT_TRANSACTION_RECEIVED",
-          "INSTANT_TRANSACTION_EXECUTED"
+          "INSTANT_TRANSACTION_EXECUTED",
+          "INSTANT_TRANSACTION_REJECTED"
         ]
       },
       "FinancialInstitutionDto": {
@@ -90,12 +91,12 @@
         "properties": {
           "BIC": {
             "type": "string",
-            "description": "BIC code. 8 or 11 characters per Pain.008 (format: 6 letters + 2 alphanumeric + optional 3 alphanumeric). ISO-8859-1 character set",
+            "description": "BIC code. 8 or 11 characters as per pain.008 (format: 6 letters + 2 alphanumeric + optional 3 alphanumeric). ISO-8859-1 character set",
             "example": "EXMPLI22XXX"
           },
           "Name": {
             "type": "string",
-            "description": "Name of the financial institution. Max 140 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Name of the financial institution. Max 140 characters as per pain.008. ISO-8859-1 character set",
             "example": "Example Bank AG"
           }
         }
@@ -106,7 +107,7 @@
         "properties": {
           "Name": {
             "type": "string",
-            "description": "Name of the party. Max 70 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Name of the party. Max 70 characters as per pain.008. ISO-8859-1 character set",
             "example": "Jane Doe"
           },
           "PostalAddress": {
@@ -145,9 +146,20 @@
         "type": "object",
         "description": "Postal address information",
         "properties": {
+          "AddressLine": {
+            "type": "array",
+            "description": "Unstructured address lines. Max 7 lines as per pain.008, each line max 70 characters. ISO-8859-1 character set",
+            "example": [
+              "Commerce Avenue 42",
+              "Floor 3"
+            ],
+            "items": {
+              "type": "string"
+            }
+          },
           "BuildingNumber": {
             "type": "string",
-            "description": "Building number. Max 16 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Building number. Max 16 characters as per pain.008. ISO-8859-1 character set",
             "example": 42
           },
           "Country": {
@@ -157,64 +169,80 @@
           },
           "CountrySubDivision": {
             "type": "string",
-            "description": "Country subdivision. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Country subdivision. Max 35 characters as per pain.008. ISO-8859-1 character set",
             "example": "Sample District"
           },
           "Department": {
             "type": "string",
-            "description": "Department. Max 70 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Department. Max 70 characters as per pain.008. ISO-8859-1 character set",
             "example": "Accounting Department"
           },
           "DistrictName": {
             "type": "string",
-            "description": "District name. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "description": "District name. Max 35 characters as per pain.008. ISO-8859-1 character set",
             "example": "City Center"
-          },
-          "Postbox": {
-            "type": "string",
-            "description": "Post box. Max 16 characters per Pain.008. ISO-8859-1 character set",
-            "example": "PO Box 100"
           },
           "PostalCode": {
             "type": "string",
-            "description": "Postal code. Max 16 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Postal code. Max 16 characters as per pain.008. ISO-8859-1 character set",
             "example": "L-1234"
+          },
+          "Postbox": {
+            "type": "string",
+            "description": "Post box. Max 16 characters as per pain.008. ISO-8859-1 character set",
+            "example": "PO Box 100"
           },
           "Room": {
             "type": "string",
-            "description": "Room. Max 70 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Room. Max 70 characters as per pain.008. ISO-8859-1 character set",
             "example": "Room 101"
           },
           "StreetName": {
             "type": "string",
-            "description": "Street name. Max 70 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Street name. Max 70 characters as per pain.008. ISO-8859-1 character set",
             "example": "Commerce Avenue"
           },
           "SubDepartment": {
             "type": "string",
-            "description": "Sub-department. Max 70 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Sub-department. Max 70 characters as per pain.008. ISO-8859-1 character set",
             "example": "Payment Operations"
           },
           "TownLocationName": {
             "type": "string",
-            "description": "Town location name. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Town location name. Max 35 characters as per pain.008. ISO-8859-1 character set",
             "example": "Business District"
           },
           "TownName": {
             "type": "string",
-            "description": "Town name. Max 35 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Town name. Max 35 characters as per pain.008. ISO-8859-1 character set",
             "example": "Sample Town"
+          }
+        }
+      },
+      "ProblemDetail": {
+        "type": "object",
+        "properties": {
+          "detail": {
+            "type": "string"
           },
-          "AddressLine": {
-            "type": "array",
-            "description": "Unstructured address lines. Max 7 lines per Pain.008, each line max 70 characters. ISO-8859-1 character set",
-            "example": [
-              "Commerce Avenue 42",
-              "Floor 3"
-            ],
-            "items": {
-              "type": "string"
-            }
+          "instance": {
+            "type": "string",
+            "format": "uri"
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "format": "uri"
           }
         }
       },
@@ -222,22 +250,22 @@
         "type": "object",
         "description": "Remittance information",
         "properties": {
+          "StructuredReference": {
+            "type": "array",
+            "description": "Structured remittance information",
+            "items": {
+              "$ref": "#/components/schemas/StructuredRemittanceInformationDto"
+            }
+          },
           "UnstructuredReference": {
             "type": "array",
-            "description": "Unstructured remittance references. Each element max 140 characters per Pain.008. ISO-8859-1 character set",
+            "description": "Unstructured remittance references. Each element max 140 characters as per pain.008. ISO-8859-1 character set",
             "example": [
               "INV-2025-0001",
               "Payment for services"
             ],
             "items": {
               "type": "string"
-            }
-          },
-          "StructuredReference": {
-            "type": "array",
-            "description": "Structured remittance information",
-            "items": {
-              "$ref": "#/components/schemas/StructuredRemittanceInformationDto"
             }
           }
         }
@@ -255,40 +283,66 @@
         "type": "object",
         "description": "Transaction amount",
         "properties": {
+          "Amount": {
+            "type": "string",
+            "description": "Amount value. Should be positive as per pain.008",
+            "example": 100.0
+          },
           "Currency": {
             "type": "string",
             "description": "Currency code. 3-letter ISO 4217 code",
             "example": "EUR"
-          },
-          "Amount": {
-            "type": "string",
-            "description": "Amount value. Should be positive per Pain.008",
-            "example": 100.0
           }
         }
+      },
+      "WebhookPayloadBookedDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/WebhookPayloadDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "AcceptanceDateTime": {
+                "type": "string",
+                "description": "Acceptance date and time",
+                "example": "2025-11-18T15:41:46.141Z"
+              },
+              "SettlementDate": {
+                "type": "string",
+                "description": "Date of settlement",
+                "example": "2025-12-18Z"
+              },
+              "TransactionNumber": {
+                "type": "string",
+                "description": "Transaction number for filtering booked transactions via the API, see https://developers.bankfrick.li/api_docs/#transactions-get",
+                "example": 87654321
+              }
+            }
+          }
+        ],
+        "description": "Webhook payload for accepted and booked transactions"
       },
       "WebhookPayloadDto": {
         "type": "object",
         "description": "Webhook notification payload with ISO 20022 transaction data",
+        "discriminator": {
+          "mapping": {
+            "INSTANT_TRANSACTION_EXECUTED": "#/components/schemas/WebhookPayloadBookedDto",
+            "INSTANT_TRANSACTION_RECEIVED": "#/components/schemas/WebhookPayloadBookedDto",
+            "INSTANT_TRANSACTION_REJECTED": "#/components/schemas/WebhookPayloadRejectedDto"
+          },
+          "propertyName": "EventType"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/WebhookPayloadBookedDto"
+          },
+          {
+            "$ref": "#/components/schemas/WebhookPayloadRejectedDto"
+          }
+        ],
         "properties": {
-          "AcceptanceDateTime": {
-            "type": "string",
-            "description": "Acceptance date and time",
-            "example": "2025-11-18T15:41:46.141Z"
-          },
-          "UniqueEventId": {
-            "type": "string",
-            "description": "Unique ID of event, can be used for deduplication of messages",
-            "example": "cb23c1b7-9fbf-4c95-b9a2-bbdbeda05a00"
-          },
-          "EventType": {
-            "$ref": "#/components/schemas/EventTypeDto",
-            "description": "Type of event that triggered the notification"
-          },
-          "Customer": {
-            "$ref": "#/components/schemas/CustomerDto",
-            "description": "Bank Frick customer information"
-          },
           "Creditor": {
             "$ref": "#/components/schemas/PartyDto",
             "description": "Creditor party information"
@@ -300,6 +354,10 @@
           "CreditorAgent": {
             "$ref": "#/components/schemas/AgentDto",
             "description": "Creditor agent (bank) information"
+          },
+          "Customer": {
+            "$ref": "#/components/schemas/CustomerDto",
+            "description": "Bank Frick customer information"
           },
           "Debtor": {
             "$ref": "#/components/schemas/PartyDto",
@@ -313,14 +371,9 @@
             "$ref": "#/components/schemas/AgentDto",
             "description": "Debtor agent (bank) information"
           },
-          "TransactionAmount": {
-            "$ref": "#/components/schemas/TransactionAmountDto",
-            "description": "Transaction amount and currency"
-          },
-          "SettlementDate": {
-            "type": "string",
-            "description": "Date of settlement",
-            "example": "2025-12-18Z"
+          "EventType": {
+            "$ref": "#/components/schemas/EventTypeDto",
+            "description": "Type of event that triggered the notification"
           },
           "PaymentIdentification": {
             "$ref": "#/components/schemas/PaymentIdentificationDto",
@@ -329,48 +382,52 @@
           "RemittanceInformation": {
             "$ref": "#/components/schemas/RemittanceInformationDto",
             "description": "Remittance information"
+          },
+          "TransactionAmount": {
+            "$ref": "#/components/schemas/TransactionAmountDto",
+            "description": "Transaction amount and currency"
+          },
+          "UniqueEventId": {
+            "type": "string",
+            "description": "Unique ID of event, can be used for deduplication of messages",
+            "example": "cb23c1b7-9fbf-4c95-b9a2-bbdbeda05a00"
           }
         }
       },
-      "ProblemDetail": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "type": "string",
-            "format": "uri"
+      "WebhookPayloadRejectedDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/WebhookPayloadDto"
           },
-          "title": {
-            "type": "string"
-          },
-          "status": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "detail": {
-            "type": "string"
-          },
-          "instance": {
-            "type": "string",
-            "format": "uri"
-          },
-          "properties": {
+          {
             "type": "object",
-            "additionalProperties": {}
+            "properties": {
+              "RejectionDateTime": {
+                "type": "string",
+                "description": "Rejection date and time",
+                "example": "2025-11-18T15:41:46.141Z"
+              },
+              "RejectionReason": {
+                "type": "string",
+                "description": "Reason for transaction rejection",
+                "example": "Insufficient funds"
+              }
+            }
           }
-        }
+        ],
+        "description": "Webhook payload for rejected transactions"
       }
     }
   },
   "webhooks": {
     "notificationWebhook": {
       "post": {
-        "summary": "Webhook notification",
         "description": "Bank Frick will POST webhook notifications to the URL you configure in your notification rule.\n\nYou can configure any HTTPS endpoint URL. The path is entirely up to you.\n\nExample URLs:\n- https://your-domain.com/api/webhooks/bankfrick\n- https://your-domain.com/notifications\n- https://api.your-service.com/v1/incoming-webhooks",
         "parameters": [
           {
-            "name": "Algorithm",
-            "in": "header",
             "description": "Signature algorithm used to sign the webhook payload",
+            "in": "header",
+            "name": "Algorithm",
             "required": true,
             "schema": {
               "type": "string",
@@ -381,9 +438,9 @@
             }
           },
           {
-            "name": "Signature",
-            "in": "header",
             "description": "Base64-encoded RSA signature of the webhook payload. Verify using the public key to ensure the webhook came from Bank Frick",
+            "in": "header",
+            "name": "Signature",
             "required": true,
             "schema": {
               "type": "string",
@@ -392,131 +449,128 @@
           }
         ],
         "requestBody": {
-          "description": "Webhook notification payload",
           "content": {
             "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WebhookPayloadDto"
-              },
               "examples": {
-                "instant_payment_received_address_lines": {
-                  "summary": "Instant payment received with unstructured address lines in postal address",
-                  "description": "An incoming instant payment (pacs.008) where the debtor\u0027s postal address is provided using free-form address lines (AdrLine) rather than structured fields. This format is common when the originating bank does not support structured addresses.",
+                "instant_payment_executed": {
+                  "description": "An outgoing instant payment (pacs.008) that has been accepted and was successfully booked.",
+                  "summary": "Instant payment executed",
                   "value": {
                     "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
-                    "EventType": "INSTANT_TRANSACTION_RECEIVED",
                     "Creditor": {
-                      "Name": "Example Bank AG",
-                      "PostalAddress": {
-                        "TownName": "Example City",
-                        "Country": "LI",
-                        "AddressLine": [
-                          "Main Street 123",
-                          "Floor 5",
-                          "Building A",
-                          "Finance Division",
-                          "Payment Processing",
-                          "PO Box 100",
-                          "Example City, LI 9490"
-                        ]
-                      }
-                    },
-                    "CreditorAccount": {
-                      "Id": {
-                        "IBAN": "LI6808811000000001234"
-                      }
-                    },
-                    "CreditorAgent": {
-                      "FinancialInstitution": {
-                        "BIC": "BFRILI22XXX"
-                      }
-                    },
-                    "Debtor": {
                       "Name": "Jane Doe",
                       "PostalAddress": {
-                        "TownName": "Sample Town",
-                        "Country": "LU",
-                        "AddressLine": [
-                          "Commerce Avenue 42",
-                          "Room 101",
-                          "Accounting Department",
-                          "Payment Operations",
-                          "Business District",
-                          "PO Box 200",
-                          "Sample Town, LU L-1234"
-                        ]
-                      }
-                    },
-                    "DebtorAccount": {
-                      "Id": {
-                        "IBAN": "LI11188110101101K001E"
-                      }
-                    },
-                    "DebtorAgent": {
-                      "FinancialInstitution": {
-                        "BIC": "BFRILI22XXX"
-                      }
-                    },
-                    "TransactionAmount": {
-                      "Currency": "EUR",
-                      "Amount": 100.0
-                    },
-                    "RemittanceInformation": {
-                      "UnstructuredReference": [
-                        "INV-2025-0001"
-                      ]
-                    }
-                  }
-                },
-                "instant_payment_received_structured_address": {
-                  "summary": "Instant payment received with structured address fields in postal address",
-                  "description": "An incoming instant payment (pacs.008) where the debtor\u0027s postal address is provided using structured fields such as street name, building number, postal code, town, and country. This format provides better data quality for address validation and processing.",
-                  "value": {
-                    "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
-                    "EventType": "INSTANT_TRANSACTION_RECEIVED",
-                    "Creditor": {
-                      "Name": "Example Bank AG",
-                      "PostalAddress": {
-                        "StreetName": "Main Street",
-                        "BuildingNumber": "123",
-                        "PostalCode": "9490",
-                        "TownName": "Example City",
-                        "Country": "LI",
-                        "CountrySubDivision": "Example District",
-                        "Department": "Treasury",
-                        "DistrictName": "Central District",
-                        "Postbox": "PO Box 100",
-                        "Room": "Floor 5",
-                        "SubDepartment": "Payment Processing",
-                        "TownLocationName": "Business District"
-                      }
-                    },
-                    "CreditorAccount": {
-                      "Id": {
-                        "IBAN": "LI6808811000000001234"
-                      }
-                    },
-                    "CreditorAgent": {
-                      "FinancialInstitution": {
-                        "BIC": "BFRILI22XXX",
-                        "Name": "Bank Frick AG"
-                      }
-                    },
-                    "Debtor": {
-                      "Name": "Jane Doe",
-                      "PostalAddress": {
-                        "StreetName": "Commerce Avenue",
                         "BuildingNumber": "42",
-                        "PostalCode": "L-1234",
-                        "TownName": "Sample Town",
                         "Country": "LU",
                         "CountrySubDivision": "Sample District",
                         "Department": "Accounting Department",
                         "DistrictName": "City Center",
+                        "PostalCode": "L-1234",
                         "Postbox": "PO Box 200",
                         "Room": "Room 101",
+                        "StreetName": "Commerce Avenue",
                         "SubDepartment": "Payment Operations",
-                        "TownLocationName": "Business District"
+                        "TownLocationName": "Business District",
+                        "TownName": "Sample Town"
+                      }
+                    },
+                    "CreditorAccount": {
+                      "Id": {
+                        "IBAN": "LI11188110101101K001E"
+                      }
+                    },
+                    "CreditorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22XXX",
+                        "Name": "Bank Frick AG"
+                      }
+                    },
+                    "Debtor": {
+                      "Name": "Example Bank AG",
+                      "PostalAddress": {
+                        "BuildingNumber": "123",
+                        "Country": "LI",
+                        "CountrySubDivision": "Example District",
+                        "Department": "Treasury",
+                        "DistrictName": "Central District",
+                        "PostalCode": "9490",
+                        "Postbox": "PO Box 100",
+                        "Room": "Floor 5",
+                        "StreetName": "Main Street",
+                        "SubDepartment": "Payment Processing",
+                        "TownLocationName": "Business District",
+                        "TownName": "Example City"
+                      }
+                    },
+                    "DebtorAccount": {
+                      "Id": {
+                        "IBAN": "LI6808811000000001234"
+                      }
+                    },
+                    "DebtorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22XXX",
+                        "Name": "Bank Frick AG"
+                      }
+                    },
+                    "EventType": "INSTANT_TRANSACTION_EXECUTED",
+                    "RemittanceInformation": {
+                      "UnstructuredReference": [
+                        "INV-2025-0001"
+                      ]
+                    },
+                    "SettlementDate": "2025-11-19Z",
+                    "TransactionAmount": {
+                      "Amount": 100.0,
+                      "Currency": "EUR"
+                    }
+                  }
+                },
+                "instant_payment_received_address_lines": {
+                  "description": "An incoming instant payment (pacs.008) where the debtor\u0027s postal address is provided using free-form address lines (AdrLine) rather than structured fields. This format is common when the originating bank does not support structured addresses.",
+                  "summary": "Instant payment received with unstructured address lines in postal address",
+                  "value": {
+                    "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
+                    "Creditor": {
+                      "Name": "Example Bank AG",
+                      "PostalAddress": {
+                        "AddressLine": [
+                          "Main Street 123",
+                          "Floor 5",
+                          "Building A",
+                          "Finance Division",
+                          "Payment Processing",
+                          "PO Box 100",
+                          "Example City, LI 9490"
+                        ],
+                        "Country": "LI",
+                        "TownName": "Example City"
+                      }
+                    },
+                    "CreditorAccount": {
+                      "Id": {
+                        "IBAN": "LI6808811000000001234"
+                      }
+                    },
+                    "CreditorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22XXX"
+                      }
+                    },
+                    "Debtor": {
+                      "Name": "Jane Doe",
+                      "PostalAddress": {
+                        "AddressLine": [
+                          "Commerce Avenue 42",
+                          "Room 101",
+                          "Accounting Department",
+                          "Payment Operations",
+                          "Business District",
+                          "PO Box 200",
+                          "Sample Town, LU L-1234"
+                        ],
+                        "Country": "LU",
+                        "TownName": "Sample Town"
                       }
                     },
                     "DebtorAccount": {
@@ -526,42 +580,41 @@
                     },
                     "DebtorAgent": {
                       "FinancialInstitution": {
-                        "BIC": "BFRILI22XXX",
-                        "Name": "Bank Frick AG"
+                        "BIC": "BFRILI22XXX"
                       }
                     },
-                    "TransactionAmount": {
-                      "Currency": "EUR",
-                      "Amount": 100.0
-                    },
-                    "SettlementDate": "2025-11-19Z",
+                    "EventType": "INSTANT_TRANSACTION_RECEIVED",
                     "RemittanceInformation": {
                       "UnstructuredReference": [
                         "INV-2025-0001"
                       ]
+                    },
+                    "TransactionAmount": {
+                      "Amount": 100.0,
+                      "Currency": "EUR"
                     }
                   }
                 },
-                "instant_payment_received_structured_remittance_information": {
-                  "summary": "Instant payment received with structured remittance information",
-                  "description": "An incoming instant payment (pacs.008) containing structured remittance information with creditor reference (e.g., ISO 11649 RF creditor reference). Useful for automated reconciliation and invoice matching.",
+                "instant_payment_received_structured_address": {
+                  "description": "An incoming instant payment (pacs.008) where the debtor\u0027s postal address is provided using structured fields such as street name, building number, postal code, town, and country. This format provides better data quality for address validation and processing.",
+                  "summary": "Instant payment received with structured address fields in postal address",
                   "value": {
                     "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
-                    "EventType": "INSTANT_TRANSACTION_RECEIVED",
                     "Creditor": {
                       "Name": "Example Bank AG",
                       "PostalAddress": {
-                        "TownName": "Example City",
+                        "BuildingNumber": "123",
                         "Country": "LI",
-                        "AddressLine": [
-                          "Main Street 123",
-                          "Floor 5",
-                          "Building A",
-                          "Finance Division",
-                          "Payment Processing",
-                          "PO Box 100",
-                          "Example City, LI 9490"
-                        ]
+                        "CountrySubDivision": "Example District",
+                        "Department": "Treasury",
+                        "DistrictName": "Central District",
+                        "PostalCode": "9490",
+                        "Postbox": "PO Box 100",
+                        "Room": "Floor 5",
+                        "StreetName": "Main Street",
+                        "SubDepartment": "Payment Processing",
+                        "TownLocationName": "Business District",
+                        "TownName": "Example City"
                       }
                     },
                     "CreditorAccount": {
@@ -578,17 +631,18 @@
                     "Debtor": {
                       "Name": "Jane Doe",
                       "PostalAddress": {
-                        "TownName": "Sample Town",
+                        "BuildingNumber": "42",
                         "Country": "LU",
-                        "AddressLine": [
-                          "Commerce Avenue 42",
-                          "Room 101",
-                          "Accounting Department",
-                          "Payment Operations",
-                          "Business District",
-                          "PO Box 200",
-                          "Sample Town, LU L-1234"
-                        ]
+                        "CountrySubDivision": "Sample District",
+                        "Department": "Accounting Department",
+                        "DistrictName": "City Center",
+                        "PostalCode": "L-1234",
+                        "Postbox": "PO Box 200",
+                        "Room": "Room 101",
+                        "StreetName": "Commerce Avenue",
+                        "SubDepartment": "Payment Operations",
+                        "TownLocationName": "Business District",
+                        "TownName": "Sample Town"
                       }
                     },
                     "DebtorAccount": {
@@ -602,26 +656,178 @@
                         "Name": "Bank Frick AG"
                       }
                     },
-                    "TransactionAmount": {
-                      "Currency": "EUR",
-                      "Amount": 100.0
+                    "EventType": "INSTANT_TRANSACTION_RECEIVED",
+                    "RemittanceInformation": {
+                      "UnstructuredReference": [
+                        "INV-2025-0001"
+                      ]
                     },
                     "SettlementDate": "2025-11-19Z",
+                    "TransactionAmount": {
+                      "Amount": 100.0,
+                      "Currency": "EUR"
+                    }
+                  }
+                },
+                "instant_payment_received_structured_remittance_information": {
+                  "description": "An incoming instant payment (pacs.008) containing structured remittance information with creditor reference (e.g., ISO 11649 RF creditor reference). Useful for automated reconciliation and invoice matching.",
+                  "summary": "Instant payment received with structured remittance information",
+                  "value": {
+                    "AcceptanceDateTime": "2025-11-18T15:41:46.141Z",
+                    "Creditor": {
+                      "Name": "Example Bank AG",
+                      "PostalAddress": {
+                        "AddressLine": [
+                          "Main Street 123",
+                          "Floor 5",
+                          "Building A",
+                          "Finance Division",
+                          "Payment Processing",
+                          "PO Box 100",
+                          "Example City, LI 9490"
+                        ],
+                        "Country": "LI",
+                        "TownName": "Example City"
+                      }
+                    },
+                    "CreditorAccount": {
+                      "Id": {
+                        "IBAN": "LI6808811000000001234"
+                      }
+                    },
+                    "CreditorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22XXX",
+                        "Name": "Bank Frick AG"
+                      }
+                    },
+                    "Debtor": {
+                      "Name": "Jane Doe",
+                      "PostalAddress": {
+                        "AddressLine": [
+                          "Commerce Avenue 42",
+                          "Room 101",
+                          "Accounting Department",
+                          "Payment Operations",
+                          "Business District",
+                          "PO Box 200",
+                          "Sample Town, LU L-1234"
+                        ],
+                        "Country": "LU",
+                        "TownName": "Sample Town"
+                      }
+                    },
+                    "DebtorAccount": {
+                      "Id": {
+                        "IBAN": "LI11188110101101K001E"
+                      }
+                    },
+                    "DebtorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22XXX",
+                        "Name": "Bank Frick AG"
+                      }
+                    },
+                    "EventType": "INSTANT_TRANSACTION_RECEIVED",
                     "RemittanceInformation": {
                       "StructuredReference": [
                         {
                           "CreditorReferenceInformation": {
-                            "Reference": "INV-2025-0001",
-                            "CodeOrIssuer": "ABCD"
+                            "CodeOrIssuer": "ABCD",
+                            "Reference": "INV-2025-0001"
                           }
                         }
                       ]
+                    },
+                    "SettlementDate": "2025-11-19Z",
+                    "TransactionAmount": {
+                      "Amount": 100.0,
+                      "Currency": "EUR"
                     }
                   }
+                },
+                "instant_payment_rejected": {
+                  "description": "An outgoing instant payment (pacs.008) that has been rejected.",
+                  "summary": "Instant payment rejected",
+                  "value": {
+                    "Creditor": {
+                      "Name": "Example Bank AG",
+                      "PostalAddress": {
+                        "AddressLine": [
+                          "Main Street 123",
+                          "Floor 5",
+                          "Building A",
+                          "Finance Division",
+                          "Payment Processing",
+                          "PO Box 100",
+                          "Example City, LI 9490"
+                        ],
+                        "Country": "LI",
+                        "TownName": "Example City"
+                      }
+                    },
+                    "CreditorAccount": {
+                      "Id": {
+                        "IBAN": "LI6808811000000001234"
+                      }
+                    },
+                    "CreditorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22XXX"
+                      }
+                    },
+                    "Customer": {
+                      "Name": "ACME Inc.",
+                      "Number": "0123456"
+                    },
+                    "Debtor": {
+                      "Name": "Jane Doe",
+                      "PostalAddress": {
+                        "AddressLine": [
+                          "Commerce Avenue 42",
+                          "Room 101",
+                          "Accounting Department",
+                          "Payment Operations",
+                          "Business District",
+                          "PO Box 200",
+                          "Sample Town, LU L-1234"
+                        ],
+                        "Country": "LU",
+                        "TownName": "Sample Town"
+                      }
+                    },
+                    "DebtorAccount": {
+                      "Id": {
+                        "IBAN": "LI11188110101101K001E"
+                      }
+                    },
+                    "DebtorAgent": {
+                      "FinancialInstitution": {
+                        "BIC": "BFRILI22XXX"
+                      }
+                    },
+                    "EventType": "INSTANT_TRANSACTION_REJECTED",
+                    "RejectionDateTime": "2025-11-18T15:41:46.141Z",
+                    "RejectionReason": "Insufficient funds",
+                    "RemittanceInformation": {
+                      "UnstructuredReference": [
+                        "INV-2025-0001"
+                      ]
+                    },
+                    "TransactionAmount": {
+                      "Amount": 100.0,
+                      "Currency": "EUR"
+                    },
+                    "UniqueEventId": "cb23c1b7-9fbf-4c95-b9a2-bbdbeda05a00"
+                  }
                 }
+              },
+              "schema": {
+                "$ref": "#/components/schemas/WebhookPayloadDto"
               }
             }
           },
+          "description": "Webhook notification payload",
           "required": true
         },
         "responses": {
@@ -629,12 +835,8 @@
             "description": "Webhook received and accepted for processing"
           },
           "408": {
-            "description": "Request Timeout - webhook will be retried",
             "content": {
               "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetail"
-                },
                 "examples": {
                   "timeout": {
                     "description": "timeout",
@@ -646,17 +848,17 @@
                       "instance": "/api/webhooks"
                     }
                   }
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests - webhook will be retried",
-            "content": {
-              "application/problem+json": {
+                },
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetail"
-                },
+                }
+              }
+            },
+            "description": "Request Timeout - webhook will be retried"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
                 "examples": {
                   "too_many_requests": {
                     "description": "too_many_requests",
@@ -668,17 +870,17 @@
                       "instance": "/api/webhooks"
                     }
                   }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error - webhook will be retried",
-            "content": {
-              "application/problem+json": {
+                },
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetail"
-                },
+                }
+              }
+            },
+            "description": "Too Many Requests - webhook will be retried"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
                 "examples": {
                   "internal_server_error": {
                     "description": "internal_server_error",
@@ -690,17 +892,17 @@
                       "instance": "/api/webhooks"
                     }
                   }
-                }
-              }
-            }
-          },
-          "502": {
-            "description": "Bad Gateway - webhook will be retried",
-            "content": {
-              "application/problem+json": {
+                },
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetail"
-                },
+                }
+              }
+            },
+            "description": "Internal Server Error - webhook will be retried"
+          },
+          "502": {
+            "content": {
+              "application/problem+json": {
                 "examples": {
                   "bad_gateway": {
                     "description": "bad_gateway",
@@ -712,17 +914,17 @@
                       "instance": "/api/webhooks"
                     }
                   }
-                }
-              }
-            }
-          },
-          "503": {
-            "description": "Service Unavailable - webhook will be retried",
-            "content": {
-              "application/problem+json": {
+                },
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetail"
-                },
+                }
+              }
+            },
+            "description": "Bad Gateway - webhook will be retried"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
                 "examples": {
                   "service_unavailable": {
                     "description": "service_unavailable",
@@ -734,17 +936,17 @@
                       "instance": "/api/webhooks"
                     }
                   }
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "Gateway Timeout - webhook will be retried",
-            "content": {
-              "application/problem+json": {
+                },
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetail"
-                },
+                }
+              }
+            },
+            "description": "Service Unavailable - webhook will be retried"
+          },
+          "504": {
+            "content": {
+              "application/problem+json": {
                 "examples": {
                   "gateway_timeout": {
                     "description": "gateway_timeout",
@@ -756,11 +958,16 @@
                       "instance": "/api/webhooks"
                     }
                   }
+                },
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
                 }
               }
-            }
+            },
+            "description": "Gateway Timeout - webhook will be retried"
           }
-        }
+        },
+        "summary": "Webhook notification"
       }
     }
   }
