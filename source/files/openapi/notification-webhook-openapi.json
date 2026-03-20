@@ -307,7 +307,7 @@
         "description": "Transaction amount",
         "properties": {
           "Amount": {
-            "type": "string",
+            "type": "number",
             "description": "Amount value. Should be positive as per pain.008",
             "example": "100.00"
           },
