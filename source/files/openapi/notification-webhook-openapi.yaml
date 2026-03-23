@@ -7,7 +7,7 @@ info:
     Customers should implement an HTTPS endpoint that accepts the WebhookPayload structure.
     The webhook URL is configured per notification rule and can be any HTTPS endpoint.
   title: Bank Frick Webhook Contract
-  version: 1.4.0
+  version: 1.5.0
 servers:
 - description: Example webhook endpoint (replace with your actual endpoint)
   url: https://example.com/api/webhooks/bankfrick
@@ -21,6 +21,8 @@ components:
         Id:
           $ref: "#/components/schemas/AccountIdDto"
           description: Account identification
+      required:
+      - Id
     AccountIdDto:
       type: object
       description: Account identification
@@ -30,6 +32,8 @@ components:
           description: Account ID (IBAN). Max 34 characters as per pain.008. ISO-8859-1
             character set
           example: LI0000000000000000000
+      required:
+      - IBAN
     AgentDto:
       type: object
       description: Agent (bank) information
@@ -37,6 +41,8 @@ components:
         FinancialInstitution:
           $ref: "#/components/schemas/FinancialInstitutionDto"
           description: Financial institution details
+      required:
+      - FinancialInstitution
     CreditorReferenceInformationDto:
       type: object
       properties:
@@ -63,6 +69,9 @@ components:
           type: string
           description: Bank Frick customer number
           example: "0123456"
+      required:
+      - Name
+      - Number
     EventTypeDto:
       type: string
       description: |-
@@ -88,6 +97,8 @@ components:
           description: Name of the financial institution. Max 140 characters as per
             pain.008. ISO-8859-1 character set
           example: Example Bank AG
+      required:
+      - BIC
     PartyDto:
       type: object
       description: Party information (creditor or debtor)
@@ -100,6 +111,9 @@ components:
         PostalAddress:
           $ref: "#/components/schemas/PostalAddressDto"
           description: Postal address of the party
+      required:
+      - Name
+      - PostalAddress
     PaymentIdentificationDto:
       type: object
       description: Payment identification
@@ -122,6 +136,8 @@ components:
           description: Unique End-to-End Transaction Reference - universally unique
             identifier (UUIDv4)
           example: e3bf5f77-30aa-40fc-83d7-72bc9067aa9b
+      required:
+      - EndToEndId
     PostalAddressDto:
       type: object
       description: Postal address information
@@ -139,7 +155,7 @@ components:
           type: string
           description: Building number. Max 16 characters as per pain.008. ISO-8859-1
             character set
-          example: 42
+          example: "42"
         Country:
           type: string
           description: "Country code. ISO 3166-1 alpha-2, 2 uppercase letters"
@@ -242,13 +258,16 @@ components:
       description: Transaction amount
       properties:
         Amount:
-          type: string
+          type: number
           description: Amount value. Should be positive as per pain.008
-          example: 100.0
+          example: "100.00"
         Currency:
           type: string
           description: Currency code. 3-letter ISO 4217 code
           example: EUR
+      required:
+      - Amount
+      - Currency
     WebhookPayloadBookedDto:
       allOf:
       - $ref: "#/components/schemas/WebhookPayloadDto"
@@ -266,8 +285,22 @@ components:
             type: string
             description: "Transaction number for filtering booked transactions via\
               \ the API, see https://developers.bankfrick.li/api_docs/#transactions-get"
-            example: 87654321
+            example: "87654321"
       description: Webhook payload for accepted and booked transactions
+      required:
+      - AcceptanceDateTime
+      - Creditor
+      - CreditorAccount
+      - CreditorAgent
+      - Customer
+      - DebtorAccount
+      - DebtorAgent
+      - EventType
+      - PaymentIdentification
+      - RemittanceInformation
+      - TransactionAmount
+      - TransactionNumber
+      - UniqueEventId
     WebhookPayloadDto:
       type: object
       description: Webhook notification payload with ISO 20022 transaction data
@@ -318,6 +351,18 @@ components:
           type: string
           description: "Unique ID of event, can be used for deduplication of messages"
           example: cb23c1b7-9fbf-4c95-b9a2-bbdbeda05a00
+      required:
+      - Creditor
+      - CreditorAccount
+      - CreditorAgent
+      - Customer
+      - DebtorAccount
+      - DebtorAgent
+      - EventType
+      - PaymentIdentification
+      - RemittanceInformation
+      - TransactionAmount
+      - UniqueEventId
     WebhookPayloadRejectedDto:
       allOf:
       - $ref: "#/components/schemas/WebhookPayloadDto"
@@ -332,6 +377,19 @@ components:
             description: Reason for transaction rejection
             example: Insufficient funds
       description: Webhook payload for rejected transactions
+      required:
+      - Creditor
+      - CreditorAccount
+      - CreditorAgent
+      - Customer
+      - DebtorAccount
+      - DebtorAgent
+      - EventType
+      - PaymentIdentification
+      - RejectionDateTime
+      - RemittanceInformation
+      - TransactionAmount
+      - UniqueEventId
 webhooks:
   notificationWebhook:
     post:
@@ -394,6 +452,9 @@ webhooks:
                     FinancialInstitution:
                       BIC: BFRILI22XXX
                       Name: Bank Frick AG
+                  Customer:
+                    Name: ACME Inc.
+                    Number: "0123456"
                   Debtor:
                     Name: Example Bank AG
                     PostalAddress:
@@ -417,6 +478,8 @@ webhooks:
                       BIC: BFRILI22XXX
                       Name: Bank Frick AG
                   EventType: INSTANT_TRANSACTION_EXECUTED
+                  PaymentIdentification:
+                    EndToEndId: E2E-2025-INV-0001
                   RemittanceInformation:
                     UnstructuredReference:
                     - INV-2025-0001
@@ -424,6 +487,8 @@ webhooks:
                   TransactionAmount:
                     Amount: 100.0
                     Currency: EUR
+                  TransactionNumber: "87654321"
+                  UniqueEventId: cb23c1b7-9fbf-4c95-b9a2-bbdbeda05a00
               instant_payment_received_address_lines:
                 description: An incoming instant payment (pacs.008) where the debtor's
                   postal address is provided using free-form address lines (AdrLine)
@@ -452,6 +517,9 @@ webhooks:
                   CreditorAgent:
                     FinancialInstitution:
                       BIC: BFRILI22XXX
+                  Customer:
+                    Name: ACME Inc.
+                    Number: "0123456"
                   Debtor:
                     Name: Jane Doe
                     PostalAddress:
@@ -472,12 +540,16 @@ webhooks:
                     FinancialInstitution:
                       BIC: BFRILI22XXX
                   EventType: INSTANT_TRANSACTION_RECEIVED
+                  PaymentIdentification:
+                    EndToEndId: E2E-2025-INV-0001
                   RemittanceInformation:
                     UnstructuredReference:
                     - INV-2025-0001
                   TransactionAmount:
                     Amount: 100.0
                     Currency: EUR
+                  TransactionNumber: "87654321"
+                  UniqueEventId: a1b2c3d4-5678-90ab-cdef-1234567890ab
               instant_payment_received_structured_address:
                 description: "An incoming instant payment (pacs.008) where the debtor's\
                   \ postal address is provided using structured fields such as street\
@@ -509,6 +581,9 @@ webhooks:
                     FinancialInstitution:
                       BIC: BFRILI22XXX
                       Name: Bank Frick AG
+                  Customer:
+                    Name: ACME Inc.
+                    Number: "0123456"
                   Debtor:
                     Name: Jane Doe
                     PostalAddress:
@@ -532,6 +607,8 @@ webhooks:
                       BIC: BFRILI22XXX
                       Name: Bank Frick AG
                   EventType: INSTANT_TRANSACTION_RECEIVED
+                  PaymentIdentification:
+                    EndToEndId: E2E-2025-INV-0001
                   RemittanceInformation:
                     UnstructuredReference:
                     - INV-2025-0001
@@ -539,6 +616,8 @@ webhooks:
                   TransactionAmount:
                     Amount: 100.0
                     Currency: EUR
+                  TransactionNumber: "87654321"
+                  UniqueEventId: b2c3d4e5-6789-01ab-cdef-2345678901ab
               instant_payment_received_structured_remittance_information:
                 description: "An incoming instant payment (pacs.008) containing structured\
                   \ remittance information with creditor reference (e.g., ISO 11649\
@@ -567,6 +646,9 @@ webhooks:
                     FinancialInstitution:
                       BIC: BFRILI22XXX
                       Name: Bank Frick AG
+                  Customer:
+                    Name: ACME Inc.
+                    Number: "0123456"
                   Debtor:
                     Name: Jane Doe
                     PostalAddress:
@@ -588,6 +670,8 @@ webhooks:
                       BIC: BFRILI22XXX
                       Name: Bank Frick AG
                   EventType: INSTANT_TRANSACTION_RECEIVED
+                  PaymentIdentification:
+                    EndToEndId: E2E-2025-INV-0001
                   RemittanceInformation:
                     StructuredReference:
                     - CreditorReferenceInformation:
@@ -597,6 +681,8 @@ webhooks:
                   TransactionAmount:
                     Amount: 100.0
                     Currency: EUR
+                  TransactionNumber: "87654321"
+                  UniqueEventId: c3d4e5f6-7890-12ab-cdef-3456789012ab
               instant_payment_rejected:
                 description: An outgoing instant payment (pacs.008) that has been
                   rejected.
@@ -644,6 +730,8 @@ webhooks:
                     FinancialInstitution:
                       BIC: BFRILI22XXX
                   EventType: INSTANT_TRANSACTION_REJECTED
+                  PaymentIdentification:
+                    EndToEndId: E2E-2025-INV-0001
                   RejectionDateTime: 2025-11-18T15:41:46.141Z
                   RejectionReason: Insufficient funds
                   RemittanceInformation:

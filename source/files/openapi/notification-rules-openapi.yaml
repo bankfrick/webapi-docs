@@ -4,7 +4,7 @@ info:
   description: API for managing notification rules. Allows to define notification
     targets (e.g. a webhook URL) endpoints that receive notifications when specific
     transaction events occur.
-  version: 1.0.0
+  version: 1.1.0
 servers:
 - url: https://api-test.bankfrick.li/onlinebanking/notifications
   description: Test
@@ -377,9 +377,15 @@ components:
       - type
     InstantTransactionsEventTypeDto:
       type: string
-      description: Type of instant transaction event
+      description: |-
+        Type of instant transaction event:
+          - INSTANT_TRANSACTION_RECEIVED: Event triggered when an instant transaction is received
+          - INSTANT_TRANSACTION_EXECUTED: Event triggered when an outgoing instant transaction is successfully executed
+          - INSTANT_TRANSACTION_REJECTED: Event triggered when an outgoing instant transaction is rejected
       enum:
       - INSTANT_TRANSACTION_RECEIVED
+      - INSTANT_TRANSACTION_EXECUTED
+      - INSTANT_TRANSACTION_REJECTED
     NotificationTargetsDto:
       type: object
       description: Notification targets for a rule
