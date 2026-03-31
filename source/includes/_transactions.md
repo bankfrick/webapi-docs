@@ -223,7 +223,7 @@ If a combination of filter parameters are applied, only orders that match all of
 | searchName | query | (optional) Filter for the beneficiary name, this parameter should be URL-Encoded.
 | status | query | (optional) Filter for for transaction status. The status of transactions that where created in the context of online banking can be one of (PREPARED, IN_PROGRESS, DELETED, EXPIRED, EXECUTED, REJECTED, DELETION_REQUESTED). **The status of booked transactions on the account is BOOKED. Note: BOOKED transactions (as known from the camt053 export) can only be queried by setting this filter to BOOKED otherwise only transactions that were created in the context of online banking are returned.**
 | toDate | query | (optional) Ending date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD.
-| type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, SEPA_INSTANT, FOREIGN, QR_BILL). Only relevant for transactions that were created in the context of online banking. **SEPA_INSTANT** is only available in the **test** environment (beta).
+| type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, SEPA_INSTANT, FOREIGN, QR_BILL). Only relevant for transactions that were created in the context of online banking. **SEPA_INSTANT** enables near real-time SEPA transfers.
 
 **Response Codes**
 
@@ -394,11 +394,7 @@ Create new payment orders similar to the create payment order dialogs within the
 | signature | \<**signature**\> |
 | algorithm | The used signing algorithm, e.g. rsa-sha512 |
 
-## SEPA Instant (Beta)
-
-<aside class="notice">
-<strong>Availability:</strong> SEPA Instant Payment is only available in the <strong>test</strong> environment and is currently in <strong>beta</strong>. It is not offered in production.
-</aside>
+## SEPA Instant
 
 The transaction type **SEPA_INSTANT** enables near real-time SEPA transfers. The behaviour and validation are largely aligned with type [SEPA](#data-types-type); the following differences apply.
 
