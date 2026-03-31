@@ -1233,7 +1233,7 @@ A single transaction instance to be created.
 | debitor |	[TransactionDebitorAccount](#data-types-transactiondebitoraccount) |	required |	The client information about the transaction |
 | creditor |	[TransactionCreditorAccount](#data-types-transactioncreditoraccount) |	required |	The beneficiary information about the transaction |
 
-For **type = SEPA_INSTANT** (test only, beta), the fields `express`, `valuta`, `valutaIsExecutionDate`, `charge` and `purposeOfPayment` must not be sent; only `currency` = `"EUR"` is allowed; debitor only EUR accounts; creditor only with IBAN (**no Bank Frick IBAN**). See [SEPA Instant (Beta)](#sepa-instant-beta) in Transactions.
+For **type = SEPA_INSTANT**, the fields `express`, `valuta`, `valutaIsExecutionDate`, `charge` and `purposeOfPayment` must not be sent; only `currency` = `"EUR"` is allowed; debitor only EUR accounts; creditor only with IBAN (**no Bank Frick IBAN**). See [SEPA Instant](#sepa-instant) in Transactions.
 
 ## Transaction (existing instance)
 
@@ -1547,7 +1547,7 @@ Enum values for the 'type' field
 | INTERNAL | Any | Transfer to another bank account within the same customer account |
 | BANK_INTERNAL |	Any | Transfer to another bank account at Bank Frick owned by another customer account |
 | SEPA | Euro |	SEPA Payment (Only transactions in Euro to European countries) |
-| SEPA_INSTANT | EUR |	SEPA Instant Payment (only **test** environment, beta). Near real-time SEPA transfers; see [SEPA Instant (Beta)](#transactions-sepa-instant-beta) in Transactions. |
+| SEPA_INSTANT | EUR |	SEPA Instant Payment. Near real-time SEPA transfers; see [SEPA Instant](#transactions-sepa-instant) in Transactions. |
 | FOREIGN	| Any | International Transfer (SWIFT) |
 | QR_BILL | CHF |	QR Bill Payment Slip with QR reference (Only in Switzerland) |
 
