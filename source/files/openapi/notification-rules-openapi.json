@@ -26,7 +26,7 @@
         "operationId": "listRules",
         "parameters": [
           {
-            "name": "state",
+            "name": "status",
             "in": "query",
             "description": "Filter by rule status. Can be specified multiple times.",
             "required": false,
