@@ -46,6 +46,9 @@ Retrieve a list of rules the current user can see/edit.
 The list will contain all rules the user has *currently* permission to see, regardless of who created them.
 It is paginated and by default shows the first 100 rules (page 0, page size 100).
 
+By default, deleted rules are excluded from the list. To include them, adjust the query filter
+accordingly (see full specifications).
+
 > Request
 
 ```shell--test
@@ -226,4 +229,50 @@ Content-Type: application/json
 Signature: ...
 Algorithm: ...
 Body: see full specifications
+```
+
+## Delete Rule
+
+An inactive rule can be permanently deleted by sending a `DELETE` request with the rule ID in the request body.
+To prevent accidental deletions, only inactive rules can be deleted — active rules must be [deactivated](#instant-transaction-notification-rules-deactivate-rule) first.
+This ID can be obtained from the response of the initial rule creation, or
+from the corresponding rule when listing all rules.
+
+Note that deletion is a soft delete: the rule will still be visible when
+[listing rules](#instant-transaction-notification-rules-list-rules) with the appropriate filter. However, deleted rules cannot be reactivated.
+
+> Request
+
+```shell--test
+DELETE https://api-test.bankfrick.li/onlinebanking/notifications/topics/instant-transactions/rules
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+Algorithm: ...
+Body: { "id": "af3fe4ef-a23f-436c-bfe9-aadeb9a85d36" }
+```
+
+```shell--production
+DELETE https://api.bankfrick.li/onlinebanking/notifications/topics/instant-transactions/rules
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+Algorithm: ...
+Body: { "id": "af3fe4ef-a23f-436c-bfe9-aadeb9a85d36" }
+```
+
+> Response
+
+```shell--test
+HTTP/1.1 204 No Content
+Signature: ...
+Algorithm: ...
+```
+
+```shell--production
+HTTP/1.1 204 No Content
+Signature: ...
+Algorithm: ...
 ```

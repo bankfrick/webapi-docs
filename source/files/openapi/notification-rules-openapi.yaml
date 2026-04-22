@@ -4,7 +4,7 @@ info:
   description: API for managing notification rules. Allows to define notification
     targets (e.g. a webhook URL) endpoints that receive notifications when specific
     transaction events occur.
-  version: 1.1.0
+  version: 1.3.0
 servers:
 - url: https://api-test.bankfrick.li/onlinebanking/notifications
   description: Test
@@ -20,31 +20,73 @@ paths:
         user
       operationId: listRules
       parameters:
+      - name: status
+        in: query
+        description: Filter by rule status. Can be specified multiple times.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ACTIVE
+            - INACTIVE
+            - DELETED
+          uniqueItems: true
       - name: pageSize
         in: query
+        description: "Page size, default 100"
         required: false
         schema:
           type: integer
           format: int32
           default: 100
+          maximum: 2500
           minimum: 1
+        example: 10
       - name: pageIndex
         in: query
+        description: "Page index, default 0"
         required: false
         schema:
           type: integer
           format: int32
           default: 0
           minimum: 0
+        example: 2
       responses:
         "200":
           description: Rules found
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/InstantTransactionsRulesDto"
         "401":
           description: Missing or invalid authentication
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -60,6 +102,18 @@ paths:
                     instance: /topics/instant-transactions/rules
         "403":
           description: Insufficient permissions
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -75,6 +129,18 @@ paths:
                     instance: /topics/instant-transactions/rules
         "500":
           description: Internal server error
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -98,23 +164,22 @@ paths:
         trigger notifications.
       operationId: createRule
       parameters:
-      - name: Algorithm
+      - name: algorithm
         in: header
-        description: Signature algorithm used to sign the webhook payload
+        description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512"
         required: true
         schema:
           type: string
           enum:
           - rsa-sha512
-          example: rsa-sha512
-      - name: Signature
+      - name: signature
         in: header
-        description: Base64-encoded RSA signature of the webhook payload. Verify using
-          the public key to ensure the webhook came from Bank Frick
+        description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
         required: true
         schema:
           type: string
-          example: MEUCIQDf...truncated...
       requestBody:
         content:
           application/json:
@@ -124,12 +189,36 @@ paths:
       responses:
         "201":
           description: Rules created successfully
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/CreatedInstantTransactionsRulesDto"
         "400":
           description: Invalid webhook URL or invalid input
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -145,6 +234,18 @@ paths:
                     instance: /topics/instant-transactions/rules
         "401":
           description: Missing or invalid authentication
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -160,6 +261,18 @@ paths:
                     instance: /topics/instant-transactions/rules
         "403":
           description: Insufficient permissions
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -175,6 +288,173 @@ paths:
                     instance: /topics/instant-transactions/rules
         "500":
           description: Internal server error
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                internal_server_error:
+                  description: internal_server_error
+                  value:
+                    type: about:blank
+                    title: Internal Server Error
+                    status: 500
+                    detail: An unexpected error occurred while processing your request
+                    instance: /topics/instant-transactions/rules
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - instant-transactions-topic-rules-controller
+      summary: Delete an instant transaction notification rule
+      description: Deletes an instant transaction notification rule which the authenticated
+        user is allowed to manage
+      operationId: deleteRule
+      parameters:
+      - name: algorithm
+        in: header
+        description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512"
+        required: true
+        schema:
+          type: string
+          enum:
+          - rsa-sha512
+      - name: signature
+        in: header
+        description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeleteInstantTransactionsRuleDto"
+        required: true
+      responses:
+        "204":
+          description: Rule deleted
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "401":
+          description: Missing or invalid authentication
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                unauthorized:
+                  description: unauthorized
+                  value:
+                    type: about:blank
+                    title: Unauthorized
+                    status: 401
+                    detail: "Authentication failure: header missing"
+                    instance: /topics/instant-transactions/rules
+        "403":
+          description: Insufficient permissions
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                forbidden:
+                  description: forbidden
+                  value:
+                    type: about:blank
+                    title: Forbidden
+                    status: 403
+                    detail: Insufficient permissions for this operation
+                    instance: /topics/instant-transactions/rules
+        "404":
+          description: Rule not found
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                not_found:
+                  description: not_found
+                  value:
+                    type: about:blank
+                    title: Not Found
+                    status: 404
+                    detail: Rule not found
+                    instance: /topics/instant-transactions/rules
+        "500":
+          description: Internal server error
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -198,6 +478,23 @@ paths:
       description: Deactivate an instant transaction notification rule which the authenticated
         user is allowed to manage
       operationId: deactivateRule
+      parameters:
+      - name: algorithm
+        in: header
+        description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512"
+        required: true
+        schema:
+          type: string
+          enum:
+          - rsa-sha512
+      - name: signature
+        in: header
+        description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -207,12 +504,36 @@ paths:
       responses:
         "200":
           description: Rule deactivated
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/InstantTransactionsRuleDto"
         "401":
           description: Missing or invalid authentication
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -228,6 +549,18 @@ paths:
                     instance: /topics/instant-transactions/rules/deactivation
         "403":
           description: Insufficient permissions
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -241,8 +574,47 @@ paths:
                     status: 403
                     detail: Insufficient permissions for this operation
                     instance: /topics/instant-transactions/rules/deactivation
+        "410":
+          description: Rule has been deleted
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                gone:
+                  description: gone
+                  value:
+                    type: about:blank
+                    title: Gone
+                    status: 410
+                    detail: Rule has been deleted
+                    instance: /topics/instant-transactions/rules/deactivation
         "500":
           description: Internal server error
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -266,6 +638,23 @@ paths:
       description: Activate an instant transaction notification rule which the authenticated
         user is allowed to manage
       operationId: activateRule
+      parameters:
+      - name: algorithm
+        in: header
+        description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512"
+        required: true
+        schema:
+          type: string
+          enum:
+          - rsa-sha512
+      - name: signature
+        in: header
+        description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        required: true
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
@@ -275,12 +664,36 @@ paths:
       responses:
         "200":
           description: Rule activated
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/InstantTransactionsRuleDto"
         "401":
           description: Missing or invalid authentication
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -296,6 +709,18 @@ paths:
                     instance: /topics/instant-transactions/rules/activation
         "403":
           description: Insufficient permissions
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -309,8 +734,47 @@ paths:
                     status: 403
                     detail: Insufficient permissions for this operation
                     instance: /topics/instant-transactions/rules/activation
+        "410":
+          description: Rule has been deleted
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetail"
+              examples:
+                gone:
+                  description: gone
+                  value:
+                    type: about:blank
+                    title: Gone
+                    status: 410
+                    detail: Rule has been deleted
+                    instance: /topics/instant-transactions/rules/activation
         "500":
           description: Internal server error
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
           content:
             application/problem+json:
               schema:
@@ -424,10 +888,11 @@ components:
           description: Unique identifier of the rule
         status:
           type: string
-          description: Current status of the rule (ACTIVE or INACTIVE)
+          description: Current status of the rule
           enum:
           - ACTIVE
           - INACTIVE
+          - DELETED
         name:
           type: string
           description: Name of the rule
@@ -547,6 +1012,18 @@ components:
       - pageIndex
       - pageSize
       - totalCount
+    DeleteInstantTransactionsRuleDto:
+      type: object
+      description: Request to delete an existing instant transaction notification
+        rule
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Rule ID
+          example: d73102e6-4741-4998-9bda-24f54200be84
+      required:
+      - id
   securitySchemes:
     bearerAuth:
       type: http
