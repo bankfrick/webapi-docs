@@ -3,54 +3,54 @@ info:
   title: Bank Frick VBAN API
   version: 0.2.0
 servers:
-  - url: https://api.bankfrick.li/vban
-  - url: https://api-test.bankfrick.li/vban
+- url: https://api.bankfrick.li/vban
+- url: https://api-test.bankfrick.li/vban
 paths:
   /virtual-ibans:
     get:
       operationId: getVirtualIbans
       parameters:
-        - description: Filter by list of reference accounts
-          example:
-            - LI4408811MAINACCOUNT1
-          in: query
-          name: account
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-            uniqueItems: true
-        - description: Filter by list of Virtual IBAN states
-          example:
+      - description: Filter by list of reference accounts
+        example:
+        - LI4408811MAINACCOUNT1
+        in: query
+        name: account
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+      - description: Filter by list of Virtual IBAN states
+        example:
+        - ACTIVE
+        in: query
+        name: state
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - PREPARED
             - ACTIVE
-          in: query
-          name: state
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - PREPARED
-                - ACTIVE
-                - DEACTIVATION_REQUESTED
-                - DEACTIVATED
-            uniqueItems: true
-        - description: "Page size, default 100"
-          example: "10"
-          in: query
-          name: pageSize
-          required: false
-          schema:
-            type: string
-        - description: "Page index, default 0"
-          example: "2"
-          in: query
-          name: pageIndex
-          required: false
-          schema:
-            type: string
+            - DEACTIVATION_REQUESTED
+            - DEACTIVATED
+          uniqueItems: true
+      - description: "Page size, default 100"
+        example: "10"
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          type: string
+      - description: "Page index, default 0"
+        example: "2"
+        in: query
+        name: pageIndex
+        required: false
+        schema:
+          type: string
       responses:
         "200":
           content:
@@ -90,24 +90,30 @@ paths:
                 type: string
       summary: Get virtual IBANs
       tags:
-        - Virtual Ibans Controller
+      - Virtual Ibans Controller
     post:
       operationId: createVirtualIban
       parameters:
-        - description: Cryptographic fingerprint of request body. Provide used algorithm
-            in <algorithm> header.
-          in: header
-          name: signature
-          required: true
-          schema:
-            type: string
-        - description: "Algorithm used for signing the request. Supported algorithms:\
-          \ rsa-sha512"
-          in: header
-          name: algorithm
-          required: true
-          schema:
-            type: string
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
       requestBody:
         content:
           application/json:
@@ -153,25 +159,31 @@ paths:
                 type: string
       summary: Create virtual IBAN
       tags:
-        - Virtual Ibans Controller
+      - Virtual Ibans Controller
   /virtual-ibans/activations/approvals:
     put:
       operationId: approveVirtualIbanActivation
       parameters:
-        - description: Cryptographic fingerprint of request body. Provide used algorithm
-            in <algorithm> header.
-          in: header
-          name: signature
-          required: true
-          schema:
-            type: string
-        - description: "Algorithm used for signing the request. Supported algorithms:\
-          \ rsa-sha512"
-          in: header
-          name: algorithm
-          required: true
-          schema:
-            type: string
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
       requestBody:
         content:
           application/json:
@@ -217,25 +229,31 @@ paths:
                 type: string
       summary: Approve prepared virtual IBAN
       tags:
-        - Virtual Ibans Controller
+      - Virtual Ibans Controller
   /virtual-ibans/deactivations:
     put:
       operationId: deactivateVirtualIban
       parameters:
-        - description: Cryptographic fingerprint of request body. Provide used algorithm
-            in <algorithm> header.
-          in: header
-          name: signature
-          required: true
-          schema:
-            type: string
-        - description: "Algorithm used for signing the request. Supported algorithms:\
-          \ rsa-sha512"
-          in: header
-          name: algorithm
-          required: true
-          schema:
-            type: string
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
       requestBody:
         content:
           application/json:
@@ -281,25 +299,31 @@ paths:
                 type: string
       summary: Deactivate virtual IBAN
       tags:
-        - Virtual Ibans Controller
+      - Virtual Ibans Controller
   /virtual-ibans/deactivations/approvals:
     put:
       operationId: approveVirtualIbanDeactivation
       parameters:
-        - description: Cryptographic fingerprint of request body. Provide used algorithm
-            in <algorithm> header.
-          in: header
-          name: signature
-          required: true
-          schema:
-            type: string
-        - description: "Algorithm used for signing the request. Supported algorithms:\
-          \ rsa-sha512"
-          in: header
-          name: algorithm
-          required: true
-          schema:
-            type: string
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
       requestBody:
         content:
           application/json:
@@ -345,16 +369,16 @@ paths:
                 type: string
       summary: Approve deactivation of virtual IBAN
       tags:
-        - Virtual Ibans Controller
+      - Virtual Ibans Controller
   /virtual-ibans/{vban}:
     get:
       operationId: getVirtualIban
       parameters:
-        - in: path
-          name: vban
-          required: true
-          schema:
-            type: string
+      - in: path
+        name: vban
+        required: true
+        schema:
+          type: string
       responses:
         "200":
           content:
@@ -412,7 +436,7 @@ paths:
                 type: string
       summary: Read virtual IBAN
       tags:
-        - Virtual Ibans Controller
+      - Virtual Ibans Controller
 components:
   schemas:
     ApprovalDto:
@@ -431,30 +455,30 @@ components:
         signatureType:
           type: string
           enum:
-            - INDIVIDUAL
-            - COLLECTIVE_TWO
-            - COLLECTIVE_THREE
-            - COLLECTIVE_FOUR
+          - INDIVIDUAL
+          - COLLECTIVE_TWO
+          - COLLECTIVE_THREE
+          - COLLECTIVE_FOUR
       required:
-        - contactNumber
-        - createdAt
-        - createdBy
-        - signatureGroup
-        - signatureType
+      - contactNumber
+      - createdAt
+      - createdBy
+      - signatureGroup
+      - signatureType
     ApproveVirtualIbanActivationDto:
       type: object
       properties:
         vban:
           type: string
       required:
-        - vban
+      - vban
     ApproveVirtualIbanDeactivationDto:
       type: object
       properties:
         vban:
           type: string
       required:
-        - vban
+      - vban
     CreateVirtualIbanAddressDto:
       type: object
       properties:
@@ -479,11 +503,11 @@ components:
           maxLength: 255
           minLength: 0
       required:
-        - city
-        - country
-        - number
-        - postalCode
-        - street
+      - city
+      - country
+      - number
+      - postalCode
+      - street
     CreateVirtualIbanDto:
       type: object
       properties:
@@ -500,14 +524,14 @@ components:
         referenceAccountIban:
           type: string
       required:
-        - referenceAccountIban
+      - referenceAccountIban
     DeactivateVirtualIbanDto:
       type: object
       properties:
         vban:
           type: string
       required:
-        - vban
+      - vban
     ErrorResponseDto:
       type: object
       properties:
@@ -517,8 +541,8 @@ components:
           type: integer
           format: int32
       required:
-        - reason
-        - status
+      - reason
+      - status
     PaginationDto:
       type: object
       properties:
@@ -534,10 +558,10 @@ components:
           type: integer
           format: int64
       required:
-        - hasMore
-        - pageIndex
-        - pageSize
-        - totalCount
+      - hasMore
+      - pageIndex
+      - pageSize
+      - totalCount
     VirtualIbanAddressDto:
       type: object
       properties:
@@ -552,11 +576,11 @@ components:
         street:
           type: string
       required:
-        - city
-        - country
-        - number
-        - postalCode
-        - street
+      - city
+      - country
+      - number
+      - postalCode
+      - street
     VirtualIbanDto:
       type: object
       properties:
@@ -583,20 +607,20 @@ components:
         state:
           type: string
           enum:
-            - PREPARED
-            - ACTIVE
-            - DEACTIVATION_REQUESTED
-            - DEACTIVATED
+          - PREPARED
+          - ACTIVE
+          - DEACTIVATION_REQUESTED
+          - DEACTIVATED
         vban:
           type: string
       required:
-        - activationApprovals
-        - createdAt
-        - createdBy
-        - deactivationApprovals
-        - referenceAccountIban
-        - state
-        - vban
+      - activationApprovals
+      - createdAt
+      - createdBy
+      - deactivationApprovals
+      - referenceAccountIban
+      - state
+      - vban
     VirtualIbansDto:
       type: object
       properties:
@@ -607,5 +631,5 @@ components:
           items:
             $ref: "#/components/schemas/VirtualIbanDto"
       required:
-        - pagination
-        - virtualIbans
+      - pagination
+      - virtualIbans

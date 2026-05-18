@@ -148,12 +148,18 @@
             }
           },
           {
-            "description": "Algorithm used for signing the request. Supported algorithms: rsa-sha512",
+            "description": "Algorithm used for signing the request. Supported algorithms: rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes rsa-sha512.",
             "in": "header",
             "name": "algorithm",
-            "required": true,
+            "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "rsa-sha512",
+              "enum": [
+                "rsa-sha512",
+                "rsa-sha384",
+                "rsa-sha256"
+              ]
             }
           }
         ],
@@ -241,12 +247,18 @@
             }
           },
           {
-            "description": "Algorithm used for signing the request. Supported algorithms: rsa-sha512",
+            "description": "Algorithm used for signing the request. Supported algorithms: rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes rsa-sha512.",
             "in": "header",
             "name": "algorithm",
-            "required": true,
+            "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "rsa-sha512",
+              "enum": [
+                "rsa-sha512",
+                "rsa-sha384",
+                "rsa-sha256"
+              ]
             }
           }
         ],
@@ -334,12 +346,18 @@
             }
           },
           {
-            "description": "Algorithm used for signing the request. Supported algorithms: rsa-sha512",
+            "description": "Algorithm used for signing the request. Supported algorithms: rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes rsa-sha512.",
             "in": "header",
             "name": "algorithm",
-            "required": true,
+            "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "rsa-sha512",
+              "enum": [
+                "rsa-sha512",
+                "rsa-sha384",
+                "rsa-sha256"
+              ]
             }
           }
         ],
@@ -427,12 +445,18 @@
             }
           },
           {
-            "description": "Algorithm used for signing the request. Supported algorithms: rsa-sha512",
+            "description": "Algorithm used for signing the request. Supported algorithms: rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes rsa-sha512.",
             "in": "header",
             "name": "algorithm",
-            "required": true,
+            "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "default": "rsa-sha512",
+              "enum": [
+                "rsa-sha512",
+                "rsa-sha384",
+                "rsa-sha256"
+              ]
             }
           }
         ],
@@ -669,29 +693,29 @@
         "type": "object",
         "properties": {
           "city": {
+            "type": "string",
             "maxLength": 255,
-            "minLength": 0,
-            "type": "string"
+            "minLength": 0
           },
           "country": {
+            "type": "string",
             "maxLength": 255,
-            "minLength": 0,
-            "type": "string"
+            "minLength": 0
           },
           "number": {
+            "type": "string",
             "maxLength": 15,
-            "minLength": 0,
-            "type": "string"
+            "minLength": 0
           },
           "postalCode": {
+            "type": "string",
             "maxLength": 15,
-            "minLength": 0,
-            "type": "string"
+            "minLength": 0
           },
           "street": {
+            "type": "string",
             "maxLength": 255,
-            "minLength": 0,
-            "type": "string"
+            "minLength": 0
           }
         },
         "required": [
@@ -709,14 +733,14 @@
             "$ref": "#/components/schemas/CreateVirtualIbanAddressDto"
           },
           "description": {
+            "type": "string",
             "maxLength": 1000,
-            "minLength": 0,
-            "type": "string"
+            "minLength": 0
           },
           "name": {
+            "type": "string",
             "maxLength": 255,
-            "minLength": 0,
-            "type": "string"
+            "minLength": 0
           },
           "referenceAccountIban": {
             "type": "string"
