@@ -260,7 +260,7 @@ components:
         Amount:
           type: number
           description: Amount value. Should be positive as per pain.008
-          example: "100.00"
+          example: 100.0
         Currency:
           type: string
           description: Currency code. 3-letter ISO 4217 code
