@@ -167,12 +167,16 @@ paths:
       - name: algorithm
         in: header
         description: "Algorithm used for signing the request. Supported algorithms:\
-          \ rsa-sha512"
-        required: true
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        required: false
         schema:
           type: string
+          default: rsa-sha512
           enum:
           - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
       - name: signature
         in: header
         description: Cryptographic fingerprint of request body. Provide used algorithm
@@ -326,12 +330,16 @@ paths:
       - name: algorithm
         in: header
         description: "Algorithm used for signing the request. Supported algorithms:\
-          \ rsa-sha512"
-        required: true
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        required: false
         schema:
           type: string
+          default: rsa-sha512
           enum:
           - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
       - name: signature
         in: header
         description: Cryptographic fingerprint of request body. Provide used algorithm
@@ -482,12 +490,16 @@ paths:
       - name: algorithm
         in: header
         description: "Algorithm used for signing the request. Supported algorithms:\
-          \ rsa-sha512"
-        required: true
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        required: false
         schema:
           type: string
+          default: rsa-sha512
           enum:
           - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
       - name: signature
         in: header
         description: Cryptographic fingerprint of request body. Provide used algorithm
@@ -642,12 +654,16 @@ paths:
       - name: algorithm
         in: header
         description: "Algorithm used for signing the request. Supported algorithms:\
-          \ rsa-sha512"
-        required: true
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        required: false
         schema:
           type: string
+          default: rsa-sha512
           enum:
           - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
       - name: signature
         in: header
         description: Cryptographic fingerprint of request body. Provide used algorithm
