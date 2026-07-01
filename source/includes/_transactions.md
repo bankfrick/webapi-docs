@@ -451,7 +451,6 @@ algorithm: ...
 ```
 
 ```shell--production
-SEPA_INSTANT is not available in production. Use the test environment.
 ```
 
 > Response
