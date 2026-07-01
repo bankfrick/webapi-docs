@@ -451,6 +451,41 @@ algorithm: ...
 ```
 
 ```shell--production
+PUT https://olb.bankfrick.li/webapi/v2/transactions
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+{
+    "transactions" : [ {
+        "customId" : "A4711",
+        "type" : "SEPA_INSTANT",
+        "amount" : 1000.00,
+        "currency" : "EUR",
+        "reference" : "some individual text",
+        "correspondence": true,
+        "orderingCustomer": {
+            "name": "Max Muster",
+            "address": "Street 100",
+            "postalcode": "101000",
+            "city": "Berlin",
+            "country": "DE"
+        },
+        "debitor" : {
+            "iban" : "LI680881100000000123E"
+        },
+        "creditor" : {
+            "name" : "Satoshi Nakamoto",
+            "address": "Bahnhofstrasse 1",
+            "postalcode": "39576",
+            "city": "Stendal",
+            "country": "Germany",
+            "iban" : "DE12500105170648489890"
+        }
+    } ]
+}
 ```
 
 > Response
