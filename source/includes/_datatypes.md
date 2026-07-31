@@ -1397,6 +1397,10 @@ Debitor or creditor account information of the transaction.
 
 The transactions beneficiary account information.
 
+<aside class="notice">The detailed information and technical specifications for the new mandatory fields for structured addresses cannot be provided by 01.08.2026 as originally planned.
+
+We are currently working on the final design and will publish the corresponding information on this API documentation page as soon as it becomes available.</aside>
+
 **Properties**
 
 | name | data type | constraints | description |
