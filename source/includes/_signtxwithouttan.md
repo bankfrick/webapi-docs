@@ -84,7 +84,7 @@ algorithm: ...
 }
 ```
 
-Sign a transaction without previously requesting a tan. This resource must be activated for the contact in the backend.
+Sign a transaction without previously requesting a tan.
 
 **Request Parameters**
 
