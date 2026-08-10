@@ -51,7 +51,9 @@
                     <Nm>Test Company</Nm>
                     <PstlAdr>
                         <StrtNm>11th St</StrtNm>
-                        <BldgNb>-</BldgNb>
+                        <BldgNb>1</BldgNb>
+                        <Flr>3</Flr>
+                        <Room>12A</Room>
                         <PstCd>33174</PstCd>
                         <TwnNm>Miami</TwnNm>
                         <Ctry>US</Ctry>

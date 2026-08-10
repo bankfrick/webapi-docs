@@ -63,6 +63,8 @@
                     <PstlAdr>
                         <StrtNm>King Fahd Road</StrtNm>
                         <BldgNb>120</BldgNb>
+                        <Flr>5</Flr>
+                        <Room>501</Room>
                         <PstCd>12271</PstCd>
                         <TwnNm>Riyadh</TwnNm>
                         <Ctry>SA</Ctry>
