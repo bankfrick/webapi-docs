@@ -3704,17 +3704,17 @@
           "buildingNumber" : {
             "maxLength" : 16,
             "type" : "string",
-            "description" : "Building number of the recipient. Optional by default."
+            "description" : "Building number of the recipient."
           },
           "floor" : {
             "maxLength" : 20,
             "type" : "string",
-            "description" : "Floor of the recipient. Optional by default."
+            "description" : "Floor of the recipient."
           },
           "room" : {
             "maxLength" : 20,
             "type" : "string",
-            "description" : "Room of the recipient. Optional by default."
+            "description" : "Room of the recipient."
           },
           "postalcode" : {
             "maxLength" : 11,

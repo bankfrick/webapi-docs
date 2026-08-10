@@ -96,9 +96,9 @@ Upload a pain.001 message. Note that errors respectively the status regarding pa
 | CdtrAgt (Group)
 | Cdtr/Nm | string | yes | Must be used if "Creditor" is used, maximum 70 characters. |
 | Cdtr/PstlAdr/StrtNm | string | yes for external payments | Street name of the creditor (maps to `address`). Required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL). |
-| Cdtr/PstlAdr/BldgNb | string |  | Building number (maps to `buildingNumber`). Optional by default. Max 16 characters. |
-| Cdtr/PstlAdr/Flr | string |  | Floor (maps to `floor`). Optional by default. Max 20 characters. |
-| Cdtr/PstlAdr/Room | string |  | Room (maps to `room`). Optional by default. Max 20 characters. |
+| Cdtr/PstlAdr/BldgNb | string |  | Building number (maps to `buildingNumber`). Max 16 characters. |
+| Cdtr/PstlAdr/Flr | string |  | Floor (maps to `floor`). Max 20 characters. |
+| Cdtr/PstlAdr/Room | string |  | Room (maps to `room`). Max 20 characters. |
 | Cdtr/PstlAdr/PstCd | string | yes for external payments | Postal code (maps to `postalcode`). Required for external payments. |
 | Cdtr/PstlAdr/TwnNm | string | yes for external payments | Town/city name (maps to `city`). Required for external payments. |
 | Cdtr/PstlAdr/Ctry | string | yes for external payments | Country code (maps to `country`). Required for external payments. |

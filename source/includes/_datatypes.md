@@ -1395,10 +1395,10 @@ Debitor or creditor account information of the transaction.
 | aba | string | max size: 11, min size: 0 | The aba routing number of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | iban |	string |	max size: 34, min size: 0	| The iban of the recipient account |
 | name |	string |	required, max size: 35, min size: 0   |	The name of the recipient |
-| address |	string |	max size: 70, min size: 0  | Street name of the recipient (without building number). For legacy records created before structured address fields were introduced, may still contain the historically stored combined address value. |
-| buildingNumber |	string |	max size: 16, min size: 0  | Building number of the recipient. Optional by default. Returned as `null` for legacy records. |
-| floor |	string |	max size: 20, min size: 0  | Floor of the recipient. Optional by default. Returned as `null` for legacy records. |
-| room |	string |	max size: 20, min size: 0  | Room of the recipient. Optional by default. Returned as `null` for legacy records. |
+| address |	string |	max size: 70, min size: 0  | Street name of the recipient (without building number) |
+| buildingNumber |	string |	max size: 16, min size: 0  | Building number of the recipient |
+| floor |	string |	max size: 20, min size: 0  | Floor of the recipient |
+| room |	string |	max size: 20, min size: 0  | Room of the recipient |
 | postalcode |	string |	max size: 11, min size: 0   |	Postal code of the recipient address |
 | city |	string |	max size: 70, min size: 0  |	City of the recipient |
 | country |	string |	max size: 70, min size: 0  |	Country of the recipient |
@@ -1434,11 +1434,9 @@ The transactions beneficiary account information.
 
 For external payments (all [types](#data-types-type) except <code>INTERNAL</code>, <code>BANK_INTERNAL</code> and <code>QR_BILL</code>), the creditor address fields <code>name</code>, <code>address</code>, <code>postalcode</code>, <code>city</code> and <code>country</code> are mandatory — independent of currency, payment type and whether IBAN or account number is used.
 
-The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code> are optional by default (property-controlled). The field <code>address</code> contains the street name only (without building number).
+The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code> are optional. The field <code>address</code> contains the street name only (without building number).
 
-Payments of type <code>INTERNAL</code>, <code>BANK_INTERNAL</code> and <code>QR_BILL</code> are exempt from this address mandate.
-
-For legacy transactions created before the structured address fields were introduced, <code>buildingNumber</code>, <code>floor</code> and <code>room</code> are returned as <code>null</code>; <code>address</code> may still contain the historically stored combined value.</aside>
+Payments of type <code>INTERNAL</code>, <code>BANK_INTERNAL</code> and <code>QR_BILL</code> are exempt from this address mandate.</aside>
 
 **Properties**
 
@@ -1450,9 +1448,9 @@ For legacy transactions created before the structured address fields were introd
 | vban |	string |	max size: 21, min size: 0	| The vban of the credited account; response-only. Not used on create. |
 | name |	string |	required, max size: 35, min size: 0   |	The name of the recipient |
 | address |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 70, min size: 0  | Street name of the recipient (without building number) |
-| buildingNumber |	string |	max size: 16, min size: 0  | Building number of the recipient. Optional by default |
-| floor |	string |	max size: 20, min size: 0  | Floor of the recipient. Optional by default |
-| room |	string |	max size: 20, min size: 0  | Room of the recipient. Optional by default |
+| buildingNumber |	string |	max size: 16, min size: 0  | Building number of the recipient |
+| floor |	string |	max size: 20, min size: 0  | Floor of the recipient |
+| room |	string |	max size: 20, min size: 0  | Room of the recipient |
 | postalcode |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 11, min size: 0   |	Postal code of the recipient address |
 | city |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 70, min size: 0  |	City of the recipient |
 | country |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 70, min size: 0  |	Country of the recipient |
