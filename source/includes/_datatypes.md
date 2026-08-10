@@ -1430,7 +1430,9 @@ Debitor or creditor account information of the transaction.
 
 The transactions beneficiary account information.
 
-<aside class="notice">For external payments (all [types](#data-types-type) except <code>INTERNAL</code>, <code>BANK_INTERNAL</code> and <code>QR_BILL</code>), the creditor address fields <code>name</code>, <code>address</code>, <code>postalcode</code>, <code>city</code> and <code>country</code> are mandatory — independent of currency, payment type and whether IBAN or account number is used.
+<aside class="notice">This structured address mandate is currently available on the <strong>test environment only</strong>. Production will follow at a later date.
+
+For external payments (all [types](#data-types-type) except <code>INTERNAL</code>, <code>BANK_INTERNAL</code> and <code>QR_BILL</code>), the creditor address fields <code>name</code>, <code>address</code>, <code>postalcode</code>, <code>city</code> and <code>country</code> are mandatory — independent of currency, payment type and whether IBAN or account number is used.
 
 The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code> are optional by default (property-controlled). The field <code>address</code> contains the street name only (without building number).
 
