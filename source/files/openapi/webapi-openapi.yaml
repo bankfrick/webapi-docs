@@ -2558,15 +2558,31 @@ components:
         address:
           maxLength: 70
           type: string
+          description: Street name of the recipient (without building number).
+        buildingNumber:
+          maxLength: 16
+          type: string
+          description: Building number of the recipient.
+        floor:
+          maxLength: 20
+          type: string
+          description: Floor of the recipient.
+        room:
+          maxLength: 20
+          type: string
+          description: Room of the recipient.
         postalcode:
           maxLength: 11
           type: string
+          description: Postal code of the recipient address.
         city:
           maxLength: 70
           type: string
+          description: City of the recipient.
         country:
           maxLength: 70
           type: string
+          description: Country of the recipient.
         iban:
           maxLength: 34
           type: string

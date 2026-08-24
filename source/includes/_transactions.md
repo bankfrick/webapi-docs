@@ -276,6 +276,13 @@ algorithm: ...
     },
     "creditor" : {
       "name" : "Satoshi Nakamoto",
+      "address" : "Street",
+      "buildingNumber" : "100",
+      "floor" : "3",
+      "room" : "12A",
+      "postalcode" : "150004",
+      "city" : "Berlin",
+      "country" : "Germany",
       "iban" : "DE12500105170648489890"
     }
   } ]
@@ -308,6 +315,13 @@ algorithm: ...
     },
     "creditor" : {
       "name" : "Satoshi Nakamoto",
+      "address" : "Street",
+      "buildingNumber" : "100",
+      "floor" : "3",
+      "room" : "12A",
+      "postalcode" : "150004",
+      "city" : "Berlin",
+      "country" : "Germany",
       "iban" : "DE12500105170648489890"
     }
   } ]
@@ -344,6 +358,13 @@ algorithm: ...
     },
     "creditor" : {
       "name" : "Satoshi Nakamoto",
+      "address" : "Street",
+      "buildingNumber" : "100",
+      "floor" : "3",
+      "room" : "12A",
+      "postalcode" : "150004",
+      "city" : "Berlin",
+      "country" : "Germany",
       "iban" : "DE12500105170648489890",
       "bic" : "INGDDEFFXXX",
       "creditInstitution" : "ING-DiBa GERMANY"
@@ -358,6 +379,8 @@ algorithm: ...
 ```
 
 Create new payment orders similar to the create payment order dialogs within the online banking frontend. The required fields and field validation for each payment order depends on the order type. The frontend dialog and pain001 mapping rules apply for field validation. New payment orders can only be created for accounts with proper write privileges for the customers account. Created payment orders will be added to the system in the PREPARED state and can be approved using the “signTransaction” methods. The application must assign an idempotent customId to allow the system to identify duplicate requests. The server will then assign a unique orderId which is used to identify the transaction later for approval or deletion.
+
+<aside class="notice">For external payments (all types except <code>INTERNAL</code>, <code>BANK_INTERNAL</code> and <code>QR_BILL</code>), the creditor address fields <code>name</code>, <code>address</code>, <code>postalcode</code>, <code>city</code> and <code>country</code> are mandatory. Optional structured address fields: <code>buildingNumber</code>, <code>floor</code>, <code>room</code>. Currently available on the <strong>test environment only</strong>; production will follow later. See <a href="#data-types-transactioncreditoraccount">TransactionCreditorAccount</a>.</aside>
 
 **Request Parameters**
 
@@ -440,7 +463,10 @@ algorithm: ...
         },
         "creditor" : {
             "name" : "Satoshi Nakamoto",
-            "address": "Bahnhofstrasse 1",
+            "address": "Bahnhofstrasse",
+            "buildingNumber": "1",
+            "floor": "2",
+            "room": "14",
             "postalcode": "39576",
             "city": "Stendal",
             "country": "Germany",
@@ -478,7 +504,10 @@ algorithm: ...
         },
         "creditor" : {
             "name" : "Satoshi Nakamoto",
-            "address": "Bahnhofstrasse 1",
+            "address": "Bahnhofstrasse",
+            "buildingNumber": "1",
+            "floor": "2",
+            "room": "14",
             "postalcode": "39576",
             "city": "Stendal",
             "country": "Germany",
@@ -528,7 +557,10 @@ algorithm: ...
             },
             "creditor": {
                 "name" : "Satoshi Nakamoto",
-                "address": "Bahnhofstrasse 1",
+                "address": "Bahnhofstrasse",
+                "buildingNumber": "1",
+                "floor": "2",
+                "room": "14",
                 "postalcode": "39576",
                 "city": "Stendal",
                 "country": "Germany",
@@ -558,4 +590,4 @@ algorithm: ...
 | correspondence | boolean | | As type SEPA |
 | orderingCustomer | object | | As type SEPA |
 | debitor | object | required | As type SEPA; **only EUR accounts** allowed |
-| creditor | object | required | As type SEPA; **IBAN only - Bank Frick IBANs are not allowed** |
+| creditor | object | required | As type SEPA; **IBAN only - Bank Frick IBANs are not allowed**. Creditor address fields follow the same mandate as [TransactionCreditorAccount](#data-types-transactioncreditoraccount). |

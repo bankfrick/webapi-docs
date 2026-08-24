@@ -47,6 +47,15 @@
                 </Amt>
                 <Cdtr>
                     <Nm>Your Customer</Nm>
+                    <PstlAdr>
+                        <StrtNm>Hauptstrasse</StrtNm>
+                        <BldgNb>12</BldgNb>
+                        <Flr>3</Flr>
+                        <Room>12A</Room>
+                        <PstCd>1010</PstCd>
+                        <TwnNm>Wien</TwnNm>
+                        <Ctry>AT</Ctry>
+                    </PstlAdr>
                 </Cdtr>
                 <CdtrAcct>
                     <Id>
