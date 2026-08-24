@@ -95,7 +95,7 @@ Upload a pain.001 message. Note that errors respectively the status regarding pa
 | Amt/InstdAmt/@Ccy | string
 | CdtrAgt (Group)
 | Cdtr/Nm | string | yes | Must be used if "Creditor" is used, maximum 70 characters. |
-| Cdtr/PstlAdr/StrtNm | string | yes for external payments | Street name of the creditor (maps to `address`). Required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL). |
+| Cdtr/PstlAdr/StrtNm | string | yes for external payments | Street name of the creditor (maps to `address`). |
 | Cdtr/PstlAdr/BldgNb | string |  | Building number (maps to `buildingNumber`). Max 16 characters. |
 | Cdtr/PstlAdr/Flr | string |  | Floor (maps to `floor`). Max 20 characters. |
 | Cdtr/PstlAdr/Room | string |  | Room (maps to `room`). Max 20 characters. |

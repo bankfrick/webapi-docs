@@ -3699,7 +3699,7 @@
           "address" : {
             "maxLength" : 70,
             "type" : "string",
-            "description" : "Street name of the recipient (without building number). Required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL)."
+            "description" : "Street name of the recipient (without building number)."
           },
           "buildingNumber" : {
             "maxLength" : 16,
@@ -3719,17 +3719,17 @@
           "postalcode" : {
             "maxLength" : 11,
             "type" : "string",
-            "description" : "Postal code of the recipient address. Required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL)."
+            "description" : "Postal code of the recipient address."
           },
           "city" : {
             "maxLength" : 70,
             "type" : "string",
-            "description" : "City of the recipient. Required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL)."
+            "description" : "City of the recipient."
           },
           "country" : {
             "maxLength" : 70,
             "type" : "string",
-            "description" : "Country of the recipient. Required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL)."
+            "description" : "Country of the recipient."
           },
           "iban" : {
             "maxLength" : 34,
