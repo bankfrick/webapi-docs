@@ -1427,7 +1427,7 @@ The transactions beneficiary account information.
 
 For external payments (all [types](#data-types-type) except <code>INTERNAL</code>, <code>BANK_INTERNAL</code> and <code>QR_BILL</code>), the creditor address fields <code>name</code>, <code>address</code>, <code>postalcode</code>, <code>city</code> and <code>country</code> are mandatory — independent of currency, payment type and whether IBAN or account number is used.
 
-The fields <code>floor</code> and <code>room</code> are optional. The field <code>address</code> contains the street name only (without building number).
+The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code> are optional. The field <code>address</code> contains the street name only (without building number).
 
 The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code> cannot yet be submitted on production.</aside>
 
