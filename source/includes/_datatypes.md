@@ -248,7 +248,7 @@ The create marketorder request body.
       "room" : "12A",
       "postalcode" : "150004",
       "city" : "Berlin",
-      "country" : "Germany",
+      "country" : "DE",
       "iban" : "DE12500105170648489890"
     }
   }, {
@@ -272,7 +272,7 @@ The create marketorder request body.
       "room" : "12A",
       "postalcode" : "150004",
       "city" : "Tokyo",
-      "country" : "Japan",
+      "country" : "JP",
       "bic" : "MHCBJPJ6",
       "creditInstitution" : "MIZUHO BANK"
     }
@@ -1222,7 +1222,7 @@ The trading types.
       "room" : "12A",
       "postalcode" : "150004",
       "city" : "Berlin",
-      "country" : "Germany",
+      "country" : "DE",
       "iban" : "DE12500105170648489890"
    }
   } ]
@@ -1371,7 +1371,7 @@ A single transaction existing instance.
   "room" : "12A",
   "postalcode" : "150004",
   "city" : "Berlin",
-  "country" : "Germany",
+  "country" : "DE",
   "bic" : "INGDDEFFXXX",
   "creditInstitution" : "ING-DiBa",
   "qrReference" : "961116900000006600000009284"
@@ -1394,7 +1394,7 @@ Debitor or creditor account information of the transaction.
 | room |	string |	max size: 20, min size: 0  | Room of the recipient |
 | postalcode |	string |	max size: 11, min size: 0   |	Postal code of the recipient address |
 | city |	string |	max size: 70, min size: 0  |	City of the recipient |
-| country |	string |	max size: 70, min size: 0  |	Country of the recipient |
+| country |	string |	max size: 70, min size: 0  |	Country of the recipient as ISO 3166-1 alpha-2 country code (e.g. <code>DE</code>) |
 | bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | qrReference	| string |	max size: 27, min size: 0 |	 The qr bill reference number in case of [type](#data-types-type) = QR_BILL) |
@@ -1414,7 +1414,7 @@ Debitor or creditor account information of the transaction.
   "room" : "12A",
   "postalcode" : "150004",
   "city" : "Berlin",
-  "country" : "Germany",
+  "country" : "DE",
   "bic" : "INGDDEFFXXX",
   "creditInstitution" : "ING-DiBa",
   "qrReference" : "961116900000006600000009284"
@@ -1427,7 +1427,7 @@ The transactions beneficiary account information.
 
 For external payments (all [types](#data-types-type) except <code>INTERNAL</code>, <code>BANK_INTERNAL</code> and <code>QR_BILL</code>), the creditor address fields <code>name</code>, <code>address</code>, <code>postalcode</code>, <code>city</code> and <code>country</code> are mandatory — independent of currency, payment type and whether IBAN or account number is used.
 
-The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code> are optional. The field <code>address</code> contains the street name only (without building number).
+The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code> are optional. The field <code>address</code> contains the street name only (without building number). The field <code>country</code> must be provided as <strong>ISO 3166-1 alpha-2</strong> country code (e.g. <code>DE</code> for Germany).
 
 The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code> cannot yet be submitted on production.</aside>
 
@@ -1446,7 +1446,7 @@ The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code>
 | room |	string |	max size: 20, min size: 0  | Room of the recipient |
 | postalcode |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 11, min size: 0   |	Postal code of the recipient address |
 | city |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 70, min size: 0  |	City of the recipient |
-| country |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 70, min size: 0  |	Country of the recipient |
+| country |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 70, min size: 0  |	Country of the recipient as ISO 3166-1 alpha-2 country code (e.g. <code>DE</code>) |
 | bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | qrReference	| string |	max size: 27, min size: 0 |	 The qr bill reference number in case of [type](#data-types-type) = QR_BILL) |
@@ -1507,7 +1507,7 @@ The transactions client account information.
       "room" : "12A",
       "postalcode" : "150004",
       "city" : "Berlin",
-      "country" : "Germany",
+      "country" : "DE",
       "iban" : "LI6808811000000001234",
       "bic" : "INGDDEFFXXX",
       "creditInstitution" : "ING-DiBa",
