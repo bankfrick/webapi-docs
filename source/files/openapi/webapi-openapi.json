@@ -3729,7 +3729,7 @@
           "country" : {
             "maxLength" : 70,
             "type" : "string",
-            "description" : "Country of the recipient."
+            "description" : "Country of the recipient as ISO 3166-1 alpha-2 country code (e.g. DE)."
           },
           "iban" : {
             "maxLength" : 34,
