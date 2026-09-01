@@ -1,14 +1,325 @@
 openapi: 3.0.1
 info:
   title: Bank Frick VBAN API
-  version: 0.2.0
+  version: 0.6.0
 servers:
 - url: https://api.bankfrick.li/vban
 - url: https://api-test.bankfrick.li/vban
+security:
+- bearerAuth: []
 paths:
-  /virtual-ibans:
+  /end-customers:
     get:
-      operationId: getVirtualIbans
+      operationId: getEndCustomers
+      parameters:
+      - description: Filter by end-customer kind
+        in: query
+        name: kind
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - NATURAL_PERSON
+            - LEGAL_ENTITY
+          uniqueItems: true
+      - description: Filter by end-customer state
+        in: query
+        name: state
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - PREPARED
+            - ACTIVE
+          uniqueItems: true
+      - description: Filter by the caller's own identifier
+        example: customer-4711
+        in: query
+        name: externalReference
+        required: false
+        schema:
+          type: string
+      - description: Return only end customers whose lastModifiedAt is strictly after
+          this ISO 8601 timestamp
+        example: 2026-05-20T08:00:00Z
+        in: query
+        name: lastModifiedAfter
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - description: "Page size, default 100"
+        example: "10"
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          type: string
+      - description: "Page index, default 0"
+        example: "2"
+        in: query
+        name: pageIndex
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EndCustomersDto"
+          description: OK
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+      summary: Get end customers
+      tags:
+      - End Customers Controller
+  /end-customers/approvals:
+    put:
+      operationId: approveEndCustomer
+      parameters:
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApproveEndCustomerDto"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EndCustomerDto"
+          description: OK
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+      summary: Approve a prepared end customer
+      tags:
+      - End Customers Controller
+  /end-customers/legal-entities:
+    post:
+      operationId: createLegalEntityEndCustomer
+      parameters:
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLegalEntityEndCustomerDto"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LegalEntityEndCustomerDto"
+          description: CREATED
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
+      summary: Register a legal entity as an end customer
+      tags:
+      - End Customers Controller
+  /end-customers/natural-persons:
+    post:
+      operationId: createNaturalPersonEndCustomer
+      parameters:
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateNaturalPersonEndCustomerDto"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NaturalPersonEndCustomerDto"
+          description: CREATED
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
+      summary: Register a natural person as an end customer
+      tags:
+      - End Customers Controller
+  /end-customers/{endCustomerId}:
+    get:
+      operationId: getEndCustomer
+      parameters:
+      - in: path
+        name: endCustomerId
+        required: true
+        schema:
+          type: string
+          maxLength: 36
+          minLength: 1
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EndCustomerDto"
+          description: OK
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+      summary: Read an end customer
+      tags:
+      - End Customers Controller
+  /named-virtual-ibans:
+    get:
+      operationId: getNamedVirtualIbans
       parameters:
       - description: Filter by list of reference accounts
         example:
@@ -21,7 +332,8 @@ paths:
           items:
             type: string
           uniqueItems: true
-      - description: Filter by list of Virtual IBAN states
+      - description: "Filter by list of Virtual IBAN states. When omitted, every state\
+          \ except DEACTIVATED is returned."
         example:
         - ACTIVE
         in: query
@@ -37,6 +349,496 @@ paths:
             - DEACTIVATION_REQUESTED
             - DEACTIVATED
           uniqueItems: true
+      - description: Return only VBANs whose lastModifiedAt is strictly after this
+          ISO 8601 timestamp
+        example: 2026-05-20T08:00:00Z
+        in: query
+        name: lastModifiedAfter
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - description: "Page size, default 100"
+        example: "10"
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          type: string
+      - description: "Page index, default 0"
+        example: "2"
+        in: query
+        name: pageIndex
+        required: false
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NamedVirtualIbansDto"
+          description: OK
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+      summary: Get Named VBANs
+      tags:
+      - Named Virtual Ibans Controller
+    post:
+      operationId: createNamedVirtualIban
+      parameters:
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateNamedVirtualIbanDto"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NamedVirtualIbanDto"
+          description: CREATED
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
+      summary: Create a Named VBAN for an approved end customer
+      tags:
+      - Named Virtual Ibans Controller
+  /named-virtual-ibans/activations/approvals:
+    put:
+      operationId: approveNamedVirtualIbanActivation
+      parameters:
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApproveNamedVirtualIbanActivationDto"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NamedVirtualIbanDto"
+          description: OK
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
+      summary: Approve a prepared Named VBAN together with its end customer
+      tags:
+      - Named Virtual Ibans Controller
+  /named-virtual-ibans/deactivations:
+    put:
+      operationId: deactivateNamedVirtualIban
+      parameters:
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DeactivateNamedVirtualIbanDto"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NamedVirtualIbanDto"
+          description: OK
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
+      summary: Request deactivation of a Named VBAN
+      tags:
+      - Named Virtual Ibans Controller
+  /named-virtual-ibans/deactivations/approvals:
+    put:
+      operationId: approveNamedVirtualIbanDeactivation
+      parameters:
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApproveNamedVirtualIbanDeactivationDto"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NamedVirtualIbanDto"
+          description: OK
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
+      summary: Approve the deactivation of a Named VBAN
+      tags:
+      - Named Virtual Ibans Controller
+  /named-virtual-ibans/upgrades:
+    post:
+      operationId: upgradeVirtualIban
+      parameters:
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpgradeVirtualIbanDto"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VirtualIbanUpgradeDto"
+          description: CREATED
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
+      summary: Request the upgrade of a plain VBAN to a Named VBAN
+      tags:
+      - Named Virtual Ibans Controller
+  /named-virtual-ibans/upgrades/approvals:
+    put:
+      operationId: approveVirtualIbanUpgrade
+      parameters:
+      - description: Cryptographic fingerprint of request body. Provide used algorithm
+          in <algorithm> header.
+        in: header
+        name: signature
+        required: true
+        schema:
+          type: string
+      - description: "Algorithm used for signing the request. Supported algorithms:\
+          \ rsa-sha512, rsa-sha384, rsa-sha256. If not provided, the server assumes\
+          \ rsa-sha512."
+        in: header
+        name: algorithm
+        required: false
+        schema:
+          type: string
+          default: rsa-sha512
+          enum:
+          - rsa-sha512
+          - rsa-sha384
+          - rsa-sha256
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApproveVirtualIbanUpgradeDto"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VirtualIbanUpgradeDto"
+          description: OK
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
+      summary: Approve a pending upgrade of a plain VBAN to a Named VBAN
+      tags:
+      - Named Virtual Ibans Controller
+  /named-virtual-ibans/{vban}:
+    get:
+      operationId: getNamedVirtualIban
+      parameters:
+      - in: path
+        name: vban
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NamedVirtualIbanDto"
+          description: OK
+          headers:
+            algorithm:
+              description: "Algorithm used for signing the response. Default: rsa-sha512"
+              required: true
+              schema:
+                type: string
+            signature:
+              description: "Cryptographic fingerprint of response body. For calculation\
+                \ method, see <algorithm> header."
+              required: true
+              schema:
+                type: string
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+      summary: Read a Named VBAN
+      tags:
+      - Named Virtual Ibans Controller
+  /virtual-ibans:
+    get:
+      operationId: getVirtualIbans
+      parameters:
+      - description: Filter by list of reference accounts
+        example:
+        - LI4408811MAINACCOUNT1
+        in: query
+        name: account
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+      - description: "Filter by list of Virtual IBAN states. When omitted, every state\
+          \ except DEACTIVATED is returned."
+        example:
+        - ACTIVE
+        in: query
+        name: state
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - PREPARED
+            - ACTIVE
+            - DEACTIVATION_REQUESTED
+            - DEACTIVATED
+          uniqueItems: true
+      - description: Return only VBANs whose lastModifiedAt is strictly after this
+          ISO 8601 timestamp
+        example: 2026-05-20T08:00:00Z
+        in: query
+        name: lastModifiedAfter
+        required: false
+        schema:
+          type: string
+          format: date-time
       - description: "Page size, default 100"
         example: "10"
         in: query
@@ -71,23 +873,11 @@ paths:
               schema:
                 type: string
         "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponseDto"
-          description: BAD REQUEST
-          headers:
-            algorithm:
-              description: "Algorithm used for signing the response. Default: rsa-sha512"
-              required: true
-              schema:
-                type: string
-            signature:
-              description: "Cryptographic fingerprint of response body. For calculation\
-                \ method, see <algorithm> header."
-              required: true
-              schema:
-                type: string
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
       summary: Get virtual IBANs
       tags:
       - Virtual Ibans Controller
@@ -140,23 +930,13 @@ paths:
               schema:
                 type: string
         "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponseDto"
-          description: BAD REQUEST
-          headers:
-            algorithm:
-              description: "Algorithm used for signing the response. Default: rsa-sha512"
-              required: true
-              schema:
-                type: string
-            signature:
-              description: "Cryptographic fingerprint of response body. For calculation\
-                \ method, see <algorithm> header."
-              required: true
-              schema:
-                type: string
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
       summary: Create virtual IBAN
       tags:
       - Virtual Ibans Controller
@@ -210,23 +990,13 @@ paths:
               schema:
                 type: string
         "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponseDto"
-          description: BAD REQUEST
-          headers:
-            algorithm:
-              description: "Algorithm used for signing the response. Default: rsa-sha512"
-              required: true
-              schema:
-                type: string
-            signature:
-              description: "Cryptographic fingerprint of response body. For calculation\
-                \ method, see <algorithm> header."
-              required: true
-              schema:
-                type: string
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
       summary: Approve prepared virtual IBAN
       tags:
       - Virtual Ibans Controller
@@ -280,23 +1050,13 @@ paths:
               schema:
                 type: string
         "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponseDto"
-          description: BAD REQUEST
-          headers:
-            algorithm:
-              description: "Algorithm used for signing the response. Default: rsa-sha512"
-              required: true
-              schema:
-                type: string
-            signature:
-              description: "Cryptographic fingerprint of response body. For calculation\
-                \ method, see <algorithm> header."
-              required: true
-              schema:
-                type: string
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
       summary: Deactivate virtual IBAN
       tags:
       - Virtual Ibans Controller
@@ -350,23 +1110,13 @@ paths:
               schema:
                 type: string
         "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponseDto"
-          description: BAD REQUEST
-          headers:
-            algorithm:
-              description: "Algorithm used for signing the response. Default: rsa-sha512"
-              required: true
-              schema:
-                type: string
-            signature:
-              description: "Cryptographic fingerprint of response body. For calculation\
-                \ method, see <algorithm> header."
-              required: true
-              schema:
-                type: string
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "409":
+          $ref: "#/components/responses/Conflict"
       summary: Approve deactivation of virtual IBAN
       tags:
       - Virtual Ibans Controller
@@ -399,46 +1149,71 @@ paths:
               schema:
                 type: string
         "400":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponseDto"
-          description: BAD REQUEST
-          headers:
-            algorithm:
-              description: "Algorithm used for signing the response. Default: rsa-sha512"
-              required: true
-              schema:
-                type: string
-            signature:
-              description: "Cryptographic fingerprint of response body. For calculation\
-                \ method, see <algorithm> header."
-              required: true
-              schema:
-                type: string
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
         "404":
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponseDto"
-          description: NOT FOUND
-          headers:
-            algorithm:
-              description: "Algorithm used for signing the response. Default: rsa-sha512"
-              required: true
-              schema:
-                type: string
-            signature:
-              description: "Cryptographic fingerprint of response body. For calculation\
-                \ method, see <algorithm> header."
-              required: true
-              schema:
-                type: string
+          $ref: "#/components/responses/NotFound"
       summary: Read virtual IBAN
       tags:
       - Virtual Ibans Controller
 components:
+  responses:
+    BadRequest:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponseDto"
+      description: "A parameter or the payload failed validation, or the provided\
+        \ signature was invalid."
+    Conflict:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponseDto"
+      description: The record was modified concurrently. Retry the request.
+    Forbidden:
+      description: "The caller's IP address is outside the range the access token\
+        \ is restricted to. The request is rejected at the API gateway, which answers\
+        \ in its own error format."
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponseDto"
+      description: "The requested record does not exist, or is not visible to the\
+        \ caller."
+    Unauthorized:
+      description: "The access token is missing, expired or invalid. The request is\
+        \ rejected at the API gateway, which answers in its own error format."
   schemas:
+    AddressType3Choice:
+      type: object
+    AddressType3ChoiceCd:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/AddressType3Choice"
+      - type: object
+        properties:
+          Cd:
+            type: string
+            enum:
+            - ADDR
+            - PBOX
+            - HOME
+            - BIZZ
+            - MLTO
+            - DLVY
+    AddressType3ChoicePrtry:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/AddressType3Choice"
+      - type: object
+        properties:
+          Prtry:
+            $ref: "#/components/schemas/GenericIdentification30"
     ApprovalDto:
       type: object
       properties:
@@ -465,6 +1240,41 @@ components:
       - createdBy
       - signatureGroup
       - signatureType
+    ApproveEndCustomerDto:
+      type: object
+      properties:
+        endCustomerId:
+          type: string
+          maxLength: 36
+          minLength: 1
+      required:
+      - endCustomerId
+    ApproveNamedVirtualIbanActivationDto:
+      type: object
+      properties:
+        endCustomerId:
+          type: string
+          maxLength: 36
+          minLength: 1
+        vban:
+          type: string
+          minLength: 1
+      required:
+      - endCustomerId
+      - vban
+    ApproveNamedVirtualIbanDeactivationDto:
+      type: object
+      properties:
+        endCustomerId:
+          type: string
+          maxLength: 36
+          minLength: 1
+        vban:
+          type: string
+          minLength: 1
+      required:
+      - endCustomerId
+      - vban
     ApproveVirtualIbanActivationDto:
       type: object
       properties:
@@ -479,6 +1289,158 @@ components:
           type: string
       required:
       - vban
+    ApproveVirtualIbanUpgradeDto:
+      type: object
+      properties:
+        endCustomerId:
+          type: string
+          maxLength: 36
+          minLength: 1
+        vban:
+          type: string
+          minLength: 1
+      required:
+      - endCustomerId
+      - vban
+    CommercialRegisterEntryDto:
+      type: object
+      description: "Place and date of the commercial register entry, where applicable"
+      properties:
+        date:
+          type: string
+          format: date
+        place:
+          type: string
+      required:
+      - date
+      - place
+    CreateCommercialRegisterEntryDto:
+      type: object
+      description: "Place and date of the commercial register entry, where applicable"
+      properties:
+        date:
+          type: string
+          format: date
+        place:
+          type: string
+          maxLength: 255
+          minLength: 1
+      required:
+      - date
+      - place
+    CreateLegalEntityEndCustomerDto:
+      type: object
+      properties:
+        address:
+          $ref: "#/components/schemas/PostalAddress27"
+        commercialRegisterEntry:
+          $ref: "#/components/schemas/CreateCommercialRegisterEntryDto"
+        companyName:
+          type: string
+          maxLength: 255
+          minLength: 1
+        countryOfDomicile:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+          minLength: 1
+          pattern: "^[A-Z]{2}$"
+        customerNumber:
+          type: string
+          description: The Bank Frick customer to register under
+          maxLength: 7
+          minLength: 1
+        externalReference:
+          type: string
+          description: "The caller's own identifier; stored and echoed back, never\
+            \ editable"
+          maxLength: 255
+          minLength: 1
+        incorporationDate:
+          type: string
+          format: date
+        legalForm:
+          type: string
+          maxLength: 255
+          minLength: 1
+        representatives:
+          type: array
+          description: "Names of the representative bodies, order preserved"
+          items:
+            type: string
+            description: "Names of the representative bodies, order preserved"
+            maxLength: 511
+            minLength: 1
+          minItems: 1
+      required:
+      - address
+      - companyName
+      - countryOfDomicile
+      - customerNumber
+      - incorporationDate
+      - legalForm
+      - representatives
+    CreateNamedVirtualIbanDto:
+      type: object
+      properties:
+        description:
+          type: string
+          maxLength: 1000
+          minLength: 1
+        endCustomerId:
+          type: string
+          maxLength: 36
+          minLength: 1
+        referenceAccountIban:
+          type: string
+          minLength: 1
+      required:
+      - endCustomerId
+      - referenceAccountIban
+    CreateNaturalPersonEndCustomerDto:
+      type: object
+      properties:
+        address:
+          $ref: "#/components/schemas/PostalAddress27"
+        countryOfResidence:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+          minLength: 1
+          pattern: "^[A-Z]{2}$"
+        customerNumber:
+          type: string
+          description: The Bank Frick customer to register under
+          maxLength: 7
+          minLength: 1
+        dateOfBirth:
+          type: string
+          format: date
+        externalReference:
+          type: string
+          description: "The caller's own identifier; stored and echoed back, never\
+            \ editable"
+          maxLength: 255
+          minLength: 1
+        firstName:
+          type: string
+          maxLength: 255
+          minLength: 1
+        lastName:
+          type: string
+          maxLength: 255
+          minLength: 1
+        nationality:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+          minLength: 1
+          pattern: "^[A-Z]{2}$"
+      required:
+      - address
+      - countryOfResidence
+      - customerNumber
+      - dateOfBirth
+      - firstName
+      - lastName
+      - nationality
     CreateVirtualIbanAddressDto:
       type: object
       properties:
@@ -525,6 +1487,19 @@ components:
           type: string
       required:
       - referenceAccountIban
+    DeactivateNamedVirtualIbanDto:
+      type: object
+      properties:
+        endCustomerId:
+          type: string
+          maxLength: 36
+          minLength: 1
+        vban:
+          type: string
+          minLength: 1
+      required:
+      - endCustomerId
+      - vban
     DeactivateVirtualIbanDto:
       type: object
       properties:
@@ -532,6 +1507,79 @@ components:
           type: string
       required:
       - vban
+    EndCustomerDto:
+      type: object
+      discriminator:
+        mapping:
+          LEGAL_ENTITY: "#/components/schemas/LegalEntityEndCustomerDto"
+          NATURAL_PERSON: "#/components/schemas/NaturalPersonEndCustomerDto"
+        propertyName: kind
+      oneOf:
+      - $ref: "#/components/schemas/NaturalPersonEndCustomerDto"
+      - $ref: "#/components/schemas/LegalEntityEndCustomerDto"
+      properties:
+        activationApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
+        address:
+          $ref: "#/components/schemas/PostalAddress27"
+        customerNumber:
+          type: string
+          description: The Bank Frick customer owning the record
+        externalReference:
+          type: string
+        id:
+          type: string
+        kind:
+          type: string
+          enum:
+          - NATURAL_PERSON
+          - LEGAL_ENTITY
+        matchingName:
+          type: string
+          description: Name used for Verification of Payee
+        state:
+          type: string
+          enum:
+          - PREPARED
+          - ACTIVE
+      required:
+      - activationApprovals
+      - address
+      - customerNumber
+      - id
+      - kind
+      - matchingName
+      - state
+    EndCustomerSummaryDto:
+      type: object
+      properties:
+        id:
+          type: string
+        kind:
+          type: string
+          enum:
+          - NATURAL_PERSON
+          - LEGAL_ENTITY
+        matchingName:
+          type: string
+      required:
+      - id
+      - kind
+      - matchingName
+    EndCustomersDto:
+      type: object
+      properties:
+        endCustomers:
+          type: array
+          items:
+            $ref: "#/components/schemas/EndCustomerDto"
+        pagination:
+          $ref: "#/components/schemas/PaginationDto"
+      required:
+      - endCustomers
+      - pagination
     ErrorResponseDto:
       type: object
       properties:
@@ -543,6 +1591,229 @@ components:
       required:
       - reason
       - status
+    GenericIdentification30:
+      type: object
+      properties:
+        Id:
+          type: string
+          pattern: "^(?:[a-zA-Z0-9]{4})$"
+        Issr:
+          type: string
+          maxLength: 35
+          minLength: 1
+        SchmeNm:
+          type: string
+          maxLength: 35
+          minLength: 1
+    LegalEntityEndCustomerDto:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/EndCustomerDto"
+      - type: object
+        properties:
+          commercialRegisterEntry:
+            $ref: "#/components/schemas/CommercialRegisterEntryDto"
+          companyName:
+            type: string
+          countryOfDomicile:
+            type: string
+            description: ISO 3166-1 alpha-2 country code
+          createdAt:
+            type: string
+          createdBy:
+            type: string
+          incorporationDate:
+            type: string
+            format: date
+          lastModifiedAt:
+            type: string
+          lastModifiedBy:
+            type: string
+          legalForm:
+            type: string
+          representatives:
+            type: array
+            description: Names of the representative bodies
+            items:
+              type: string
+              description: Names of the representative bodies
+      required:
+      - activationApprovals
+      - address
+      - companyName
+      - countryOfDomicile
+      - createdAt
+      - createdBy
+      - customerNumber
+      - id
+      - incorporationDate
+      - kind
+      - lastModifiedAt
+      - lastModifiedBy
+      - legalForm
+      - matchingName
+      - representatives
+      - state
+    NamedVirtualIbanDto:
+      type: object
+      properties:
+        activationApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
+        createdAt:
+          type: string
+        createdBy:
+          type: string
+        customerNumber:
+          type: string
+        deactivationApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
+        description:
+          type: string
+        endCustomer:
+          $ref: "#/components/schemas/EndCustomerDto"
+        lastModifiedAt:
+          type: string
+        lastModifiedBy:
+          type: string
+        referenceAccountIban:
+          type: string
+        state:
+          type: string
+          enum:
+          - PREPARED
+          - ACTIVE
+          - DEACTIVATION_REQUESTED
+          - DEACTIVATED
+        upgradeApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
+        vban:
+          type: string
+      required:
+      - activationApprovals
+      - createdAt
+      - createdBy
+      - customerNumber
+      - deactivationApprovals
+      - endCustomer
+      - lastModifiedAt
+      - lastModifiedBy
+      - referenceAccountIban
+      - state
+      - vban
+    NamedVirtualIbanListEntryDto:
+      type: object
+      properties:
+        activationApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
+        createdAt:
+          type: string
+        createdBy:
+          type: string
+        customerNumber:
+          type: string
+        deactivationApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
+        description:
+          type: string
+        endCustomer:
+          $ref: "#/components/schemas/EndCustomerSummaryDto"
+        lastModifiedAt:
+          type: string
+        lastModifiedBy:
+          type: string
+        referenceAccountIban:
+          type: string
+        state:
+          type: string
+          enum:
+          - PREPARED
+          - ACTIVE
+          - DEACTIVATION_REQUESTED
+          - DEACTIVATED
+        upgradeApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
+        vban:
+          type: string
+      required:
+      - activationApprovals
+      - createdAt
+      - createdBy
+      - customerNumber
+      - deactivationApprovals
+      - endCustomer
+      - lastModifiedAt
+      - lastModifiedBy
+      - referenceAccountIban
+      - state
+      - vban
+    NamedVirtualIbansDto:
+      type: object
+      properties:
+        namedVirtualIbans:
+          type: array
+          items:
+            $ref: "#/components/schemas/NamedVirtualIbanListEntryDto"
+        pagination:
+          $ref: "#/components/schemas/PaginationDto"
+      required:
+      - namedVirtualIbans
+      - pagination
+    NaturalPersonEndCustomerDto:
+      type: object
+      allOf:
+      - $ref: "#/components/schemas/EndCustomerDto"
+      - type: object
+        properties:
+          countryOfResidence:
+            type: string
+            description: ISO 3166-1 alpha-2 country code
+          createdAt:
+            type: string
+          createdBy:
+            type: string
+          dateOfBirth:
+            type: string
+            format: date
+          firstName:
+            type: string
+          lastModifiedAt:
+            type: string
+          lastModifiedBy:
+            type: string
+          lastName:
+            type: string
+          nationality:
+            type: string
+            description: ISO 3166-1 alpha-2 country code
+      required:
+      - activationApprovals
+      - address
+      - countryOfResidence
+      - createdAt
+      - createdBy
+      - customerNumber
+      - dateOfBirth
+      - firstName
+      - id
+      - kind
+      - lastModifiedAt
+      - lastModifiedBy
+      - lastName
+      - matchingName
+      - nationality
+      - state
     PaginationDto:
       type: object
       properties:
@@ -562,6 +1833,95 @@ components:
       - pageIndex
       - pageSize
       - totalCount
+    PostalAddress27:
+      type: object
+      properties:
+        AdrLine:
+          type: array
+          items:
+            type: string
+          maxItems: 7
+          minItems: 0
+        AdrTp:
+          oneOf:
+          - $ref: "#/components/schemas/AddressType3ChoiceCd"
+          - $ref: "#/components/schemas/AddressType3ChoicePrtry"
+        BldgNb:
+          type: string
+          maxLength: 16
+          minLength: 1
+        BldgNm:
+          type: string
+          maxLength: 140
+          minLength: 1
+        CareOf:
+          type: string
+          maxLength: 140
+          minLength: 1
+        Ctry:
+          type: string
+          pattern: "^(?:[A-Z]{2,2})$"
+        CtrySubDvsn:
+          type: string
+          maxLength: 35
+          minLength: 1
+        Dept:
+          type: string
+          maxLength: 70
+          minLength: 1
+        DstrctNm:
+          type: string
+          maxLength: 140
+          minLength: 1
+        Flr:
+          type: string
+          maxLength: 70
+          minLength: 1
+        PstBx:
+          type: string
+          maxLength: 16
+          minLength: 1
+        PstCd:
+          type: string
+          maxLength: 16
+          minLength: 1
+        Room:
+          type: string
+          maxLength: 70
+          minLength: 1
+        StrtNm:
+          type: string
+          maxLength: 140
+          minLength: 1
+        SubDept:
+          type: string
+          maxLength: 70
+          minLength: 1
+        TwnLctnNm:
+          type: string
+          maxLength: 140
+          minLength: 1
+        TwnNm:
+          type: string
+          maxLength: 140
+          minLength: 1
+        UnitNb:
+          type: string
+          maxLength: 16
+          minLength: 1
+    UpgradeVirtualIbanDto:
+      type: object
+      properties:
+        endCustomerId:
+          type: string
+          maxLength: 36
+          minLength: 1
+        vban:
+          type: string
+          minLength: 1
+      required:
+      - endCustomerId
+      - vban
     VirtualIbanAddressDto:
       type: object
       properties:
@@ -594,14 +1954,22 @@ components:
           type: string
         createdBy:
           type: string
+        customerNumber:
+          type: string
         deactivationApprovals:
           type: array
           items:
             $ref: "#/components/schemas/ApprovalDto"
         description:
           type: string
+        lastModifiedAt:
+          type: string
+        lastModifiedBy:
+          type: string
         name:
           type: string
+        pendingUpgrade:
+          $ref: "#/components/schemas/VirtualIbanUpgradeDto"
         referenceAccountIban:
           type: string
         state:
@@ -617,8 +1985,44 @@ components:
       - activationApprovals
       - createdAt
       - createdBy
+      - customerNumber
       - deactivationApprovals
+      - lastModifiedAt
+      - lastModifiedBy
       - referenceAccountIban
+      - state
+      - vban
+    VirtualIbanUpgradeDto:
+      type: object
+      properties:
+        approvals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
+        createdAt:
+          type: string
+        createdBy:
+          type: string
+        endCustomer:
+          $ref: "#/components/schemas/EndCustomerSummaryDto"
+        lastModifiedAt:
+          type: string
+        lastModifiedBy:
+          type: string
+        state:
+          type: string
+          enum:
+          - PENDING
+          - COMPLETED
+        vban:
+          type: string
+      required:
+      - approvals
+      - createdAt
+      - createdBy
+      - endCustomer
+      - lastModifiedAt
+      - lastModifiedBy
       - state
       - vban
     VirtualIbansDto:
@@ -633,3 +2037,9 @@ components:
       required:
       - pagination
       - virtualIbans
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      description: JWT token from Online Banking WebAPI
+      scheme: bearer
+      type: http

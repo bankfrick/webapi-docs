@@ -21,6 +21,7 @@ includes:
   - transactions
   - instanttransactions
   - vban
+  - namedvban
   - camt052
   - camt053
   - pain001
