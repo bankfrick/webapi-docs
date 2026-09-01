@@ -722,11 +722,117 @@ An existing plain VBAN can be assigned to an already registered end customer and
 VBAN: `POST /named-virtual-ibans/upgrades` requests the upgrade and `PUT /named-virtual-ibans/upgrades/approvals`
 approves it, both with `vban` and `endCustomerId`.
 
-Until the signing rule is satisfied, the upgrade stays `PENDING` and the plain VBAN keeps working exactly as before.
-When the upgrade completes, the VBAN's own `name` and `address` are **replaced** by the end customer's
-data and are no longer available.
+Until the signing rule is satisfied, the upgrade stays `PENDING` and the plain VBAN keeps working exactly as
+before: it is still served by the plain VBAN endpoints, which report the request under `pendingUpgrade`.
 
-<aside class="notice">The upgrade endpoints are not functional yet in the beta: they answer with example payloads and do not change any VBAN. We will announce when the upgrade becomes available on the test environment.</aside>
+> Request
+
+```shell--test
+POST https://api-test.bankfrick.li/vban/named-virtual-ibans/upgrades
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "vban" : "LI3808811V07QJ4M2XC44",
+  "endCustomerId" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90"
+}
+```
+
+```shell--production
+Named Virtual IBANs are not available on the production environment yet.
+Switch to the test tab for the request examples.
+```
+
+> Response
+
+```shell
+HTTP/1.1 201 Created
+Content-Type: application/json
+Signature: ...
+algorithm: ...
+
+
+{
+  "vban" : "LI3808811V07QJ4M2XC44",
+  "endCustomer" : {
+    "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
+    "kind" : "NATURAL_PERSON",
+    "matchingName" : "Nikita Muster"
+  },
+  "state" : "PENDING",
+  "approvals" : [ ],
+  "createdBy" : "Contact 6789",
+  "createdAt" : "2026-08-27T10:12:31.204Z",
+  "lastModifiedBy" : "Contact 6789",
+  "lastModifiedAt" : "2026-08-27T10:12:31.204Z"
+}
+```
+
+## Approve an upgrade
+
+Once the signing rule is satisfied, the upgrade moves to `COMPLETED` and the VBAN becomes a Named VBAN: it is
+served by the Named VBAN endpoints from then on, and the plain endpoints reject it. The VBAN's own `name` and
+`address` are **replaced** by the end customer's data and are no longer available. The upgrade's approvals stay
+readable on the Named VBAN under `upgradeApprovals`.
+
+> Request
+
+```shell--test
+PUT https://api-test.bankfrick.li/vban/named-virtual-ibans/upgrades/approvals
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "vban" : "LI3808811V07QJ4M2XC44",
+  "endCustomerId" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90"
+}
+```
+
+```shell--production
+Named Virtual IBANs are not available on the production environment yet.
+Switch to the test tab for the request examples.
+```
+
+> Response
+
+```shell
+HTTP/1.1 200 OK
+Content-Type: application/json
+Signature: ...
+algorithm: ...
+
+
+{
+  "vban" : "LI3808811V07QJ4M2XC44",
+  "endCustomer" : {
+    "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
+    "kind" : "NATURAL_PERSON",
+    "matchingName" : "Nikita Muster"
+  },
+  "state" : "COMPLETED",
+  "approvals" : [
+    {
+      "contactNumber" : 6789,
+      "signatureType" : "INDIVIDUAL",
+      "signatureGroup" : 1,
+      "createdBy" : "Contact 6789",
+      "createdAt" : "2026-08-27T10:17:44.856Z"
+    }
+  ],
+  "createdBy" : "Contact 6789",
+  "createdAt" : "2026-08-27T10:12:31.204Z",
+  "lastModifiedBy" : "Contact 6789",
+  "lastModifiedAt" : "2026-08-27T10:17:44.856Z"
+}
+```
 
 ## Errors
 

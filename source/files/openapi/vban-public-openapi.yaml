@@ -349,14 +349,6 @@ paths:
             - DEACTIVATION_REQUESTED
             - DEACTIVATED
           uniqueItems: true
-      - description: Filter by end-customer name. The parameter is accepted but not
-          applied yet; until then the list is returned unfiltered.
-        example: Nikita
-        in: query
-        name: endCustomerName
-        required: false
-        schema:
-          type: string
       - description: Return only VBANs whose lastModifiedAt is strictly after this
           ISO 8601 timestamp
         example: 2026-05-20T08:00:00Z
@@ -1696,6 +1688,10 @@ components:
           - ACTIVE
           - DEACTIVATION_REQUESTED
           - DEACTIVATED
+        upgradeApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
         vban:
           type: string
       required:
@@ -1744,6 +1740,10 @@ components:
           - ACTIVE
           - DEACTIVATION_REQUESTED
           - DEACTIVATED
+        upgradeApprovals:
+          type: array
+          items:
+            $ref: "#/components/schemas/ApprovalDto"
         vban:
           type: string
       required:
@@ -1968,6 +1968,8 @@ components:
           type: string
         name:
           type: string
+        pendingUpgrade:
+          $ref: "#/components/schemas/VirtualIbanUpgradeDto"
         referenceAccountIban:
           type: string
         state:
@@ -2001,8 +2003,8 @@ components:
           type: string
         createdBy:
           type: string
-        endCustomerId:
-          type: string
+        endCustomer:
+          $ref: "#/components/schemas/EndCustomerSummaryDto"
         lastModifiedAt:
           type: string
         lastModifiedBy:
@@ -2018,7 +2020,7 @@ components:
       - approvals
       - createdAt
       - createdBy
-      - endCustomerId
+      - endCustomer
       - lastModifiedAt
       - lastModifiedBy
       - state
