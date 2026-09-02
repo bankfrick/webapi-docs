@@ -4,8 +4,7 @@
 
 A Named Virtual IBAN (Named VBAN) is a virtual IBAN permanently tied to one **end customer** which is a natural
 person or a legal entity that your company holds the relationship with. Incoming payments to a Named VBAN can
-therefore be formally addressed to that end customer (Me-to-Me deposits) and are routed to the safeguarding account
-(reference account) stored on the VBAN.
+therefore be formally addressed to that end customer (Me-to-Me deposits) and are routed to the reference account stored on the VBAN.
 
 Named VBANs live in their own endpoint tree under `/named-virtual-ibans` and use their own end-customer register
 under `/end-customers`. The existing [Virtual IBAN](#virtual-iban) endpoints are unchanged and continue to serve
@@ -14,8 +13,6 @@ plain VBANs only.
 |                                    | plain VBAN                                          | Named VBAN                                                             |
 |------------------------------------|-----------------------------------------------------|------------------------------------------------------------------------|
 | Identity of the party              | optional free-text `name` and `address` on the VBAN | mandatory `endCustomer` record with the regulatorily required data set |
-| Name of the payee                  | free-text, unverified                               | derived from the end customer (`matchingName`)                         |
-| Name matching on incoming payments | never                                               | performed by Bank Frick                                                |
 | Endpoints                          | `/virtual-ibans`                                    | `/named-virtual-ibans`, `/end-customers`                               |
 
 ## Base URL and authentication
@@ -41,7 +38,7 @@ Creating and approving end customers and Named VBANs requires signing permission
 ### End customer
 
 An end customer is registered once and can then be reused for several Named VBANs — for example one Named VBAN per
-currency, each on the matching safeguarding account. End customers are scoped to one Bank Frick customer number.
+currency, each on the matching reference account. End customers are scoped to one Bank Frick customer number.
 Registering the same end customer for two different customer numbers requires two separate end customer records.
 
 An end customer is addressed by the `id` that Bank Frick issues on creation. The id is immutable, and it is the only
@@ -65,7 +62,7 @@ end customer's own customer number. A Named VBAN and its end customer must belon
 
 States are the same as for plain VBANs: `PREPARED` → `ACTIVE` → `DEACTIVATION_REQUESTED` → `DEACTIVATED`.
 
-### Every write names both the VBAN and the end customer
+### Every modification requires both the VBAN and the end customer as input
 
 Each Named VBAN modification request, e.g. activation approval, deactivation, deactivation approval, carries **both**
 the `vban` and the `endCustomerId`, and is rejected unless the two match the stored values.
@@ -106,7 +103,7 @@ The required data set differs by kind.
 
 | field              | required | description                                                                          |
 |--------------------|----------|--------------------------------------------------------------------------------------|
-| customerNumber     | yes      | The Bank Frick customer number this end customer belongs to (max. 7 characters).     |
+| customerNumber     | yes      | The Bank Frick customer number this end customer belongs to (7 characters).     |
 | firstName          | yes      | Given name(s), max. 255 characters.                                                  |
 | lastName           | yes      | Family name, max. 255 characters.                                                    |
 | dateOfBirth        | yes      | ISO 8601 date, e.g. `1984-03-27`.                                                    |
@@ -119,7 +116,7 @@ The required data set differs by kind.
 
 | field                   | required | description                                                                         |
 |-------------------------|----------|-------------------------------------------------------------------------------------|
-| customerNumber          | yes      | The Bank Frick customer number this end customer belongs to (max. 7 characters).    |
+| customerNumber          | yes      | The Bank Frick customer number this end customer belongs to (7 characters).    |
 | companyName             | yes      | Name or company name, max. 255 characters.                                          |
 | legalForm               | yes      | Legal form, max. 255 characters.                                                    |
 | address                 | yes      | Registered address, see [Address format](#named-virtual-ibans-beta-address-format). |
@@ -230,7 +227,7 @@ data set and `"kind" : "LEGAL_ENTITY"` in the response.
 ## Approve an end customer
 
 An end customer must be approved before a Named VBAN can be linked to it.
-Repeat the call using suitable contacts until the signing rule of your customer is satisfied.
+Repeat the call using suitable contacts until the signing rule is satisfied.
 
 > Request
 
