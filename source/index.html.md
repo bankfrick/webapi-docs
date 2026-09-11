@@ -171,3 +171,107 @@ If the message cannot be delivered, e.g. because the client server is not respon
 ![WebHooks](/images/documentation/bank-frick-webapi-webhooks.png "WebHooks")
 
 ![WebHooks Details](/images/documentation/bank-frick-webapi-webhooks-details.png "WebHooks Details")
+
+### Example: rule created or changed
+
+Creating or changing a notification rule triggers a `creating or changing the rule` notification once, listing every event currently configured on the rule.
+
+> Example
+
+```json
+{
+  "name" : "Example rule",
+  "date" : "2026-09-11T08:06:37.890717500",
+  "env" : "olbtest.bankfrick.li",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "All",
+  "events" : [ "executed orders", "not executed orders", "amount going out > 0.00 CHF", "amount coming in > 0.00 CHF", "creating or changing the rule" ]
+}
+```
+
+### Example: transaction events
+
+For the transaction-related events (`executed orders`, `not executed orders`, `amount going out`, `amount coming in`), one notification is sent per matching event **and** per account. A single payment order can therefore trigger several notifications, for example:
+
+* An internal transfer between two of your own accounts triggers one `amount going out` notification for the debited account and one `amount coming in` notification for the credited account.
+* Once an order is booked, an additional `executed orders` notification is sent for every account it was booked on.
+
+The example below shows all notifications sent by a rule watching account `"All"` for `amount going out`, `amount coming in` and `executed orders`, triggered by one outgoing payment and one internal transfer between the two accounts (`orderId` `9022205`).
+
+The internal transfer produces three notifications:
+
+> Example
+
+```json
+{
+  "name" : "Example rule",
+  "date" : "2026-09-11T08:12:09.700404600",
+  "env" : "olbtest.bankfrick.li",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "0012345/001.000.840",
+  "iban" : "LI03088110012345K000U",
+  "transactionNr" : "15138859",
+  "orderId" : "9022205",
+  "customId" : "mpwW1gp2p3",
+  "events" : [ "amount going out > 0.00 CHF" ]
+}
+```
+
+```json
+{
+  "name" : "Example rule",
+  "date" : "2026-09-11T08:12:09.829228500",
+  "env" : "olbtest.bankfrick.li",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "0012345/001.000.978",
+  "iban" : "LI47088110012345K000E",
+  "transactionNr" : "15138859",
+  "orderId" : "9022205",
+  "customId" : "mpwW1gp2p3",
+  "events" : [ "amount coming in > 0.00 CHF" ]
+}
+```
+
+```json
+{
+  "name" : "Example rule",
+  "date" : "2026-09-11T08:12:10.623681200",
+  "env" : "olbtest.bankfrick.li",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "0012345/001.000.840",
+  "iban" : "LI03088110012345K000U",
+  "transactionNr" : "15138859",
+  "orderId" : "9022205",
+  "customId" : "mpwW1gp2p3",
+  "events" : [ "executed orders" ]
+}
+```
+
+Note that `orderId` `9022205` (the internal transfer) appears three times: once for the debit, once for the credit, and once when the order is booked.
+
+The outgoing payment produces two notifications:
+
+| account | transactionNr | orderId | customId | events |
+| ------- | -------------- | ------- | -------- | ------ |
+| 0012345/001.000.840 | 15138861 | 9022207 | WeUaYDdaeR | amount going out > 0.00 CHF |
+| 0012345/001.000.840 | 15138861 | 9022207 | WeUaYDdaeR | executed orders |
+
+**Properties**
+
+| name | data type | constraints | description |
+| ---- | --------- | ----------- | ----------- |
+| name | string | required | The name of the notification rule that triggered this notification |
+| date | string | required | The date and time the event occurred |
+| env | string | required | The environment the event occurred in |
+| contact | string | required | Contact number and name of the user who owns the rule |
+| customer | string | required | Customer number and name the rule applies to |
+| account | string | required | The account the event relates to, in the format `<customer number>/<account number>`. `"All"` for a `creating or changing the rule` notification on a rule that applies to all accounts |
+| iban | string | | The IBAN of the account the event relates to. Only present for transaction-related events |
+| transactionNr | string | | Unique transaction number assigned by the core banking system. Only present for transaction-related events |
+| orderId | string | | The id of the underlying payment order. Only present for transaction-related events |
+| customId | string | | The custom id given to the payment order by the client, if any. Only present for transaction-related events |
+| events | array of string | required | The event(s) that triggered this notification. For a `creating or changing the rule` notification this lists every event configured on the rule; for a transaction-related notification exactly one matching event is listed |
