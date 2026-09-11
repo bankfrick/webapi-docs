@@ -1301,6 +1301,7 @@ For **type = SEPA_INSTANT**, the fields `express`, `valuta`, `valutaIsExecutionD
   "bookingDate" : "2022-05-01",
   "reference" : "Some Individual Text",
   "direction" : "outgoing",
+  "swiftGpiE2eId" : "19301b09-37d7-4ecb-9fff-7fdfc88482a7",
   "debitor" : {
     "name" : "Max Muster",
     "iban" : "LI08088110102720K000E",
@@ -1345,6 +1346,7 @@ A single transaction existing instance.
 | charge |	[Charge](#data-types-charge)	| |	The charging system of the transaction |
 | correspondence | boolean | | 	Must be set to true in case of correspondence payment |
 | direction | string | | Either "incoming", "outgoing" or "return". |
+| swiftGpiE2eId | string | | The SWIFT gpi end-to-end reference id (UETR) used to track the payment via the SWIFT gpi tracker. |
 | orderingCustomer | [OrderingCustomer](#data-types-orderingcustomer) | | 	In case of correspondence payment information about the ordering customer must be given |
 | debitor |	[TransactionAccount](#data-types-transactionaccount) |	required |	The client information about the transaction |
 | creditor |	[TransactionAccount](#data-types-transactionaccount) |	required |	The beneficiary information about the transaction |
