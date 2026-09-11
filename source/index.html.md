@@ -197,7 +197,9 @@ For the transaction-related events (`executed orders`, `not executed orders`, `a
 * An internal transfer between two of your own accounts triggers one `amount going out` notification for the debited account and one `amount coming in` notification for the credited account.
 * Once an order is booked, an additional `executed orders` notification is sent for every account it was booked on.
 
-The example below shows all notifications sent by a rule watching account `"All"` for `amount going out`, `amount coming in` and `executed orders`, triggered by two outgoing payments and one internal transfer between two own accounts (`orderId` `9000001`):
+The example below shows all notifications sent by a rule watching account `"All"` for `amount going out`, `amount coming in` and `executed orders`, triggered by two outgoing payments (one from each account) and one internal transfer between the two accounts (`orderId` `9022205`).
+
+The internal transfer produces three notifications:
 
 > Example
 
@@ -206,29 +208,59 @@ The example below shows all notifications sent by a rule watching account `"All"
   "name" : "TEST",
   "date" : "2026-09-11T08:12:09.700404600",
   "env" : "olbtest.bankfrick.li",
-  "contact" : "13579 Max Muster",
-  "customer" : "0012345 Max Muster",
-  "account" : "0012345/001.000.840",
-  "iban" : "LI03088110012345K000U",
-  "transactionNr" : "20000101",
-  "orderId" : "9000001",
-  "customId" : "aB3dE5fG7h",
+  "contact" : "22536 Gabor Riesz",
+  "customer" : "0104056 Gabor Riesz",
+  "account" : "0104056/001.000.840",
+  "iban" : "LI03088110104056K000U",
+  "transactionNr" : "15138859",
+  "orderId" : "9022205",
+  "customId" : "mpwW1gp2p3",
   "events" : [ "amount going out > 0.00 CHF" ]
 }
 ```
 
-The remaining notifications for this scenario, differing only in the highlighted fields:
+```json
+{
+  "name" : "TEST",
+  "date" : "2026-09-11T08:12:09.829228500",
+  "env" : "olbtest.bankfrick.li",
+  "contact" : "22536 Gabor Riesz",
+  "customer" : "0104056 Gabor Riesz",
+  "account" : "0104056/001.000.978",
+  "iban" : "LI47088110104056K000E",
+  "transactionNr" : "15138859",
+  "orderId" : "9022205",
+  "customId" : "mpwW1gp2p3",
+  "events" : [ "amount coming in > 0.00 CHF" ]
+}
+```
+
+```json
+{
+  "name" : "TEST",
+  "date" : "2026-09-11T08:12:10.623681200",
+  "env" : "olbtest.bankfrick.li",
+  "contact" : "22536 Gabor Riesz",
+  "customer" : "0104056 Gabor Riesz",
+  "account" : "0104056/001.000.840",
+  "iban" : "LI03088110104056K000U",
+  "transactionNr" : "15138859",
+  "orderId" : "9022205",
+  "customId" : "mpwW1gp2p3",
+  "events" : [ "executed orders" ]
+}
+```
+
+Note that `orderId` `9022205` (the internal transfer) appears three times: once for the debit, once for the credit, and once when the order is booked.
+
+The two outgoing payments each produce two notifications, differing only in the highlighted fields:
 
 | account | transactionNr | orderId | customId | events |
 | ------- | -------------- | ------- | -------- | ------ |
-| 0012345/001.000.840 | 20000103 | 9000003 | Zx8cVb2nMk | amount going out > 0.00 CHF |
-| 0012345/001.000.978 | 20000101 | 9000001 | aB3dE5fG7h | amount coming in > 0.00 CHF |
-| 0012345/001.000.978 | 20000102 | 9000002 | Qw9eRt1yUi | amount going out > 0.00 CHF |
-| 0012345/001.000.840 | 20000101 | 9000001 | aB3dE5fG7h | executed orders |
-| 0012345/001.000.840 | 20000103 | 9000003 | Zx8cVb2nMk | executed orders |
-| 0012345/001.000.978 | 20000102 | 9000002 | Qw9eRt1yUi | executed orders |
-
-Note that `orderId` `9000001` (the internal transfer) appears three times: once for the debit, once for the credit, and once when the order is booked.
+| 0104056/001.000.840 | 15138861 | 9022207 | WeUaYDdaeR | amount going out > 0.00 CHF |
+| 0104056/001.000.840 | 15138861 | 9022207 | WeUaYDdaeR | executed orders |
+| 0104056/001.000.978 | 15138860 | 9022206 | 5elx0VREQ1 | amount going out > 0.00 CHF |
+| 0104056/001.000.978 | 15138860 | 9022206 | 5elx0VREQ1 | executed orders |
 
 **Properties**
 
