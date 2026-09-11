@@ -180,7 +180,7 @@ Creating or changing a notification rule triggers a `creating or changing the ru
 
 ```json
 {
-  "name" : "TEST",
+  "name" : "Example rule",
   "date" : "2026-09-11T08:06:37.890717500",
   "env" : "olbtest.bankfrick.li",
   "contact" : "13579 Max Muster",
