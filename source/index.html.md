@@ -172,7 +172,7 @@ If the message cannot be delivered, e.g. because the client server is not respon
 
 ![WebHooks Details](/images/documentation/bank-frick-webapi-webhooks-details.png "WebHooks Details")
 
-### Example: rule created or changed
+**Example: rule created or changed**
 
 Creating or changing a notification rule triggers a `creating or changing the rule` notification once, listing every event currently configured on the rule.
 
@@ -190,7 +190,7 @@ Creating or changing a notification rule triggers a `creating or changing the ru
 }
 ```
 
-### Example: transaction events
+**Example: transaction events**
 
 For the transaction-related events (`executed orders`, `not executed orders`, `amount going out`, `amount coming in`), one notification is sent per matching event **and** per account. A single payment order can therefore trigger several notifications, for example:
 
