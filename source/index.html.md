@@ -205,13 +205,13 @@ The internal transfer produces three notifications:
 
 ```json
 {
-  "name" : "TEST",
+  "name" : "Example rule",
   "date" : "2026-09-11T08:12:09.700404600",
   "env" : "olbtest.bankfrick.li",
-  "contact" : "22536 Gabor Riesz",
-  "customer" : "0104056 Gabor Riesz",
-  "account" : "0104056/001.000.840",
-  "iban" : "LI03088110104056K000U",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "0012345/001.000.840",
+  "iban" : "LI03088110012345K000U",
   "transactionNr" : "15138859",
   "orderId" : "9022205",
   "customId" : "mpwW1gp2p3",
@@ -221,13 +221,13 @@ The internal transfer produces three notifications:
 
 ```json
 {
-  "name" : "TEST",
+  "name" : "Example rule",
   "date" : "2026-09-11T08:12:09.829228500",
   "env" : "olbtest.bankfrick.li",
-  "contact" : "22536 Gabor Riesz",
-  "customer" : "0104056 Gabor Riesz",
-  "account" : "0104056/001.000.978",
-  "iban" : "LI47088110104056K000E",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "0012345/001.000.978",
+  "iban" : "LI47088110012345K000E",
   "transactionNr" : "15138859",
   "orderId" : "9022205",
   "customId" : "mpwW1gp2p3",
@@ -237,13 +237,13 @@ The internal transfer produces three notifications:
 
 ```json
 {
-  "name" : "TEST",
+  "name" : "Example rule",
   "date" : "2026-09-11T08:12:10.623681200",
   "env" : "olbtest.bankfrick.li",
-  "contact" : "22536 Gabor Riesz",
-  "customer" : "0104056 Gabor Riesz",
-  "account" : "0104056/001.000.840",
-  "iban" : "LI03088110104056K000U",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "0012345/001.000.840",
+  "iban" : "LI03088110012345K000U",
   "transactionNr" : "15138859",
   "orderId" : "9022205",
   "customId" : "mpwW1gp2p3",
@@ -257,8 +257,8 @@ The outgoing payment produces two notifications:
 
 | account | transactionNr | orderId | customId | events |
 | ------- | -------------- | ------- | -------- | ------ |
-| 0104056/001.000.840 | 15138861 | 9022207 | WeUaYDdaeR | amount going out > 0.00 CHF |
-| 0104056/001.000.840 | 15138861 | 9022207 | WeUaYDdaeR | executed orders |
+| 0012345/001.000.840 | 15138861 | 9022207 | WeUaYDdaeR | amount going out > 0.00 CHF |
+| 0012345/001.000.840 | 15138861 | 9022207 | WeUaYDdaeR | executed orders |
 
 **Properties**
 
