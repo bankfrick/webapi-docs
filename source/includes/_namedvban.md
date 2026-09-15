@@ -97,38 +97,48 @@ An end customer whose Named VBANs are all deactivated simply remains available a
 
 ## End customer data set
 
-The required data set differs by kind.
+The required data set differs by type.
 
 **Natural person** — `POST /end-customers/natural-persons`
 
-| field              | required | description                                                                          |
-|--------------------|----------|--------------------------------------------------------------------------------------|
-| customerNumber     | yes      | The Bank Frick customer number this end customer belongs to (7 characters).     |
-| firstName          | yes      | Given name(s), max. 255 characters.                                                  |
-| lastName           | yes      | Family name(s), max. 255 characters.                                                    |
-| dateOfBirth        | yes      | ISO 8601 date, e.g. `1984-03-27`.                                                    |
-| address            | yes      | Residential address, see [Address format](#named-virtual-ibans-beta-address-format). |
-| countryOfResidence | yes      | ISO 3166-1 alpha-2 country code.                                                     |
-| nationality        | yes      | ISO 3166-1 alpha-2 country code.                                                     |
-| externalReference  | no       | Your own identifier, max. 255 characters.                                            |
+| field                   | required | description                                                                          |
+|-------------------------|----------|--------------------------------------------------------------------------------------|
+| customerNumber          | yes      | The Bank Frick customer number this end customer belongs to (7 characters).          |
+| firstName               | yes      | Given name(s), max. 255 characters.                                                  |
+| lastName                | yes      | Family name(s), max. 255 characters.                                                 |
+| preferredName           | no       | Preferred or commonly used name or alias, max. 255 characters. Required if available. |
+| dateOfBirth             | yes      | ISO 8601 date, e.g. `1984-03-27`.                                                    |
+| placeOfBirth            | yes      | Country where the individual was born, as ISO 3166-1 alpha-2 country code.           |
+| address                 | yes      | Residential address, see [Address format](#named-virtual-ibans-beta-address-format). |
+| nationalities           | yes      | All nationalities of the individual, as ISO 3166-1 alpha-2 country codes. At least one entry. |
+| taxIdentificationNumber | no       | Tax identification number assigned to the individual, max. 50 characters. Required if available. |
+| externalReference       | no       | Your own identifier, max. 255 characters.                                            |
 
 **Legal entity** — `POST /end-customers/legal-entities`
 
-| field                   | required | description                                                                         |
-|-------------------------|----------|-------------------------------------------------------------------------------------|
-| customerNumber          | yes      | The Bank Frick customer number this end customer belongs to (7 characters).    |
-| companyName             | yes      | Name or company name, max. 255 characters.                                          |
-| legalForm               | yes      | Legal form, max. 255 characters.                                                    |
-| address                 | yes      | Registered address, see [Address format](#named-virtual-ibans-beta-address-format). |
-| countryOfDomicile       | yes      | ISO 3166-1 alpha-2 country code.                                                    |
-| incorporationDate       | yes      | ISO 8601 date.                                                                      |
-| commercialRegisterEntry | no       | `place` and `date` of the commercial-register entry, where applicable.              |
-| representatives         | yes      | Names of the representative bodies. At least one entry; the order is preserved.     |
-| externalReference       | no       | Your own identifier, max. 255 characters.                                           |
+| field                    | required | description                                                                         |
+|--------------------------|----------|-------------------------------------------------------------------------------------|
+| customerNumber           | yes      | The Bank Frick customer number this end customer belongs to (7 characters).         |
+| companyName              | yes      | Name or company name, max. 255 characters.                                          |
+| legalForm                | yes      | Legal form, max. 255 characters.                                                    |
+| tradeName                | no       | Name under which the legal entity conducts business, if different from the company name, max. 255 characters. Required if available. |
+| address                  | yes      | Registered address, see [Address format](#named-virtual-ibans-beta-address-format). |
+| incorporationDate        | yes      | ISO 8601 date.                                                                      |
+| principalPlaceOfBusiness | no       | Primary location where the entity conducts its business activities, if different from the registered address, max. 255 characters. Required if available. |
+| incorporationCountry     | no       | Country in which the business was incorporated, if different from the registered address, as ISO 3166-1 alpha-2 country code. Required if available. |
+| commercialRegisterEntry  | no       | `place` and `date` of the commercial-register entry, where applicable.              |
+| registrationNumber       | no       | Official number assigned to the entity by the relevant register, max. 50 characters. Required if available. |
+| taxIdentificationNumber  | no       | Tax identification number assigned to the legal entity, max. 50 characters. Required if available. |
+| legalEntityIdentifier    | no       | Legal Entity Identifier (LEI) or any available equivalent official identifier, max. 50 characters. Required if available. |
+| legalRepresentatives     | yes      | First Name(s) and Last Name(s) of the legal representatives (management body). At least one entry. |
+| nomineeShareholders      | no       | Names of individuals or entities acting as nominee shareholders. Required if available. |
+| nomineeDirectors         | no       | Names of individuals acting as nominee directors. Required if available.            |
+| externalReference        | no       | Your own identifier, max. 255 characters.                                           |
 
 ## Address format
 
-End-customer addresses use an ISO 20022 structure. The most relevant elements are:
+End-customer addresses use an ISO 20022 structure. The town name (`TwnNm`) and the country (`Ctry`) are
+required, every other element is optional. The most relevant elements are:
 
 | element                       | description                                                                                                     |
 |-------------------------------|-----------------------------------------------------------------------------------------------------------------|
@@ -147,7 +157,7 @@ End-customer addresses use an ISO 20022 structure. The most relevant elements ar
 | AdrLine                       | Address lines, for data that cannot be mapped to the elements above, max. 7 entries of max. 70 characters each. |
 | CareOf, Dept, SubDept, UnitNb | Further optional qualifiers.                                                                                    |
 
-<aside class="notice">We recommend supplying at least <code>StrtNm</code>, <code>BldgNb</code>, <code>PstCd</code>, <code>TwnNm</code> and <code>Ctry</code>. End-customer data is stored exactly as you send it. We only validate formal constraints, but we do not verify the content, normalise or reformat it, since the KYC responsibility for your end customers remains with you.</aside>
+<aside class="notice">Note: Where available, the postal code, street name, post boxes, building number and apartment number are required fields. End-customer data is stored exactly as you send it. We only validate formal constraints, but we do not verify the content, normalise or reformat it, since the KYC responsibility for your end customers remains with you.</aside>
 
 ## Create a natural person
 
@@ -167,7 +177,9 @@ algorithm: ...
   "externalReference" : "customer-1234abc",
   "firstName" : "Nikita",
   "lastName" : "Muster",
+  "preferredName" : "Niki",
   "dateOfBirth" : "1984-03-27",
+  "placeOfBirth" : "AT",
   "address" : {
     "StrtNm" : "Landstrasse",
     "BldgNb" : "14",
@@ -175,8 +187,8 @@ algorithm: ...
     "TwnNm" : "Vaduz",
     "Ctry" : "LI"
   },
-  "countryOfResidence" : "LI",
-  "nationality" : "AT"
+  "nationalities" : [ "AT", "LI" ],
+  "taxIdentificationNumber" : "1234567890"
 }
 ```
 
@@ -196,13 +208,15 @@ algorithm: ...
 
 {
   "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
-  "kind" : "NATURAL_PERSON",
+  "type" : "NATURAL_PERSON",
   "customerNumber" : "1234567",
   "externalReference" : "customer-1234abc",
   "matchingName" : "Nikita Muster",
   "firstName" : "Nikita",
   "lastName" : "Muster",
+  "preferredName" : "Niki",
   "dateOfBirth" : "1984-03-27",
+  "placeOfBirth" : "AT",
   "address" : {
     "StrtNm" : "Landstrasse",
     "BldgNb" : "14",
@@ -210,8 +224,8 @@ algorithm: ...
     "TwnNm" : "Vaduz",
     "Ctry" : "LI"
   },
-  "countryOfResidence" : "LI",
-  "nationality" : "AT",
+  "nationalities" : [ "AT", "LI" ],
+  "taxIdentificationNumber" : "1234567890",
   "state" : "PREPARED",
   "activationApprovals" : [ ],
   "createdBy" : "Contact 6789",
@@ -222,7 +236,7 @@ algorithm: ...
 ```
 
 Creating a legal entity works the same way against `POST /end-customers/legal-entities`, with the legal-entity
-data set and `"kind" : "LEGAL_ENTITY"` in the response.
+data set and `"type" : "LEGAL_ENTITY"` in the response.
 
 ## Approve an end customer
 
@@ -261,13 +275,15 @@ algorithm: ...
 
 {
   "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
-  "kind" : "NATURAL_PERSON",
+  "type" : "NATURAL_PERSON",
   "customerNumber" : "1234567",
   "externalReference" : "customer-1234abc",
   "matchingName" : "Nikita Muster",
   "firstName" : "Nikita",
   "lastName" : "Muster",
+  "preferredName" : "Niki",
   "dateOfBirth" : "1984-03-27",
+  "placeOfBirth" : "AT",
   "address" : {
     "StrtNm" : "Landstrasse",
     "BldgNb" : "14",
@@ -275,8 +291,8 @@ algorithm: ...
     "TwnNm" : "Vaduz",
     "Ctry" : "LI"
   },
-  "countryOfResidence" : "LI",
-  "nationality" : "AT",
+  "nationalities" : [ "AT", "LI" ],
+  "taxIdentificationNumber" : "1234567890",
   "state" : "ACTIVE",
   "activationApprovals" : [
     {
@@ -300,13 +316,13 @@ algorithm: ...
 records, paginated with `pageIndex` and `pageSize` (default 100, maximum 1000) and the same `pagination` envelope
 as, e.g., the VBAN list.
 
-Filters: `kind`, `state`, `externalReference` and `lastModifiedAfter`. Results are ordered newest first and are
+Filters: `type`, `state`, `externalReference` and `lastModifiedAfter`. Results are ordered newest first and are
 limited to the Bank Frick customers you are authorised for.
 
 > Request
 
 ```shell--test
-GET https://api-test.bankfrick.li/vban/end-customers?kind=NATURAL_PERSON&state=ACTIVE&pageSize=10
+GET https://api-test.bankfrick.li/vban/end-customers?type=NATURAL_PERSON&state=ACTIVE&pageSize=10
 Accept: application/json
 Authorization: ...
 ```
@@ -329,13 +345,15 @@ algorithm: ...
   "endCustomers" : [
     {
       "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
-      "kind" : "NATURAL_PERSON",
+      "type" : "NATURAL_PERSON",
       "customerNumber" : "1234567",
       "externalReference" : "customer-1234abc",
       "matchingName" : "Nikita Muster",
       "firstName" : "Nikita",
       "lastName" : "Muster",
+      "preferredName" : "Niki",
       "dateOfBirth" : "1984-03-27",
+      "placeOfBirth" : "AT",
       "address" : {
         "StrtNm" : "Landstrasse",
         "BldgNb" : "14",
@@ -343,8 +361,8 @@ algorithm: ...
         "TwnNm" : "Vaduz",
         "Ctry" : "LI"
       },
-      "countryOfResidence" : "LI",
-      "nationality" : "AT",
+      "nationalities" : [ "AT", "LI" ],
+      "taxIdentificationNumber" : "1234567890",
       "state" : "ACTIVE",
       "activationApprovals" : [
         {
@@ -415,13 +433,15 @@ algorithm: ...
   "state" : "PREPARED",
   "endCustomer" : {
     "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
-    "kind" : "NATURAL_PERSON",
+    "type" : "NATURAL_PERSON",
     "customerNumber" : "1234567",
     "externalReference" : "customer-1234abc",
     "matchingName" : "Nikita Muster",
     "firstName" : "Nikita",
     "lastName" : "Muster",
+    "preferredName" : "Niki",
     "dateOfBirth" : "1984-03-27",
+    "placeOfBirth" : "AT",
     "address" : {
       "StrtNm" : "Landstrasse",
       "BldgNb" : "14",
@@ -429,8 +449,8 @@ algorithm: ...
       "TwnNm" : "Vaduz",
       "Ctry" : "LI"
     },
-    "countryOfResidence" : "LI",
-    "nationality" : "AT",
+    "nationalities" : [ "AT", "LI" ],
+    "taxIdentificationNumber" : "1234567890",
     "state" : "ACTIVE",
     "activationApprovals" : [
       {
@@ -499,13 +519,15 @@ algorithm: ...
   "state" : "ACTIVE",
   "endCustomer" : {
     "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
-    "kind" : "NATURAL_PERSON",
+    "type" : "NATURAL_PERSON",
     "customerNumber" : "1234567",
     "externalReference" : "customer-1234abc",
     "matchingName" : "Nikita Muster",
     "firstName" : "Nikita",
     "lastName" : "Muster",
+    "preferredName" : "Niki",
     "dateOfBirth" : "1984-03-27",
+    "placeOfBirth" : "AT",
     "address" : {
       "StrtNm" : "Landstrasse",
       "BldgNb" : "14",
@@ -513,8 +535,8 @@ algorithm: ...
       "TwnNm" : "Vaduz",
       "Ctry" : "LI"
     },
-    "countryOfResidence" : "LI",
-    "nationality" : "AT",
+    "nationalities" : [ "AT", "LI" ],
+    "taxIdentificationNumber" : "1234567890",
     "state" : "ACTIVE",
     "activationApprovals" : [
       {
@@ -589,7 +611,7 @@ algorithm: ...
       "state" : "ACTIVE",
       "endCustomer" : {
         "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
-        "kind" : "NATURAL_PERSON",
+        "type" : "NATURAL_PERSON",
         "matchingName" : "Nikita Muster"
       },
       "activationApprovals" : [
@@ -665,13 +687,15 @@ algorithm: ...
   "state" : "DEACTIVATION_REQUESTED",
   "endCustomer" : {
     "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
-    "kind" : "NATURAL_PERSON",
+    "type" : "NATURAL_PERSON",
     "customerNumber" : "1234567",
     "externalReference" : "customer-1234abc",
     "matchingName" : "Nikita Muster",
     "firstName" : "Nikita",
     "lastName" : "Muster",
+    "preferredName" : "Niki",
     "dateOfBirth" : "1984-03-27",
+    "placeOfBirth" : "AT",
     "address" : {
       "StrtNm" : "Landstrasse",
       "BldgNb" : "14",
@@ -679,8 +703,8 @@ algorithm: ...
       "TwnNm" : "Vaduz",
       "Ctry" : "LI"
     },
-    "countryOfResidence" : "LI",
-    "nationality" : "AT",
+    "nationalities" : [ "AT", "LI" ],
+    "taxIdentificationNumber" : "1234567890",
     "state" : "ACTIVE",
     "activationApprovals" : [
       {
@@ -757,7 +781,7 @@ algorithm: ...
   "vban" : "LI3808811V07QJ4M2XC44",
   "endCustomer" : {
     "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
-    "kind" : "NATURAL_PERSON",
+    "type" : "NATURAL_PERSON",
     "matchingName" : "Nikita Muster"
   },
   "state" : "PENDING",
@@ -811,7 +835,7 @@ algorithm: ...
   "vban" : "LI3808811V07QJ4M2XC44",
   "endCustomer" : {
     "id" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
-    "kind" : "NATURAL_PERSON",
+    "type" : "NATURAL_PERSON",
     "matchingName" : "Nikita Muster"
   },
   "state" : "COMPLETED",
@@ -837,7 +861,7 @@ Errors use the same `{ "reason": ..., "status": ... }` body as the VBAN endpoint
 
 | code | condition                                                                                                                                                                                                                                                             |
 |------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 400  | Validation error, can have multiple reasons like a missing, unknown or invalid field, a missing or invalid request signature, a mismatch between `vban` and `endCustomerId`, an end customer that is not yet `ACTIVE`, or a VBAN of the wrong kind for this endpoint. |
+| 400  | Validation error, can have multiple reasons like a missing, unknown or invalid field, a missing or invalid request signature, a mismatch between `vban` and `endCustomerId`, an end customer that is not yet `ACTIVE`, or a VBAN of the wrong type for this endpoint. |
 | 401  | Missing or invalid JWT.                                                                                                                                                                                                                                               |
 | 403  | The request was refused before it reached the service, e.g. due to IP restrictions of the API Key.                                                                                                                                                                    |
 | 404  | Record does not exist, or the caller has no permission to access it.                                                                                                                                                                                                  |
