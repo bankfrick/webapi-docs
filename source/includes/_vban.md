@@ -6,10 +6,10 @@ accounts (IBANs). This also includes the approval procedure for the activation a
 Users need to be authenticated using the `authorize` endpoint of the web API with scope `account`.
 Creating, approving, and deactivation of VBANs requires signing permissions.
 
-Virtual IBANs that are tied to a registered end customer are documented separately under
-[Named Virtual IBANs (beta)](#named-virtual-ibans-beta). The endpoints below serve plain VBANs only: a Named VBAN
+Virtual IBANs that are tied to an end customer are documented separately under
+[Named Virtual IBANs (beta)](#named-virtual-ibans-beta). The endpoints below do not serve Named VBANs: a Named VBAN
 is not returned by `GET /virtual-ibans`, and the read and write endpoints below will reject Named VBANs.
-For callers that use plain VBANs only, nothing changes.
+For callers that do not use Named VBANs, nothing changes.
 
 All details are specified in the openApi specs below:
 

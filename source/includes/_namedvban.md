@@ -6,22 +6,22 @@ A Named Virtual IBAN (Named VBAN) is a virtual IBAN permanently tied to one **en
 person or a legal entity that your company holds the relationship with. Incoming payments to a Named VBAN can
 therefore be formally addressed to that end customer (Me-to-Me deposits) and are routed to the reference account stored on the VBAN.
 
-Named VBANs live in their own endpoint tree under `/named-virtual-ibans` and use their own end-customer register
+Named VBANs live in their own endpoint tree under `/named-virtual-ibans` and use their own end-customer records
 under `/end-customers`. The existing [Virtual IBAN](#virtual-iban) endpoints are unchanged and continue to serve
-plain VBANs only.
+VBANs only.
 
-|                                    | plain VBAN                                          | Named VBAN                                                             |
+|                                    | VBAN                                                | Named VBAN                                                             |
 |------------------------------------|-----------------------------------------------------|------------------------------------------------------------------------|
 | Identity of the party              | optional free-text `name` and `address` on the VBAN | mandatory `endCustomer` record with the regulatorily required data set |
 | Endpoints                          | `/virtual-ibans`                                    | `/named-virtual-ibans`, `/end-customers`                               |
 
 ## Base URL and authentication
 
-The Named VBAN API is part of the VBAN API and uses the same base URL and the same authentication as plain
-virtual IBANs.
+The Named VBAN API is part of the VBAN API and uses the same base URL and the same authentication as the
+existing VBAN endpoints.
 
 The end-customer and Named VBAN endpoints are exposed on the test environment only for the duration of the beta testing.
-Plain [Virtual IBAN](#virtual-iban) endpoints remain available on both environments.
+[Virtual IBAN](#virtual-iban) endpoints remain available on both environments.
 
 Users need to be authenticated using the [authorize](#authorize) endpoint of the web API with scope `account`; the
 returned JWT is sent in the `Authorization` header. Request payloads must be signed and responses are signed, exactly
@@ -29,17 +29,17 @@ as described under [Signatures](#getting-started-signatures).
 
 Creating and approving end customers and Named VBANs requires signing permissions:
 
-* **End-customer** writes are evaluated against the signing rules of the Bank Frick customer the record is registered
+* **End-customer** writes are evaluated against the signing rules of the Bank Frick customer the record is created
   under. Account restrictions do not apply, because an end customer is not bound to a single account.
-* **Named VBAN** writes are evaluated against the signing rules of the reference account, exactly as for plain VBANs.
+* **Named VBAN** writes are evaluated against the signing rules of the reference account, exactly as for VBANs.
 
 ## Concepts
 
 ### End customer
 
-An end customer is registered once and can then be reused for several Named VBANs — for example one Named VBAN per
+An end customer is created once and can then be reused for several Named VBANs — for example one Named VBAN per
 currency, each on the matching reference account. End customers are scoped to one Bank Frick customer number.
-Registering the same end customer for two different customer numbers requires two separate end customer records.
+Creating the same end customer for two different customer numbers requires two separate end-customer records.
 
 An end customer is addressed by the `id` that Bank Frick issues on creation. The id is immutable, and it is the only
 way to reference the record in write requests. In addition, you may store your own identifier in the optional
@@ -50,8 +50,8 @@ An end customer is created in state `PREPARED` and becomes `ACTIVE` once your si
 
 ### Named VBAN
 
-A Named VBAN carries no `name` and no `address` of its own (as opposed to plain VBANs) since these attributes
-belong to the linked end customer.
+A Named VBAN carries no `name` and no `address` of its own, since these attributes belong to the linked
+end customer.
 The name that incoming payments are matched against is the end customer's `matchingName`:
 
 * natural person: `firstName` followed by `lastName`
@@ -60,7 +60,7 @@ The name that incoming payments are matched against is the end customer's `match
 The Bank Frick customer number of a Named VBAN is derived from the reference account and checked against the
 end customer's own customer number. A Named VBAN and its end customer must belong to the same Bank Frick customer.
 
-States are the same as for plain VBANs: `PREPARED` → `ACTIVE` → `DEACTIVATION_REQUESTED` → `DEACTIVATED`.
+States are the same as for VBANs: `PREPARED` → `ACTIVE` → `DEACTIVATION_REQUESTED` → `DEACTIVATED`.
 
 ### Every modification requires both the VBAN and the end customer as input
 
@@ -72,9 +72,9 @@ This way, each approver confirms explicitly *which end customer* a Named VBAN sh
 
 Every VBAN appears in exactly one place:
 
-* `GET /virtual-ibans` returns plain VBANs only; `GET /named-virtual-ibans` returns Named VBANs only.
+* `GET /virtual-ibans` returns VBANs only; `GET /named-virtual-ibans` returns Named VBANs only.
 * The `/virtual-ibans` write and single-read endpoints reject a Named VBAN, and the `/named-virtual-ibans` endpoints
-  reject a plain VBAN.
+  reject any VBAN that is not a Named VBAN.
 
 If you need your full inventory, call both lists.
 Detailed end customer information beyond the summary provided by `GET /named-virtual-ibans` needs to be queried
@@ -82,18 +82,18 @@ separately via `GET /end-customers` or `GET /end-customers/{endCustomerId}`.
 
 ## Lifecycle
 
-1. **Register the end customer** — `POST /end-customers/natural-persons` or `POST /end-customers/legal-entities`.
+1. **Create the end customer** — `POST /end-customers/natural-persons` or `POST /end-customers/legal-entities`.
    State `PREPARED`, `id` returned.
 2. **Approve the end customer** — `PUT /end-customers/approvals`, once per required signature. State becomes
    `ACTIVE`.
 3. **Create the Named VBAN** — `POST /named-virtual-ibans` with the reference account and the end-customer id.
    State `PREPARED`, the VBAN is returned.
-4. **Approve the activation** — `PUT /named-virtual-ibans/activations/approvals` with `vban` and `endCustomerId`,
+4. **Approve the Named VBAN** — `PUT /named-virtual-ibans/activations/approvals` with `vban` and `endCustomerId`,
    once per required signature. State becomes `ACTIVE` and the VBAN accepts incoming payments.
 5. **Deactivate when no longer needed** — `PUT /named-virtual-ibans/deactivations`, followed by
    `PUT /named-virtual-ibans/deactivations/approvals` where the signing rule requires it.
 
-An end customer whose Named VBANs are all deactivated simply remains registered and can be reused.
+An end customer whose Named VBANs are all deactivated simply remains available and can be reused.
 
 ## End customer data set
 
@@ -105,7 +105,7 @@ The required data set differs by kind.
 |--------------------|----------|--------------------------------------------------------------------------------------|
 | customerNumber     | yes      | The Bank Frick customer number this end customer belongs to (7 characters).     |
 | firstName          | yes      | Given name(s), max. 255 characters.                                                  |
-| lastName           | yes      | Family name, max. 255 characters.                                                    |
+| lastName           | yes      | Family name(s), max. 255 characters.                                                    |
 | dateOfBirth        | yes      | ISO 8601 date, e.g. `1984-03-27`.                                                    |
 | address            | yes      | Residential address, see [Address format](#named-virtual-ibans-beta-address-format). |
 | countryOfResidence | yes      | ISO 3166-1 alpha-2 country code.                                                     |
@@ -149,7 +149,7 @@ End-customer addresses use an ISO 20022 structure. The most relevant elements ar
 
 <aside class="notice">We recommend supplying at least <code>StrtNm</code>, <code>BldgNb</code>, <code>PstCd</code>, <code>TwnNm</code> and <code>Ctry</code>. End-customer data is stored exactly as you send it. We only validate formal constraints, but we do not verify the content, normalise or reformat it, since the KYC responsibility for your end customers remains with you.</aside>
 
-## Register a natural person
+## Create a natural person
 
 > Request
 
@@ -221,7 +221,7 @@ algorithm: ...
 }
 ```
 
-Registering a legal entity works the same way against `POST /end-customers/legal-entities`, with the legal-entity
+Creating a legal entity works the same way against `POST /end-customers/legal-entities`, with the legal-entity
 data set and `"kind" : "LEGAL_ENTITY"` in the response.
 
 ## Approve an end customer
@@ -297,8 +297,8 @@ algorithm: ...
 ## Read and list end customers
 
 `GET /end-customers/{endCustomerId}` returns one full record. `GET /end-customers` returns your end-customer
-register, paginated with `pageIndex` and `pageSize` (default 100, maximum 1000) and the same `pagination` envelope
-as, e.g., the plain VBAN list.
+records, paginated with `pageIndex` and `pageSize` (default 100, maximum 1000) and the same `pagination` envelope
+as, e.g., the VBAN list.
 
 Filters: `kind`, `state`, `externalReference` and `lastModifiedAfter`. Results are ordered newest first and are
 limited to the Bank Frick customers you are authorised for.
@@ -624,7 +624,7 @@ approves it. Both carry `vban` and `endCustomerId`, and both verify the link.
 
 An `ACTIVE` Named VBAN moves to `DEACTIVATION_REQUESTED` and then to `DEACTIVATED` once the signing rule is
 satisfied. A `PREPARED` Named VBAN is deactivated immediately.
-The end customer itself is not affected and stays registered.
+The end customer itself is not affected and stays available.
 
 > Request
 
@@ -713,14 +713,14 @@ algorithm: ...
 }
 ```
 
-## Upgrade a plain VBAN to a Named VBAN
+## Upgrade a VBAN to a Named VBAN
 
-An existing plain VBAN can be assigned to an already registered end customer and continue to be used as a Named
+An existing VBAN can be assigned to an existing end customer and continue to be used as a Named
 VBAN: `POST /named-virtual-ibans/upgrades` requests the upgrade and `PUT /named-virtual-ibans/upgrades/approvals`
 approves it, both with `vban` and `endCustomerId`.
 
-Until the signing rule is satisfied, the upgrade stays `PENDING` and the plain VBAN keeps working exactly as
-before: it is still served by the plain VBAN endpoints, which report the request under `pendingUpgrade`.
+Until the signing rule is satisfied, the upgrade stays `PENDING` and the VBAN keeps working exactly as
+before: it is still served by the VBAN endpoints, which report the request under `pendingUpgrade`.
 
 > Request
 
@@ -772,7 +772,7 @@ algorithm: ...
 ## Approve an upgrade
 
 Once the signing rule is satisfied, the upgrade moves to `COMPLETED` and the VBAN becomes a Named VBAN: it is
-served by the Named VBAN endpoints from then on, and the plain endpoints reject it. The VBAN's own `name` and
+served by the Named VBAN endpoints from then on, and the VBAN endpoints reject it. The VBAN's own `name` and
 `address` are **replaced** by the end customer's data and are no longer available. The upgrade's approvals stay
 readable on the Named VBAN under `upgradeApprovals`.
 
@@ -833,7 +833,7 @@ algorithm: ...
 
 ## Errors
 
-Errors use the same `{ "reason": ..., "status": ... }` body as the plain VBAN endpoints.
+Errors use the same `{ "reason": ..., "status": ... }` body as the VBAN endpoints.
 
 | code | condition                                                                                                                                                                                                                                                             |
 |------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
