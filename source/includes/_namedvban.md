@@ -10,10 +10,10 @@ Named VBANs live in their own endpoint tree under `/named-virtual-ibans` and use
 under `/end-customers`. The existing [Virtual IBAN](#virtual-iban) endpoints are unchanged and continue to serve
 VBANs only.
 
-|                                    | VBAN                                                | Named VBAN                                                             |
-|------------------------------------|-----------------------------------------------------|------------------------------------------------------------------------|
-| Identity of the party              | optional free-text `name` and `address` on the VBAN | mandatory `endCustomer` record with the regulatorily required data set |
-| Endpoints                          | `/virtual-ibans`                                    | `/named-virtual-ibans`, `/end-customers`                               |
+|                       | VBAN                                                | Named VBAN                                                             |
+|-----------------------|-----------------------------------------------------|------------------------------------------------------------------------|
+| Identity of the party | optional free-text `name` and `address` on the VBAN | mandatory `endCustomer` record with the regulatorily required data set |
+| Endpoints             | `/virtual-ibans`                                    | `/named-virtual-ibans`, `/end-customers`                               |
 
 ## Base URL and authentication
 
@@ -101,40 +101,40 @@ The required data set differs by type.
 
 **Natural person** — `POST /end-customers/natural-persons`
 
-| field                   | required | description                                                                          |
-|-------------------------|----------|--------------------------------------------------------------------------------------|
-| customerNumber          | yes      | The Bank Frick customer number this end customer belongs to (7 characters).          |
-| firstName               | yes      | Given name(s), max. 255 characters.                                                  |
-| lastName                | yes      | Family name(s), max. 255 characters.                                                 |
-| preferredName           | no       | Preferred or commonly used name or alias, max. 255 characters. Required if available. |
-| dateOfBirth             | yes      | ISO 8601 date, e.g. `1984-03-27`.                                                    |
-| countryOfBirth          | yes      | Country where the individual was born, as ISO 3166-1 alpha-2 country code.           |
+| field                   | required | description                                                                                                                         |
+|-------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------|
+| customerNumber          | yes      | The Bank Frick customer number this end customer belongs to (7 characters).                                                         |
+| firstName               | yes      | Given name(s), max. 255 characters.                                                                                                 |
+| lastName                | yes      | Family name(s), max. 255 characters.                                                                                                |
+| preferredName           | no       | Preferred or commonly used name or alias, max. 255 characters. Required if available.                                               |
+| dateOfBirth             | yes      | ISO 8601 date, e.g. `1984-03-27`.                                                                                                   |
+| countryOfBirth          | yes      | Country where the individual was born, as ISO 3166-1 alpha-2 country code.                                                          |
 | placeOfBirth            | no       | City, town, municipality, county, or other available information specifying the individual's place of birth. Required if available. |
-| address                 | yes      | Residential address, see [Address format](#named-virtual-ibans-beta-address-format). |
-| nationalities           | yes      | All nationalities of the individual, as ISO 3166-1 alpha-2 country codes. At least one entry, max. 10. |
-| taxIdentificationNumber | no       | Tax identification number assigned to the individual, max. 50 characters. Required if available. |
-| externalReference       | no       | Your own identifier, max. 255 characters.                                            |
+| address                 | yes      | Residential address, see [Address format](#named-virtual-ibans-beta-address-format).                                                |
+| nationalities           | yes      | All nationalities of the individual, as ISO 3166-1 alpha-2 country codes. At least one entry, max. 10.                              |
+| taxIdentificationNumber | no       | Tax identification number assigned to the individual, max. 50 characters. Required if available.                                    |
+| externalReference       | no       | Your own identifier, max. 255 characters.                                                                                           |
 
 **Legal entity** — `POST /end-customers/legal-entities`
 
-| field                    | required | description                                                                         |
-|--------------------------|----------|-------------------------------------------------------------------------------------|
-| customerNumber           | yes      | The Bank Frick customer number this end customer belongs to (7 characters).         |
-| companyName              | yes      | Name or company name, max. 255 characters.                                          |
-| legalForm                | yes      | Legal form, max. 255 characters.                                                    |
-| tradeName                | no       | Name under which the legal entity conducts business, if different from the company name, max. 255 characters. Required if available. |
-| address                  | yes      | Registered address, see [Address format](#named-virtual-ibans-beta-address-format). |
-| incorporationDate        | yes      | ISO 8601 date.                                                                      |
+| field                    | required | description                                                                                                                                               |
+|--------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| customerNumber           | yes      | The Bank Frick customer number this end customer belongs to (7 characters).                                                                               |
+| companyName              | yes      | Name or company name, max. 255 characters.                                                                                                                |
+| legalForm                | yes      | Legal form, max. 255 characters.                                                                                                                          |
+| tradeName                | no       | Name under which the legal entity conducts business, if different from the company name, max. 255 characters. Required if available.                      |
+| address                  | yes      | Registered address, see [Address format](#named-virtual-ibans-beta-address-format).                                                                       |
+| incorporationDate        | yes      | ISO 8601 date.                                                                                                                                            |
 | principalPlaceOfBusiness | no       | Primary location where the entity conducts its business activities, if different from the registered address, max. 255 characters. Required if available. |
-| incorporationCountry     | no       | Country in which the business was incorporated, if different from the registered address, as ISO 3166-1 alpha-2 country code. Required if available. |
-| commercialRegisterEntry  | no       | `place` and `date` of the commercial-register entry, where applicable.              |
-| registrationNumber       | no       | Official number assigned to the entity by the relevant register, max. 50 characters. Required if available. |
-| taxIdentificationNumber  | no       | Tax identification number assigned to the legal entity, max. 50 characters. Required if available. |
-| legalEntityIdentifier    | no       | Legal Entity Identifier (LEI) or any available equivalent official identifier, max. 50 characters. Required if available. |
-| legalRepresentatives     | yes      | First Name(s) and Last Name(s) of the legal representatives (management body). At least one entry, max. 50 entries of max. 511 characters each. |
-| nomineeShareholders      | no       | Names of individuals or entities acting as nominee shareholders, max. 50 entries of max. 511 characters each. Required if available. |
-| nomineeDirectors         | no       | Names of individuals acting as nominee directors, max. 50 entries of max. 511 characters each. Required if available.            |
-| externalReference        | no       | Your own identifier, max. 255 characters.                                           |
+| incorporationCountry     | no       | Country in which the business was incorporated, if different from the registered address, as ISO 3166-1 alpha-2 country code. Required if available.      |
+| commercialRegisterEntry  | no       | `place` and `date` of the commercial-register entry, where applicable.                                                                                    |
+| registrationNumber       | no       | Official number assigned to the entity by the relevant register, max. 50 characters. Required if available.                                               |
+| taxIdentificationNumber  | no       | Tax identification number assigned to the legal entity, max. 50 characters. Required if available.                                                        |
+| legalEntityIdentifier    | no       | Legal Entity Identifier (LEI) or any available equivalent official identifier, max. 50 characters. Required if available.                                 |
+| legalRepresentatives     | yes      | First Name(s) and Last Name(s) of the legal representatives (management body). At least one entry, max. 50 entries of max. 511 characters each.           |
+| nomineeShareholders      | no       | Names of individuals or entities acting as nominee shareholders, max. 50 entries of max. 511 characters each. Required if available.                      |
+| nomineeDirectors         | no       | Names of individuals acting as nominee directors, max. 50 entries of max. 511 characters each. Required if available.                                     |
+| externalReference        | no       | Your own identifier, max. 255 characters.                                                                                                                 |
 
 ## Address format
 
