@@ -108,9 +108,10 @@ The required data set differs by type.
 | lastName                | yes      | Family name(s), max. 255 characters.                                                 |
 | preferredName           | no       | Preferred or commonly used name or alias, max. 255 characters. Required if available. |
 | dateOfBirth             | yes      | ISO 8601 date, e.g. `1984-03-27`.                                                    |
-| placeOfBirth            | yes      | Country where the individual was born, as ISO 3166-1 alpha-2 country code.           |
+| countryOfBirth          | yes      | Country where the individual was born, as ISO 3166-1 alpha-2 country code.           |
+| placeOfBirth            | no       | City, town, municipality, county, or other available information specifying the individual's place of birth. Required if available. |
 | address                 | yes      | Residential address, see [Address format](#named-virtual-ibans-beta-address-format). |
-| nationalities           | yes      | All nationalities of the individual, as ISO 3166-1 alpha-2 country codes. At least one entry. |
+| nationalities           | yes      | All nationalities of the individual, as ISO 3166-1 alpha-2 country codes. At least one entry, max. 10. |
 | taxIdentificationNumber | no       | Tax identification number assigned to the individual, max. 50 characters. Required if available. |
 | externalReference       | no       | Your own identifier, max. 255 characters.                                            |
 
@@ -130,9 +131,9 @@ The required data set differs by type.
 | registrationNumber       | no       | Official number assigned to the entity by the relevant register, max. 50 characters. Required if available. |
 | taxIdentificationNumber  | no       | Tax identification number assigned to the legal entity, max. 50 characters. Required if available. |
 | legalEntityIdentifier    | no       | Legal Entity Identifier (LEI) or any available equivalent official identifier, max. 50 characters. Required if available. |
-| legalRepresentatives     | yes      | First Name(s) and Last Name(s) of the legal representatives (management body). At least one entry. |
-| nomineeShareholders      | no       | Names of individuals or entities acting as nominee shareholders. Required if available. |
-| nomineeDirectors         | no       | Names of individuals acting as nominee directors. Required if available.            |
+| legalRepresentatives     | yes      | First Name(s) and Last Name(s) of the legal representatives (management body). At least one entry, max. 50 entries of max. 511 characters each. |
+| nomineeShareholders      | no       | Names of individuals or entities acting as nominee shareholders, max. 50 entries of max. 511 characters each. Required if available. |
+| nomineeDirectors         | no       | Names of individuals acting as nominee directors, max. 50 entries of max. 511 characters each. Required if available.            |
 | externalReference        | no       | Your own identifier, max. 255 characters.                                           |
 
 ## Address format
@@ -179,7 +180,8 @@ algorithm: ...
   "lastName" : "Muster",
   "preferredName" : "Niki",
   "dateOfBirth" : "1984-03-27",
-  "placeOfBirth" : "AT",
+  "countryOfBirth" : "AT",
+  "placeOfBirth" : "Innsbruck",
   "address" : {
     "StrtNm" : "Landstrasse",
     "BldgNb" : "14",
@@ -216,7 +218,8 @@ algorithm: ...
   "lastName" : "Muster",
   "preferredName" : "Niki",
   "dateOfBirth" : "1984-03-27",
-  "placeOfBirth" : "AT",
+  "countryOfBirth" : "AT",
+  "placeOfBirth" : "Innsbruck",
   "address" : {
     "StrtNm" : "Landstrasse",
     "BldgNb" : "14",
@@ -283,7 +286,8 @@ algorithm: ...
   "lastName" : "Muster",
   "preferredName" : "Niki",
   "dateOfBirth" : "1984-03-27",
-  "placeOfBirth" : "AT",
+  "countryOfBirth" : "AT",
+  "placeOfBirth" : "Innsbruck",
   "address" : {
     "StrtNm" : "Landstrasse",
     "BldgNb" : "14",
@@ -353,7 +357,8 @@ algorithm: ...
       "lastName" : "Muster",
       "preferredName" : "Niki",
       "dateOfBirth" : "1984-03-27",
-      "placeOfBirth" : "AT",
+      "countryOfBirth" : "AT",
+      "placeOfBirth" : "Innsbruck",
       "address" : {
         "StrtNm" : "Landstrasse",
         "BldgNb" : "14",
@@ -441,7 +446,8 @@ algorithm: ...
     "lastName" : "Muster",
     "preferredName" : "Niki",
     "dateOfBirth" : "1984-03-27",
-    "placeOfBirth" : "AT",
+    "countryOfBirth" : "AT",
+    "placeOfBirth" : "Innsbruck",
     "address" : {
       "StrtNm" : "Landstrasse",
       "BldgNb" : "14",
@@ -527,7 +533,8 @@ algorithm: ...
     "lastName" : "Muster",
     "preferredName" : "Niki",
     "dateOfBirth" : "1984-03-27",
-    "placeOfBirth" : "AT",
+    "countryOfBirth" : "AT",
+    "placeOfBirth" : "Innsbruck",
     "address" : {
       "StrtNm" : "Landstrasse",
       "BldgNb" : "14",
@@ -695,7 +702,8 @@ algorithm: ...
     "lastName" : "Muster",
     "preferredName" : "Niki",
     "dateOfBirth" : "1984-03-27",
-    "placeOfBirth" : "AT",
+    "countryOfBirth" : "AT",
+    "placeOfBirth" : "Innsbruck",
     "address" : {
       "StrtNm" : "Landstrasse",
       "BldgNb" : "14",

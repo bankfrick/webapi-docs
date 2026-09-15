@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Bank Frick VBAN API",
-    "version": "0.7.0"
+    "version": "0.9.0"
   },
   "servers": [
     {
@@ -23,7 +23,7 @@
         "operationId": "getEndCustomers",
         "parameters": [
           {
-            "description": "Filter by end-customer type",
+            "description": "Filter by end customer type",
             "in": "query",
             "name": "type",
             "required": false,
@@ -40,7 +40,7 @@
             }
           },
           {
-            "description": "Filter by end-customer state",
+            "description": "Filter by end customer state",
             "in": "query",
             "name": "state",
             "required": false,
@@ -1960,7 +1960,8 @@
               "maxLength": 511,
               "minLength": 1
             },
-            "minItems": 1
+            "maxItems": 50,
+            "minItems": 0
           },
           "nomineeDirectors": {
             "type": "array",
@@ -1970,7 +1971,9 @@
               "description": "Names of individuals acting as nominee directors; required if available",
               "maxLength": 511,
               "minLength": 1
-            }
+            },
+            "maxItems": 50,
+            "minItems": 0
           },
           "nomineeShareholders": {
             "type": "array",
@@ -1980,7 +1983,9 @@
               "description": "Names of individuals or entities acting as nominee shareholders; required if available",
               "maxLength": 511,
               "minLength": 1
-            }
+            },
+            "maxItems": 50,
+            "minItems": 0
           },
           "principalPlaceOfBusiness": {
             "type": "string",
@@ -2045,6 +2050,12 @@
           "address": {
             "$ref": "#/components/schemas/PostalAddress27"
           },
+          "countryOfBirth": {
+            "type": "string",
+            "description": "Country where the individual was born, as ISO 3166-1 alpha-2 country code",
+            "minLength": 1,
+            "pattern": "^[A-Z]{2}$"
+          },
           "customerNumber": {
             "type": "string",
             "description": "The Bank Frick customer to register under",
@@ -2080,13 +2091,14 @@
               "minLength": 1,
               "pattern": "^[A-Z]{2}$"
             },
-            "minItems": 1
+            "maxItems": 10,
+            "minItems": 0
           },
           "placeOfBirth": {
             "type": "string",
-            "description": "Country where the individual was born, as ISO 3166-1 alpha-2 country code",
-            "minLength": 1,
-            "pattern": "^[A-Z]{2}$"
+            "description": "City, town, municipality, county, or other available information specifying the individual\u0027s place of birth; required if available",
+            "maxLength": 255,
+            "minLength": 1
           },
           "preferredName": {
             "type": "string",
@@ -2103,12 +2115,12 @@
         },
         "required": [
           "address",
+          "countryOfBirth",
           "customerNumber",
           "dateOfBirth",
           "firstName",
           "lastName",
-          "nationalities",
-          "placeOfBirth"
+          "nationalities"
         ]
       },
       "CreateVirtualIbanAddressDto": {
@@ -2637,6 +2649,10 @@
           {
             "type": "object",
             "properties": {
+              "countryOfBirth": {
+                "type": "string",
+                "description": "Country where the individual was born, as ISO 3166-1 alpha-2 country code"
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
@@ -2675,7 +2691,7 @@
               },
               "placeOfBirth": {
                 "type": "string",
-                "description": "Country where the individual was born, as ISO 3166-1 alpha-2 country code"
+                "description": "City, town, municipality, county, or other available information specifying the individual\u0027s place of birth"
               },
               "preferredName": {
                 "type": "string",
@@ -2691,6 +2707,7 @@
         "required": [
           "activationApprovals",
           "address",
+          "countryOfBirth",
           "createdAt",
           "createdBy",
           "customerNumber",
@@ -2702,7 +2719,6 @@
           "lastName",
           "matchingName",
           "nationalities",
-          "placeOfBirth",
           "state",
           "type"
         ]
