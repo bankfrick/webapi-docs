@@ -160,9 +160,13 @@ required, every other element is optional. The most relevant elements are:
 
 <aside class="notice">Note: Where available, the postal code, street name, post boxes, building number and apartment number are required fields. End-customer data is stored exactly as you send it. We only validate formal constraints, but we do not verify the content, normalise or reformat it, since the KYC responsibility for your end customers remains with you.</aside>
 
-## Create a natural person
+## Create an end customer
 
-> Request
+Each type has its own endpoint: `POST /end-customers/natural-persons` and
+`POST /end-customers/legal-entities`. Both take the data set described above, return the created record with its
+`id` and `"state" : "PREPARED"`, and require an approval before the end customer can be linked to a Named VBAN.
+
+> Request — natural person
 
 ```shell--test
 POST https://api-test.bankfrick.li/vban/end-customers/natural-persons
@@ -199,7 +203,7 @@ Named Virtual IBANs are not available on the production environment yet.
 Switch to the test tab for the request examples.
 ```
 
-> Response
+> Response — natural person
 
 ```shell
 HTTP/1.1 201 CREATED
@@ -238,8 +242,95 @@ algorithm: ...
 }
 ```
 
-Creating a legal entity works the same way against `POST /end-customers/legal-entities`, with the legal-entity
-data set and `"type" : "LEGAL_ENTITY"` in the response.
+> Request — legal entity
+
+```shell--test
+POST https://api-test.bankfrick.li/vban/end-customers/legal-entities
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "customerNumber" : "1234567",
+  "externalReference" : "customer-5678efg",
+  "companyName" : "Muster Trading AG",
+  "legalForm" : "Aktiengesellschaft",
+  "tradeName" : "Muster Trading",
+  "address" : {
+    "StrtNm" : "Landstrasse",
+    "BldgNb" : "14",
+    "PstCd" : "9490",
+    "TwnNm" : "Vaduz",
+    "Ctry" : "LI"
+  },
+  "incorporationDate" : "2011-06-14",
+  "principalPlaceOfBusiness" : "Vaduz, Liechtenstein",
+  "incorporationCountry" : "LI",
+  "commercialRegisterEntry" : {
+    "place" : "Vaduz",
+    "date" : "2011-06-20"
+  },
+  "registrationNumber" : "FL-0002.345.678-9",
+  "taxIdentificationNumber" : "0987654321",
+  "legalEntityIdentifier" : "529900MUSTER00000012",
+  "legalRepresentatives" : [ "Nikita Muster", "Andrea Beispiel" ]
+}
+```
+
+```shell--production
+Named Virtual IBANs are not available on the production environment yet.
+Switch to the test tab for the request examples.
+```
+
+> Response — legal entity
+
+```shell
+HTTP/1.1 201 CREATED
+Content-Type: application/json
+Signature: ...
+algorithm: ...
+
+
+{
+  "id" : "0198f3c2-6b71-7c42-8ade-91b2c3d4e5f6",
+  "type" : "LEGAL_ENTITY",
+  "customerNumber" : "1234567",
+  "externalReference" : "customer-5678efg",
+  "matchingName" : "Muster Trading AG",
+  "companyName" : "Muster Trading AG",
+  "legalForm" : "Aktiengesellschaft",
+  "tradeName" : "Muster Trading",
+  "address" : {
+    "StrtNm" : "Landstrasse",
+    "BldgNb" : "14",
+    "PstCd" : "9490",
+    "TwnNm" : "Vaduz",
+    "Ctry" : "LI"
+  },
+  "incorporationDate" : "2011-06-14",
+  "principalPlaceOfBusiness" : "Vaduz, Liechtenstein",
+  "incorporationCountry" : "LI",
+  "commercialRegisterEntry" : {
+    "place" : "Vaduz",
+    "date" : "2011-06-20"
+  },
+  "registrationNumber" : "FL-0002.345.678-9",
+  "taxIdentificationNumber" : "0987654321",
+  "legalEntityIdentifier" : "529900MUSTER00000012",
+  "legalRepresentatives" : [ "Nikita Muster", "Andrea Beispiel" ],
+  "nomineeShareholders" : [ ],
+  "nomineeDirectors" : [ ],
+  "state" : "PREPARED",
+  "activationApprovals" : [ ],
+  "createdBy" : "Contact 6789",
+  "createdAt" : "2026-08-27T09:16:05.774Z",
+  "lastModifiedBy" : "Contact 6789",
+  "lastModifiedAt" : "2026-08-27T09:16:05.774Z"
+}
+```
 
 ## Approve an end customer
 
