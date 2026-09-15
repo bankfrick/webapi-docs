@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Bank Frick VBAN API",
-    "version": "0.6.0"
+    "version": "0.9.0"
   },
   "servers": [
     {
@@ -23,9 +23,9 @@
         "operationId": "getEndCustomers",
         "parameters": [
           {
-            "description": "Filter by end-customer kind",
+            "description": "Filter by end customer type",
             "in": "query",
-            "name": "kind",
+            "name": "type",
             "required": false,
             "schema": {
               "type": "array",
@@ -40,7 +40,7 @@
             }
           },
           {
-            "description": "Filter by end-customer state",
+            "description": "Filter by end customer state",
             "in": "query",
             "name": "state",
             "required": false,
@@ -994,7 +994,7 @@
             "$ref": "#/components/responses/Conflict"
           }
         },
-        "summary": "Request the upgrade of a plain VBAN to a Named VBAN",
+        "summary": "Request the upgrade of a VBAN to a Named VBAN",
         "tags": [
           "Named Virtual Ibans Controller"
         ]
@@ -1079,7 +1079,7 @@
             "$ref": "#/components/responses/Conflict"
           }
         },
-        "summary": "Approve a pending upgrade of a plain VBAN to a Named VBAN",
+        "summary": "Approve a pending upgrade of a VBAN to a Named VBAN",
         "tags": [
           "Named Virtual Ibans Controller"
         ]
@@ -1750,7 +1750,10 @@
             "format": "int64"
           },
           "createdAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO 8601 format",
+            "example": "2021-10-24T13:24:13.541Z"
           },
           "createdBy": {
             "type": "string"
@@ -1916,12 +1919,6 @@
             "maxLength": 255,
             "minLength": 1
           },
-          "countryOfDomicile": {
-            "type": "string",
-            "description": "ISO 3166-1 alpha-2 country code",
-            "minLength": 1,
-            "pattern": "^[A-Z]{2}$"
-          },
           "customerNumber": {
             "type": "string",
             "description": "The Bank Frick customer to register under",
@@ -1934,35 +1931,94 @@
             "maxLength": 255,
             "minLength": 1
           },
+          "incorporationCountry": {
+            "type": "string",
+            "description": "Country in which the business was incorporated, if different from the registered address, as ISO 3166-1 alpha-2 country code; required if available",
+            "pattern": "^[A-Z]{2}$"
+          },
           "incorporationDate": {
             "type": "string",
             "format": "date"
+          },
+          "legalEntityIdentifier": {
+            "type": "string",
+            "description": "Legal Entity Identifier (LEI) or any available equivalent official identifier; required if available",
+            "maxLength": 50,
+            "minLength": 1
           },
           "legalForm": {
             "type": "string",
             "maxLength": 255,
             "minLength": 1
           },
-          "representatives": {
+          "legalRepresentatives": {
             "type": "array",
-            "description": "Names of the representative bodies, order preserved",
+            "description": "First Name(s) and Last Name(s) of the legal representatives (management body)",
             "items": {
               "type": "string",
-              "description": "Names of the representative bodies, order preserved",
+              "description": "First Name(s) and Last Name(s) of the legal representatives (management body)",
               "maxLength": 511,
               "minLength": 1
             },
-            "minItems": 1
+            "maxItems": 50,
+            "minItems": 0
+          },
+          "nomineeDirectors": {
+            "type": "array",
+            "description": "Names of individuals acting as nominee directors; required if available",
+            "items": {
+              "type": "string",
+              "description": "Names of individuals acting as nominee directors; required if available",
+              "maxLength": 511,
+              "minLength": 1
+            },
+            "maxItems": 50,
+            "minItems": 0
+          },
+          "nomineeShareholders": {
+            "type": "array",
+            "description": "Names of individuals or entities acting as nominee shareholders; required if available",
+            "items": {
+              "type": "string",
+              "description": "Names of individuals or entities acting as nominee shareholders; required if available",
+              "maxLength": 511,
+              "minLength": 1
+            },
+            "maxItems": 50,
+            "minItems": 0
+          },
+          "principalPlaceOfBusiness": {
+            "type": "string",
+            "description": "Primary location where the entity conducts its business activities, if different from the registered address; required if available",
+            "maxLength": 255,
+            "minLength": 1
+          },
+          "registrationNumber": {
+            "type": "string",
+            "description": "Official number assigned to the entity by the relevant register; required if available",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          "taxIdentificationNumber": {
+            "type": "string",
+            "description": "Tax identification number assigned to the legal entity; required if available",
+            "maxLength": 50,
+            "minLength": 1
+          },
+          "tradeName": {
+            "type": "string",
+            "description": "Name under which the legal entity conducts business, if different from the company name; required if available",
+            "maxLength": 255,
+            "minLength": 1
           }
         },
         "required": [
           "address",
           "companyName",
-          "countryOfDomicile",
           "customerNumber",
           "incorporationDate",
           "legalForm",
-          "representatives"
+          "legalRepresentatives"
         ]
       },
       "CreateNamedVirtualIbanDto": {
@@ -1994,9 +2050,9 @@
           "address": {
             "$ref": "#/components/schemas/PostalAddress27"
           },
-          "countryOfResidence": {
+          "countryOfBirth": {
             "type": "string",
-            "description": "ISO 3166-1 alpha-2 country code",
+            "description": "Country where the individual was born, as ISO 3166-1 alpha-2 country code",
             "minLength": 1,
             "pattern": "^[A-Z]{2}$"
           },
@@ -2026,21 +2082,45 @@
             "maxLength": 255,
             "minLength": 1
           },
-          "nationality": {
+          "nationalities": {
+            "type": "array",
+            "description": "All nationalities of the individual, as ISO 3166-1 alpha-2 country codes",
+            "items": {
+              "type": "string",
+              "description": "All nationalities of the individual, as ISO 3166-1 alpha-2 country codes",
+              "minLength": 1,
+              "pattern": "^[A-Z]{2}$"
+            },
+            "maxItems": 10,
+            "minItems": 0
+          },
+          "placeOfBirth": {
             "type": "string",
-            "description": "ISO 3166-1 alpha-2 country code",
-            "minLength": 1,
-            "pattern": "^[A-Z]{2}$"
+            "description": "City, town, municipality, county, or other available information specifying the individual\u0027s place of birth; required if available",
+            "maxLength": 255,
+            "minLength": 1
+          },
+          "preferredName": {
+            "type": "string",
+            "description": "Preferred or commonly used name or alias; required if available",
+            "maxLength": 255,
+            "minLength": 1
+          },
+          "taxIdentificationNumber": {
+            "type": "string",
+            "description": "Tax identification number assigned to the individual; required if available",
+            "maxLength": 50,
+            "minLength": 1
           }
         },
         "required": [
           "address",
-          "countryOfResidence",
+          "countryOfBirth",
           "customerNumber",
           "dateOfBirth",
           "firstName",
           "lastName",
-          "nationality"
+          "nationalities"
         ]
       },
       "CreateVirtualIbanAddressDto": {
@@ -2140,7 +2220,7 @@
             "LEGAL_ENTITY": "#/components/schemas/LegalEntityEndCustomerDto",
             "NATURAL_PERSON": "#/components/schemas/NaturalPersonEndCustomerDto"
           },
-          "propertyName": "kind"
+          "propertyName": "type"
         },
         "oneOf": [
           {
@@ -2170,13 +2250,6 @@
           "id": {
             "type": "string"
           },
-          "kind": {
-            "type": "string",
-            "enum": [
-              "NATURAL_PERSON",
-              "LEGAL_ENTITY"
-            ]
-          },
           "matchingName": {
             "type": "string",
             "description": "Name used for Verification of Payee"
@@ -2187,6 +2260,13 @@
               "PREPARED",
               "ACTIVE"
             ]
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "NATURAL_PERSON",
+              "LEGAL_ENTITY"
+            ]
           }
         },
         "required": [
@@ -2194,9 +2274,9 @@
           "address",
           "customerNumber",
           "id",
-          "kind",
           "matchingName",
-          "state"
+          "state",
+          "type"
         ]
       },
       "EndCustomerSummaryDto": {
@@ -2205,21 +2285,21 @@
           "id": {
             "type": "string"
           },
-          "kind": {
+          "matchingName": {
+            "type": "string"
+          },
+          "type": {
             "type": "string",
             "enum": [
               "NATURAL_PERSON",
               "LEGAL_ENTITY"
             ]
-          },
-          "matchingName": {
-            "type": "string"
           }
         },
         "required": [
           "id",
-          "kind",
-          "matchingName"
+          "matchingName",
+          "type"
         ]
       },
       "EndCustomersDto": {
@@ -2290,36 +2370,78 @@
               "companyName": {
                 "type": "string"
               },
-              "countryOfDomicile": {
-                "type": "string",
-                "description": "ISO 3166-1 alpha-2 country code"
-              },
               "createdAt": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp in ISO 8601 format",
+                "example": "2021-10-24T13:24:13.541Z"
               },
               "createdBy": {
                 "type": "string"
+              },
+              "incorporationCountry": {
+                "type": "string",
+                "description": "Country in which the business was incorporated, if different from the registered address, as ISO 3166-1 alpha-2 country code"
               },
               "incorporationDate": {
                 "type": "string",
                 "format": "date"
               },
               "lastModifiedAt": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp in ISO 8601 format",
+                "example": "2021-10-24T13:24:13.541Z"
               },
               "lastModifiedBy": {
                 "type": "string"
               },
+              "legalEntityIdentifier": {
+                "type": "string",
+                "description": "Legal Entity Identifier (LEI) or any available equivalent official identifier"
+              },
               "legalForm": {
                 "type": "string"
               },
-              "representatives": {
+              "legalRepresentatives": {
                 "type": "array",
-                "description": "Names of the representative bodies",
+                "description": "First Name(s) and Last Name(s) of the legal representatives (management body)",
                 "items": {
                   "type": "string",
-                  "description": "Names of the representative bodies"
+                  "description": "First Name(s) and Last Name(s) of the legal representatives (management body)"
                 }
+              },
+              "nomineeDirectors": {
+                "type": "array",
+                "description": "Names of individuals acting as nominee directors; empty when none were named",
+                "items": {
+                  "type": "string",
+                  "description": "Names of individuals acting as nominee directors; empty when none were named"
+                }
+              },
+              "nomineeShareholders": {
+                "type": "array",
+                "description": "Names of individuals or entities acting as nominee shareholders; empty when none were named",
+                "items": {
+                  "type": "string",
+                  "description": "Names of individuals or entities acting as nominee shareholders; empty when none were named"
+                }
+              },
+              "principalPlaceOfBusiness": {
+                "type": "string",
+                "description": "Primary location where the entity conducts its business activities, if different from the registered address"
+              },
+              "registrationNumber": {
+                "type": "string",
+                "description": "Official number assigned to the entity by the relevant register"
+              },
+              "taxIdentificationNumber": {
+                "type": "string",
+                "description": "Tax identification number assigned to the legal entity"
+              },
+              "tradeName": {
+                "type": "string",
+                "description": "Name under which the legal entity conducts business, if different from the company name"
               }
             }
           }
@@ -2328,19 +2450,20 @@
           "activationApprovals",
           "address",
           "companyName",
-          "countryOfDomicile",
           "createdAt",
           "createdBy",
           "customerNumber",
           "id",
           "incorporationDate",
-          "kind",
           "lastModifiedAt",
           "lastModifiedBy",
           "legalForm",
+          "legalRepresentatives",
           "matchingName",
-          "representatives",
-          "state"
+          "nomineeDirectors",
+          "nomineeShareholders",
+          "state",
+          "type"
         ]
       },
       "NamedVirtualIbanDto": {
@@ -2353,7 +2476,10 @@
             }
           },
           "createdAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO 8601 format",
+            "example": "2021-10-24T13:24:13.541Z"
           },
           "createdBy": {
             "type": "string"
@@ -2374,7 +2500,10 @@
             "$ref": "#/components/schemas/EndCustomerDto"
           },
           "lastModifiedAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO 8601 format",
+            "example": "2021-10-24T13:24:13.541Z"
           },
           "lastModifiedBy": {
             "type": "string"
@@ -2425,7 +2554,10 @@
             }
           },
           "createdAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO 8601 format",
+            "example": "2021-10-24T13:24:13.541Z"
           },
           "createdBy": {
             "type": "string"
@@ -2446,7 +2578,10 @@
             "$ref": "#/components/schemas/EndCustomerSummaryDto"
           },
           "lastModifiedAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO 8601 format",
+            "example": "2021-10-24T13:24:13.541Z"
           },
           "lastModifiedBy": {
             "type": "string"
@@ -2514,12 +2649,15 @@
           {
             "type": "object",
             "properties": {
-              "countryOfResidence": {
+              "countryOfBirth": {
                 "type": "string",
-                "description": "ISO 3166-1 alpha-2 country code"
+                "description": "Country where the individual was born, as ISO 3166-1 alpha-2 country code"
               },
               "createdAt": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp in ISO 8601 format",
+                "example": "2021-10-24T13:24:13.541Z"
               },
               "createdBy": {
                 "type": "string"
@@ -2532,7 +2670,10 @@
                 "type": "string"
               },
               "lastModifiedAt": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time",
+                "description": "Timestamp in ISO 8601 format",
+                "example": "2021-10-24T13:24:13.541Z"
               },
               "lastModifiedBy": {
                 "type": "string"
@@ -2540,9 +2681,25 @@
               "lastName": {
                 "type": "string"
               },
-              "nationality": {
+              "nationalities": {
+                "type": "array",
+                "description": "All nationalities of the individual, as ISO 3166-1 alpha-2 country codes",
+                "items": {
+                  "type": "string",
+                  "description": "All nationalities of the individual, as ISO 3166-1 alpha-2 country codes"
+                }
+              },
+              "placeOfBirth": {
                 "type": "string",
-                "description": "ISO 3166-1 alpha-2 country code"
+                "description": "City, town, municipality, county, or other available information specifying the individual\u0027s place of birth"
+              },
+              "preferredName": {
+                "type": "string",
+                "description": "Preferred or commonly used name or alias"
+              },
+              "taxIdentificationNumber": {
+                "type": "string",
+                "description": "Tax identification number assigned to the individual"
               }
             }
           }
@@ -2550,20 +2707,20 @@
         "required": [
           "activationApprovals",
           "address",
-          "countryOfResidence",
+          "countryOfBirth",
           "createdAt",
           "createdBy",
           "customerNumber",
           "dateOfBirth",
           "firstName",
           "id",
-          "kind",
           "lastModifiedAt",
           "lastModifiedBy",
           "lastName",
           "matchingName",
-          "nationality",
-          "state"
+          "nationalities",
+          "state",
+          "type"
         ]
       },
       "PaginationDto": {
@@ -2752,7 +2909,10 @@
             "$ref": "#/components/schemas/VirtualIbanAddressDto"
           },
           "createdAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO 8601 format",
+            "example": "2021-10-24T13:24:13.541Z"
           },
           "createdBy": {
             "type": "string"
@@ -2770,7 +2930,10 @@
             "type": "string"
           },
           "lastModifiedAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO 8601 format",
+            "example": "2021-10-24T13:24:13.541Z"
           },
           "lastModifiedBy": {
             "type": "string"
@@ -2820,7 +2983,10 @@
             }
           },
           "createdAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO 8601 format",
+            "example": "2021-10-24T13:24:13.541Z"
           },
           "createdBy": {
             "type": "string"
@@ -2829,7 +2995,10 @@
             "$ref": "#/components/schemas/EndCustomerSummaryDto"
           },
           "lastModifiedAt": {
-            "type": "string"
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp in ISO 8601 format",
+            "example": "2021-10-24T13:24:13.541Z"
           },
           "lastModifiedBy": {
             "type": "string"
