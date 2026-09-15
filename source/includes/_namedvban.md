@@ -6,7 +6,7 @@ A Named Virtual IBAN (Named VBAN) is a virtual IBAN permanently tied to one **en
 person or a legal entity that your company holds the relationship with. Incoming payments to a Named VBAN can
 therefore be formally addressed to that end customer (Me-to-Me deposits) and are routed to the reference account stored on the VBAN.
 
-Named VBANs live in their own endpoint tree under `/named-virtual-ibans` and use their own end-customer records
+Named VBANs live in their own endpoint tree under `/named-virtual-ibans` and use their own end customer records
 under `/end-customers`. The existing [Virtual IBAN](#virtual-iban) endpoints are unchanged and continue to serve
 VBANs only.
 
@@ -20,7 +20,7 @@ VBANs only.
 The Named VBAN API is part of the VBAN API and uses the same base URL and the same authentication as the
 existing VBAN endpoints.
 
-The end-customer and Named VBAN endpoints are exposed on the test environment only for the duration of the beta testing.
+The end customer and Named VBAN endpoints are exposed on the test environment only for the duration of the beta testing.
 [Virtual IBAN](#virtual-iban) endpoints remain available on both environments.
 
 Users need to be authenticated using the [authorize](#authorize) endpoint of the web API with scope `account`; the
@@ -39,7 +39,7 @@ Creating and approving end customers and Named VBANs requires signing permission
 
 An end customer is created once and can then be reused for several Named VBANs — for example one Named VBAN per
 currency, each on the matching reference account. End customers are scoped to one Bank Frick customer number.
-Creating the same end customer for two different customer numbers requires two separate end-customer records.
+Creating the same end customer for two different customer numbers requires two separate end customer records.
 
 An end customer is addressed by the `id` that Bank Frick issues on creation. The id is immutable, and it is the only
 way to reference the record in write requests. In addition, you may store your own identifier in the optional
@@ -86,7 +86,7 @@ separately via `GET /end-customers` or `GET /end-customers/{endCustomerId}`.
    State `PREPARED`, `id` returned.
 2. **Approve the end customer** — `PUT /end-customers/approvals`, once per required signature. State becomes
    `ACTIVE`.
-3. **Create the Named VBAN** — `POST /named-virtual-ibans` with the reference account and the end-customer id.
+3. **Create the Named VBAN** — `POST /named-virtual-ibans` with the reference account and the end customer id.
    State `PREPARED`, the VBAN is returned.
 4. **Approve the Named VBAN** — `PUT /named-virtual-ibans/activations/approvals` with `vban` and `endCustomerId`,
    once per required signature. State becomes `ACTIVE` and the VBAN accepts incoming payments.
@@ -316,7 +316,7 @@ algorithm: ...
 
 ## Read and list end customers
 
-`GET /end-customers/{endCustomerId}` returns one full record. `GET /end-customers` returns your end-customer
+`GET /end-customers/{endCustomerId}` returns one full record. `GET /end-customers` returns your end customer
 records, paginated with `pageIndex` and `pageSize` (default 100, maximum 1000) and the same `pagination` envelope
 as, e.g., the VBAN list.
 
@@ -578,9 +578,9 @@ algorithm: ...
 
 ## Read and list Named VBANs
 
-`GET /named-virtual-ibans/{vban}` returns one Named VBAN together with the **full** end-customer record.
+`GET /named-virtual-ibans/{vban}` returns one Named VBAN together with the **full** end customer record.
 
-`GET /named-virtual-ibans` lists Named VBANs only. Each entry carries an end-customer **summary** rather
+`GET /named-virtual-ibans` lists Named VBANs only. Each entry carries an end customer **summary** rather
 than the full record. Use the single read when you need further details.
 
 Filters: `account`, `state`, and `lastModifiedAfter`, plus `pageIndex` and `pageSize`.
