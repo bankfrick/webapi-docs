@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Bank Frick VBAN API
-  version: 0.9.0
+  version: 0.10.0
 servers:
 - url: https://api.bankfrick.li/vban
 - url: https://api-test.bankfrick.li/vban
@@ -52,7 +52,7 @@ paths:
         schema:
           type: string
           format: date-time
-      - description: "Page size, default 100"
+      - description: "Page size, default 100, maximum 1000"
         example: "10"
         in: query
         name: pageSize
@@ -358,7 +358,7 @@ paths:
         schema:
           type: string
           format: date-time
-      - description: "Page size, default 100"
+      - description: "Page size, default 100, maximum 1000"
         example: "10"
         in: query
         name: pageSize
@@ -839,7 +839,7 @@ paths:
         schema:
           type: string
           format: date-time
-      - description: "Page size, default 100"
+      - description: "Page size, default 100, maximum 1000"
         example: "10"
         in: query
         name: pageSize
