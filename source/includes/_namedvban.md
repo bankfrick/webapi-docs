@@ -54,7 +54,7 @@ A Named VBAN carries no `name` and no `address` of its own, since these attribut
 end customer.
 The name that incoming payments are matched against is the end customer's `matchingName`:
 
-* natural person: `firstName` followed by `lastName`
+* natural person: `firstName` followed by `lastName`, without `middleNames`
 * legal entity: `companyName`
 
 The Bank Frick customer number of a Named VBAN is derived from the reference account and checked against the
@@ -105,6 +105,7 @@ The required data set differs by type.
 |-------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------|
 | customerNumber          | yes      | The Bank Frick customer number this end customer belongs to (7 characters).                                                         |
 | firstName               | yes      | Given name(s), max. 255 characters.                                                                                                 |
+| middleNames             | no       | Middle name(s), separated by spaces, max. 255 characters. Required if available.                                                    |
 | lastName                | yes      | Family name(s), max. 255 characters.                                                                                                |
 | preferredName           | no       | Preferred or commonly used name or alias, max. 255 characters. Required if available.                                               |
 | dateOfBirth             | yes      | ISO 8601 date, e.g. `1984-03-27`.                                                                                                   |
@@ -131,10 +132,23 @@ The required data set differs by type.
 | registrationNumber       | no       | Official number assigned to the entity by the relevant register, max. 50 characters. Required if available.                                               |
 | taxIdentificationNumber  | no       | Tax identification number assigned to the legal entity, max. 50 characters. Required if available.                                                        |
 | legalEntityIdentifier    | no       | Legal Entity Identifier (LEI) or any available equivalent official identifier, max. 50 characters. Required if available.                                 |
-| legalRepresentatives     | yes      | First Name(s) and Last Name(s) of the legal representatives (management body). At least one entry, max. 50 entries of max. 511 characters each.           |
-| nomineeShareholders      | no       | Names of individuals or entities acting as nominee shareholders, max. 50 entries of max. 511 characters each. Required if available.                      |
-| nomineeDirectors         | no       | Names of individuals acting as nominee directors, max. 50 entries of max. 511 characters each. Required if available.                                     |
+| legalRepresentatives     | yes      | Legal representatives (management body), each a natural person or a legal entity, see below. At least one entry, max. 50.                                 |
+| nomineeShareholders      | no       | Individuals or entities acting as nominee shareholders, see below. Max. 50 entries. Required if available.                                                |
+| nomineeDirectors         | no       | Individuals or entities acting as nominee directors, see below. Max. 50 entries. Required if available.                                                   |
 | externalReference        | no       | Your own identifier, max. 255 characters.                                                                                                                 |
+
+**Entries of `legalRepresentatives`, `nomineeShareholders` and `nomineeDirectors`**
+
+Each entry is either a natural person or a legal entity, told apart by `type`. An entry carries only the fields of
+its type; a field of the other type is rejected.
+
+| field       | required       | description                                                                                           |
+|-------------|----------------|-------------------------------------------------------------------------------------------------------|
+| type        | yes            | `NATURAL_PERSON` or `LEGAL_ENTITY`.                                                                   |
+| firstName   | natural person | Given name(s), max. 255 characters.                                                                   |
+| middleNames | no             | Middle name(s), separated by spaces, max. 255 characters. Natural person only. Required if available. |
+| lastName    | natural person | Family name(s), max. 255 characters.                                                                  |
+| companyName | legal entity   | Name or company name, max. 255 characters.                                                            |
 
 ## Address format
 
@@ -181,6 +195,7 @@ algorithm: ...
   "customerNumber" : "1234567",
   "externalReference" : "customer-1234abc",
   "firstName" : "Nikita",
+  "middleNames" : "Maria",
   "lastName" : "Muster",
   "preferredName" : "Niki",
   "dateOfBirth" : "1984-03-27",
@@ -219,6 +234,7 @@ algorithm: ...
   "externalReference" : "customer-1234abc",
   "matchingName" : "Nikita Muster",
   "firstName" : "Nikita",
+  "middleNames" : "Maria",
   "lastName" : "Muster",
   "preferredName" : "Niki",
   "dateOfBirth" : "1984-03-27",
@@ -276,7 +292,20 @@ algorithm: ...
   "registrationNumber" : "FL-0002.345.678-9",
   "taxIdentificationNumber" : "0987654321",
   "legalEntityIdentifier" : "529900MUSTER00000012",
-  "legalRepresentatives" : [ "Nikita Muster", "Andrea Beispiel" ]
+  "legalRepresentatives" : [ {
+    "type" : "NATURAL_PERSON",
+    "firstName" : "Andrea",
+    "middleNames" : "Sofia",
+    "lastName" : "Beispiel"
+  }, {
+    "type" : "NATURAL_PERSON",
+    "firstName" : "Jonas",
+    "lastName" : "Muster"
+  } ],
+  "nomineeShareholders" : [ {
+    "type" : "LEGAL_ENTITY",
+    "companyName" : "Beispiel Treuhand AG"
+  } ]
 }
 ```
 
@@ -320,8 +349,20 @@ algorithm: ...
   "registrationNumber" : "FL-0002.345.678-9",
   "taxIdentificationNumber" : "0987654321",
   "legalEntityIdentifier" : "529900MUSTER00000012",
-  "legalRepresentatives" : [ "Nikita Muster", "Andrea Beispiel" ],
-  "nomineeShareholders" : [ ],
+  "legalRepresentatives" : [ {
+    "type" : "NATURAL_PERSON",
+    "firstName" : "Andrea",
+    "middleNames" : "Sofia",
+    "lastName" : "Beispiel"
+  }, {
+    "type" : "NATURAL_PERSON",
+    "firstName" : "Jonas",
+    "lastName" : "Muster"
+  } ],
+  "nomineeShareholders" : [ {
+    "type" : "LEGAL_ENTITY",
+    "companyName" : "Beispiel Treuhand AG"
+  } ],
   "nomineeDirectors" : [ ],
   "state" : "PREPARED",
   "activationApprovals" : [ ],
@@ -374,6 +415,7 @@ algorithm: ...
   "externalReference" : "customer-1234abc",
   "matchingName" : "Nikita Muster",
   "firstName" : "Nikita",
+  "middleNames" : "Maria",
   "lastName" : "Muster",
   "preferredName" : "Niki",
   "dateOfBirth" : "1984-03-27",
@@ -445,6 +487,7 @@ algorithm: ...
       "externalReference" : "customer-1234abc",
       "matchingName" : "Nikita Muster",
       "firstName" : "Nikita",
+      "middleNames" : "Maria",
       "lastName" : "Muster",
       "preferredName" : "Niki",
       "dateOfBirth" : "1984-03-27",
@@ -534,6 +577,7 @@ algorithm: ...
     "externalReference" : "customer-1234abc",
     "matchingName" : "Nikita Muster",
     "firstName" : "Nikita",
+    "middleNames" : "Maria",
     "lastName" : "Muster",
     "preferredName" : "Niki",
     "dateOfBirth" : "1984-03-27",
@@ -621,6 +665,7 @@ algorithm: ...
     "externalReference" : "customer-1234abc",
     "matchingName" : "Nikita Muster",
     "firstName" : "Nikita",
+    "middleNames" : "Maria",
     "lastName" : "Muster",
     "preferredName" : "Niki",
     "dateOfBirth" : "1984-03-27",
@@ -790,6 +835,7 @@ algorithm: ...
     "externalReference" : "customer-1234abc",
     "matchingName" : "Nikita Muster",
     "firstName" : "Nikita",
+    "middleNames" : "Maria",
     "lastName" : "Muster",
     "preferredName" : "Niki",
     "dateOfBirth" : "1984-03-27",
