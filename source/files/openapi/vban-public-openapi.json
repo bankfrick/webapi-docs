@@ -1953,36 +1953,27 @@
           },
           "legalRepresentatives": {
             "type": "array",
-            "description": "First Name(s) and Last Name(s) of the legal representatives (management body)",
+            "description": "The legal representatives (management body), each a natural person or a legal entity",
             "items": {
-              "type": "string",
-              "description": "First Name(s) and Last Name(s) of the legal representatives (management body)",
-              "maxLength": 511,
-              "minLength": 1
+              "$ref": "#/components/schemas/CreatePartyDto"
             },
             "maxItems": 50,
             "minItems": 0
           },
           "nomineeDirectors": {
             "type": "array",
-            "description": "Names of individuals acting as nominee directors; required if available",
+            "description": "Individuals or entities acting as nominee directors; required if available",
             "items": {
-              "type": "string",
-              "description": "Names of individuals acting as nominee directors; required if available",
-              "maxLength": 511,
-              "minLength": 1
+              "$ref": "#/components/schemas/CreatePartyDto"
             },
             "maxItems": 50,
             "minItems": 0
           },
           "nomineeShareholders": {
             "type": "array",
-            "description": "Names of individuals or entities acting as nominee shareholders; required if available",
+            "description": "Individuals or entities acting as nominee shareholders; required if available",
             "items": {
-              "type": "string",
-              "description": "Names of individuals or entities acting as nominee shareholders; required if available",
-              "maxLength": 511,
-              "minLength": 1
+              "$ref": "#/components/schemas/CreatePartyDto"
             },
             "maxItems": 50,
             "minItems": 0
@@ -2019,6 +2010,28 @@
           "incorporationDate",
           "legalForm",
           "legalRepresentatives"
+        ]
+      },
+      "CreateLegalEntityPartyDto": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreatePartyDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "companyName": {
+                "type": "string",
+                "maxLength": 255,
+                "minLength": 1
+              }
+            }
+          }
+        ],
+        "required": [
+          "companyName",
+          "type"
         ]
       },
       "CreateNamedVirtualIbanDto": {
@@ -2082,6 +2095,12 @@
             "maxLength": 255,
             "minLength": 1
           },
+          "middleNames": {
+            "type": "string",
+            "description": "Middle name(s) of the individual, separated by spaces; required if available",
+            "maxLength": 255,
+            "minLength": 1
+          },
           "nationalities": {
             "type": "array",
             "description": "All nationalities of the individual, as ISO 3166-1 alpha-2 country codes",
@@ -2121,6 +2140,71 @@
           "firstName",
           "lastName",
           "nationalities"
+        ]
+      },
+      "CreateNaturalPersonPartyDto": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CreatePartyDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string",
+                "maxLength": 255,
+                "minLength": 1
+              },
+              "lastName": {
+                "type": "string",
+                "maxLength": 255,
+                "minLength": 1
+              },
+              "middleNames": {
+                "type": "string",
+                "description": "Middle name(s) of the individual, separated by spaces; required if available",
+                "maxLength": 255,
+                "minLength": 1
+              }
+            }
+          }
+        ],
+        "required": [
+          "firstName",
+          "lastName",
+          "type"
+        ]
+      },
+      "CreatePartyDto": {
+        "type": "object",
+        "description": "A party named on the legal entity: a natural person or a legal entity, told apart by its type",
+        "discriminator": {
+          "mapping": {
+            "LEGAL_ENTITY": "#/components/schemas/CreateLegalEntityPartyDto",
+            "NATURAL_PERSON": "#/components/schemas/CreateNaturalPersonPartyDto"
+          },
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/CreateNaturalPersonPartyDto"
+          },
+          {
+            "$ref": "#/components/schemas/CreateLegalEntityPartyDto"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "NATURAL_PERSON",
+              "LEGAL_ENTITY"
+            ]
+          }
+        },
+        "required": [
+          "type"
         ]
       },
       "CreateVirtualIbanAddressDto": {
@@ -2405,26 +2489,23 @@
               },
               "legalRepresentatives": {
                 "type": "array",
-                "description": "First Name(s) and Last Name(s) of the legal representatives (management body)",
+                "description": "The legal representatives (management body), each a natural person or a legal entity",
                 "items": {
-                  "type": "string",
-                  "description": "First Name(s) and Last Name(s) of the legal representatives (management body)"
+                  "$ref": "#/components/schemas/PartyDto"
                 }
               },
               "nomineeDirectors": {
                 "type": "array",
-                "description": "Names of individuals acting as nominee directors; empty when none were named",
+                "description": "Individuals or entities acting as nominee directors; empty when none were named",
                 "items": {
-                  "type": "string",
-                  "description": "Names of individuals acting as nominee directors; empty when none were named"
+                  "$ref": "#/components/schemas/PartyDto"
                 }
               },
               "nomineeShareholders": {
                 "type": "array",
-                "description": "Names of individuals or entities acting as nominee shareholders; empty when none were named",
+                "description": "Individuals or entities acting as nominee shareholders; empty when none were named",
                 "items": {
-                  "type": "string",
-                  "description": "Names of individuals or entities acting as nominee shareholders; empty when none were named"
+                  "$ref": "#/components/schemas/PartyDto"
                 }
               },
               "principalPlaceOfBusiness": {
@@ -2463,6 +2544,26 @@
           "nomineeDirectors",
           "nomineeShareholders",
           "state",
+          "type"
+        ]
+      },
+      "LegalEntityPartyDto": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PartyDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "companyName": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "required": [
+          "companyName",
           "type"
         ]
       },
@@ -2681,6 +2782,10 @@
               "lastName": {
                 "type": "string"
               },
+              "middleNames": {
+                "type": "string",
+                "description": "Middle name(s) of the individual, separated by spaces"
+              },
               "nationalities": {
                 "type": "array",
                 "description": "All nationalities of the individual, as ISO 3166-1 alpha-2 country codes",
@@ -2723,6 +2828,34 @@
           "type"
         ]
       },
+      "NaturalPersonPartyDto": {
+        "type": "object",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PartyDto"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string"
+              },
+              "lastName": {
+                "type": "string"
+              },
+              "middleNames": {
+                "type": "string",
+                "description": "Middle name(s) of the individual, separated by spaces"
+              }
+            }
+          }
+        ],
+        "required": [
+          "firstName",
+          "lastName",
+          "type"
+        ]
+      },
       "PaginationDto": {
         "type": "object",
         "properties": {
@@ -2747,6 +2880,37 @@
           "pageIndex",
           "pageSize",
           "totalCount"
+        ]
+      },
+      "PartyDto": {
+        "type": "object",
+        "description": "A party named on the legal entity: a natural person or a legal entity, told apart by its type",
+        "discriminator": {
+          "mapping": {
+            "LEGAL_ENTITY": "#/components/schemas/LegalEntityPartyDto",
+            "NATURAL_PERSON": "#/components/schemas/NaturalPersonPartyDto"
+          },
+          "propertyName": "type"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/NaturalPersonPartyDto"
+          },
+          {
+            "$ref": "#/components/schemas/LegalEntityPartyDto"
+          }
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "NATURAL_PERSON",
+              "LEGAL_ENTITY"
+            ]
+          }
+        },
+        "required": [
+          "type"
         ]
       },
       "PostalAddress27": {
