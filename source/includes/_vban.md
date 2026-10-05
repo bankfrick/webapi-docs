@@ -7,7 +7,7 @@ Users need to be authenticated using the `authorize` endpoint of the web API wit
 Creating, approving, and deactivation of VBANs requires signing permissions.
 
 Virtual IBANs that are tied to an end customer are documented separately under
-[Named Virtual IBANs (beta)](#named-virtual-ibans-beta). The endpoints below do not serve Named VBANs: a Named VBAN
+[Named Virtual IBANs](#named-virtual-ibans). The endpoints below do not serve Named VBANs: a Named VBAN
 is not returned by `GET /virtual-ibans`, and the read and write endpoints below will reject Named VBANs.
 For callers that do not use Named VBANs, nothing changes.
 
