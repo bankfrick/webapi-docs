@@ -108,7 +108,7 @@ The required data set differs by type.
 | dateOfBirth             | yes      | ISO 8601 date, e.g. `1984-03-27`.                                                                                                   |
 | countryOfBirth          | yes      | Country where the individual was born, as ISO 3166-1 alpha-2 country code.                                                          |
 | placeOfBirth            | no       | City, town, municipality, county, or other available information specifying the individual's place of birth. Required if available. |
-| address                 | yes      | Residential address, see [Address format](#named-virtual-ibans-address-format).                                                |
+| address                 | yes      | Residential address, see [Address format](#named-virtual-ibans-address-format).                                                     |
 | nationalities           | yes      | All nationalities of the individual, as ISO 3166-1 alpha-2 country codes. At least one entry, max. 10.                              |
 | taxIdentificationNumber | no       | Tax identification number assigned to the individual, max. 50 characters. Required if available.                                    |
 | externalReference       | no       | Your own identifier, max. 255 characters.                                                                                           |
@@ -121,7 +121,7 @@ The required data set differs by type.
 | companyName              | yes      | Name or company name, max. 255 characters.                                                                                                                |
 | legalForm                | yes      | Legal form, max. 255 characters.                                                                                                                          |
 | tradeName                | no       | Name under which the legal entity conducts business, if different from the company name, max. 255 characters. Required if available.                      |
-| address                  | yes      | Registered address, see [Address format](#named-virtual-ibans-address-format).                                                                       |
+| address                  | yes      | Registered address, see [Address format](#named-virtual-ibans-address-format).                                                                            |
 | incorporationDate        | yes      | ISO 8601 date.                                                                                                                                            |
 | principalPlaceOfBusiness | no       | Primary location where the entity conducts its business activities, if different from the registered address, max. 255 characters. Required if available. |
 | incorporationCountry     | no       | Country in which the business was incorporated, if different from the registered address, as ISO 3166-1 alpha-2 country code. Required if available.      |
