@@ -20,9 +20,6 @@ VBANs only.
 The Named VBAN API is part of the VBAN API and uses the same base URL and the same authentication as the
 existing VBAN endpoints.
 
-The end customer and Named VBAN endpoints are available on both environments, as are the
-[Virtual IBAN](#virtual-iban) endpoints.
-
 Users need to be authenticated using the [authorize](#authorize) endpoint of the web API with scope `account`; the
 returned JWT is sent in the `Authorization` header. Request payloads must be signed and responses are signed, exactly
 as described under [Signatures](#getting-started-signatures).
