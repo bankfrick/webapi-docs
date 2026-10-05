@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Bank Frick VBAN API
-  version: 0.10.0
+  version: 0.11.0
 servers:
 - url: https://api.bankfrick.li/vban
 - url: https://api-test.bankfrick.li/vban

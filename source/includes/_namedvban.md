@@ -1,6 +1,6 @@
-# Named Virtual IBANs (beta)
+# Named Virtual IBANs
 
-<aside class="notice">Named Virtual IBANs are currently available on the <strong>test environment only</strong> and are released as a <strong>beta</strong>: the contract may still change before general availability. All examples in this section therefore show the test environment. Please coordinate your onboarding with your Bank Frick contact.</aside>
+<aside class="notice">Please coordinate your onboarding for Named Virtual IBANs with your Bank Frick contact.</aside>
 
 A Named Virtual IBAN (Named VBAN) is a virtual IBAN permanently tied to one **end customer** which is a natural
 person or a legal entity that your company holds the relationship with. Incoming payments to a Named VBAN can
@@ -20,8 +20,8 @@ VBANs only.
 The Named VBAN API is part of the VBAN API and uses the same base URL and the same authentication as the
 existing VBAN endpoints.
 
-The end customer and Named VBAN endpoints are exposed on the test environment only for the duration of the beta testing.
-[Virtual IBAN](#virtual-iban) endpoints remain available on both environments.
+The end customer and Named VBAN endpoints are available on both environments, as are the
+[Virtual IBAN](#virtual-iban) endpoints.
 
 Users need to be authenticated using the [authorize](#authorize) endpoint of the web API with scope `account`; the
 returned JWT is sent in the `Authorization` header. Request payloads must be signed and responses are signed, exactly
@@ -111,7 +111,7 @@ The required data set differs by type.
 | dateOfBirth             | yes      | ISO 8601 date, e.g. `1984-03-27`.                                                                                                   |
 | countryOfBirth          | yes      | Country where the individual was born, as ISO 3166-1 alpha-2 country code.                                                          |
 | placeOfBirth            | no       | City, town, municipality, county, or other available information specifying the individual's place of birth. Required if available. |
-| address                 | yes      | Residential address, see [Address format](#named-virtual-ibans-beta-address-format).                                                |
+| address                 | yes      | Residential address, see [Address format](#named-virtual-ibans-address-format).                                                |
 | nationalities           | yes      | All nationalities of the individual, as ISO 3166-1 alpha-2 country codes. At least one entry, max. 10.                              |
 | taxIdentificationNumber | no       | Tax identification number assigned to the individual, max. 50 characters. Required if available.                                    |
 | externalReference       | no       | Your own identifier, max. 255 characters.                                                                                           |
@@ -124,7 +124,7 @@ The required data set differs by type.
 | companyName              | yes      | Name or company name, max. 255 characters.                                                                                                                |
 | legalForm                | yes      | Legal form, max. 255 characters.                                                                                                                          |
 | tradeName                | no       | Name under which the legal entity conducts business, if different from the company name, max. 255 characters. Required if available.                      |
-| address                  | yes      | Registered address, see [Address format](#named-virtual-ibans-beta-address-format).                                                                       |
+| address                  | yes      | Registered address, see [Address format](#named-virtual-ibans-address-format).                                                                       |
 | incorporationDate        | yes      | ISO 8601 date.                                                                                                                                            |
 | principalPlaceOfBusiness | no       | Primary location where the entity conducts its business activities, if different from the registered address, max. 255 characters. Required if available. |
 | incorporationCountry     | no       | Country in which the business was incorporated, if different from the registered address, as ISO 3166-1 alpha-2 country code. Required if available.      |
@@ -214,8 +214,34 @@ algorithm: ...
 ```
 
 ```shell--production
-Named Virtual IBANs are not available on the production environment yet.
-Switch to the test tab for the request examples.
+POST https://api.bankfrick.li/vban/end-customers/natural-persons
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "customerNumber" : "1234567",
+  "externalReference" : "customer-1234abc",
+  "firstName" : "Nikita",
+  "middleNames" : "Maria",
+  "lastName" : "Muster",
+  "preferredName" : "Niki",
+  "dateOfBirth" : "1984-03-27",
+  "countryOfBirth" : "AT",
+  "placeOfBirth" : "Innsbruck",
+  "address" : {
+    "StrtNm" : "Landstrasse",
+    "BldgNb" : "14",
+    "PstCd" : "9490",
+    "TwnNm" : "Vaduz",
+    "Ctry" : "LI"
+  },
+  "nationalities" : [ "AT", "LI" ],
+  "taxIdentificationNumber" : "1234567890"
+}
 ```
 
 > Response — natural person
@@ -310,8 +336,52 @@ algorithm: ...
 ```
 
 ```shell--production
-Named Virtual IBANs are not available on the production environment yet.
-Switch to the test tab for the request examples.
+POST https://api.bankfrick.li/vban/end-customers/legal-entities
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "customerNumber" : "1234567",
+  "externalReference" : "customer-5678efg",
+  "companyName" : "Muster Trading AG",
+  "legalForm" : "Aktiengesellschaft",
+  "tradeName" : "Muster Trading",
+  "address" : {
+    "StrtNm" : "Landstrasse",
+    "BldgNb" : "14",
+    "PstCd" : "9490",
+    "TwnNm" : "Vaduz",
+    "Ctry" : "LI"
+  },
+  "incorporationDate" : "2011-06-14",
+  "principalPlaceOfBusiness" : "Vaduz, Liechtenstein",
+  "incorporationCountry" : "LI",
+  "commercialRegisterEntry" : {
+    "place" : "Vaduz",
+    "date" : "2011-06-20"
+  },
+  "registrationNumber" : "FL-0002.345.678-9",
+  "taxIdentificationNumber" : "0987654321",
+  "legalEntityIdentifier" : "529900MUSTER00000012",
+  "legalRepresentatives" : [ {
+    "type" : "NATURAL_PERSON",
+    "firstName" : "Andrea",
+    "middleNames" : "Sofia",
+    "lastName" : "Beispiel"
+  }, {
+    "type" : "NATURAL_PERSON",
+    "firstName" : "Jonas",
+    "lastName" : "Muster"
+  } ],
+  "nomineeShareholders" : [ {
+    "type" : "LEGAL_ENTITY",
+    "companyName" : "Beispiel Treuhand AG"
+  } ]
+}
 ```
 
 > Response — legal entity
@@ -395,8 +465,17 @@ algorithm: ...
 ```
 
 ```shell--production
-Named Virtual IBANs are not available on the production environment yet.
-Switch to the test tab for the request examples.
+PUT https://api.bankfrick.li/vban/end-customers/approvals
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "endCustomerId" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90"
+}
 ```
 
 > Response
@@ -465,8 +544,9 @@ Authorization: ...
 ```
 
 ```shell--production
-Named Virtual IBANs are not available on the production environment yet.
-Switch to the test tab for the request examples.
+GET https://api.bankfrick.li/vban/end-customers?type=NATURAL_PERSON&state=ACTIVE&pageSize=10
+Accept: application/json
+Authorization: ...
 ```
 
 > Response
@@ -551,8 +631,19 @@ algorithm: ...
 ```
 
 ```shell--production
-Named Virtual IBANs are not available on the production environment yet.
-Switch to the test tab for the request examples.
+POST https://api.bankfrick.li/vban/named-virtual-ibans
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "referenceAccountIban" : "LI4408811MAINACCOUNT1",
+  "endCustomerId" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90",
+  "description" : "EUR deposits Nikita Muster"
+}
 ```
 
 > Response
@@ -639,8 +730,18 @@ algorithm: ...
 ```
 
 ```shell--production
-Named Virtual IBANs are not available on the production environment yet.
-Switch to the test tab for the request examples.
+PUT https://api.bankfrick.li/vban/named-virtual-ibans/activations/approvals
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "vban" : "LI1108811V07QJ4M2XB9K",
+  "endCustomerId" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90"
+}
 ```
 
 > Response
@@ -731,8 +832,9 @@ Authorization: ...
 ```
 
 ```shell--production
-Named Virtual IBANs are not available on the production environment yet.
-Switch to the test tab for the request examples.
+GET https://api.bankfrick.li/vban/named-virtual-ibans?account=LI4408811MAINACCOUNT1&state=ACTIVE
+Accept: application/json
+Authorization: ...
 ```
 
 > Response
@@ -809,8 +911,18 @@ algorithm: ...
 ```
 
 ```shell--production
-Named Virtual IBANs are not available on the production environment yet.
-Switch to the test tab for the request examples.
+PUT https://api.bankfrick.li/vban/named-virtual-ibans/deactivations
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "vban" : "LI1108811V07QJ4M2XB9K",
+  "endCustomerId" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90"
+}
 ```
 
 > Response
@@ -909,8 +1021,18 @@ algorithm: ...
 ```
 
 ```shell--production
-Named Virtual IBANs are not available on the production environment yet.
-Switch to the test tab for the request examples.
+POST https://api.bankfrick.li/vban/named-virtual-ibans/upgrades
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "vban" : "LI3808811V07QJ4M2XC44",
+  "endCustomerId" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90"
+}
 ```
 
 > Response
@@ -963,8 +1085,18 @@ algorithm: ...
 ```
 
 ```shell--production
-Named Virtual IBANs are not available on the production environment yet.
-Switch to the test tab for the request examples.
+PUT https://api.bankfrick.li/vban/named-virtual-ibans/upgrades/approvals
+Content-Type: application/json
+Accept: application/json
+Authorization: ...
+Signature: ...
+algorithm: ...
+
+
+{
+  "vban" : "LI3808811V07QJ4M2XC44",
+  "endCustomerId" : "0198f3c2-4e5a-7b1d-9c8e-3f5a6b7c8d90"
+}
 ```
 
 > Response
