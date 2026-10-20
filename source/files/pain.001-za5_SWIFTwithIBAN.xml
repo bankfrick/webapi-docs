@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.03">
+<Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09">
     <CstmrCdtTrfInitn>
         <GrpHdr>
             <!-- NOTE: Change the last number to reupload the file -->
-            <MsgId>SWIFT_IBAN-1001</MsgId>
-            <CreDtTm>2024-05-16T08:00:00</CreDtTm>
+            <MsgId>SWIFT-IBAN-1001</MsgId>
+            <CreDtTm>2026-10-20T16:00:00.000+02:00</CreDtTm>
             <NbOfTxs>1</NbOfTxs>
             <CtrlSum>100.00</CtrlSum>
             <InitgPty>
@@ -18,7 +18,9 @@
             <BtchBookg>true</BtchBookg>
 
             <!-- Must be today or a future date -->
-            <ReqdExctnDt>2025-11-11</ReqdExctnDt>
+            <ReqdExctnDt>
+                <Dt>2027-01-04</Dt>
+            </ReqdExctnDt>
 
             <Dbtr>
                 <Nm>Your Customer</Nm>
@@ -34,14 +36,14 @@
             <DbtrAgt>
                 <FinInstnId>
                     <!-- NOTE: Always the same Bank Frick BIC -->
-                    <BIC>BFRILI22</BIC>
+                    <BICFI>BFRILI22</BICFI>
                 </FinInstnId>
             </DbtrAgt>
 
             <CdtTrfTxInf>
                 <PmtId>
-                    <InstrId>Your unique ID_1</InstrId>
-                    <EndToEndId>Your EndtoEndId_1</EndToEndId>
+                    <InstrId>Your unique ID-1</InstrId>
+                    <EndToEndId>Your EndtoEndId-1</EndToEndId>
                 </PmtId>
 
                 <!-- No SEPA service level, no CHxx local instrument for foreign SWIFT -->
@@ -53,7 +55,7 @@
                 <!-- CdtrAgt must come BEFORE Cdtr and CdtrAcct -->
                 <CdtrAgt>
                     <FinInstnId>
-                        <BIC>NCBKSAJEXXX</BIC>
+                        <BICFI>NCBKSAJEXXX</BICFI>
                     </FinInstnId>
                 </CdtrAgt>
 
