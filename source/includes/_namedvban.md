@@ -169,7 +169,7 @@ required, every other element is optional. The most relevant elements are:
 | AdrLine                       | Address lines, for data that cannot be mapped to the elements above, max. 7 entries of max. 70 characters each. |
 | CareOf, Dept, SubDept, UnitNb | Further optional qualifiers.                                                                                    |
 
-<aside class="notice">Note: The postal code, street name, post box, building number and apartment number should be provided where available. End-customer data is stored exactly as you send it. We only validate formal constraints, but we do not verify the content, normalise or reformat it, since the KYC responsibility for your end customers remains with you.</aside>
+<aside class="notice">Note: postal code, street name, post box, building number and apartment number should be provided where available. End-customer data is stored exactly as you send it. We only validate formal constraints, but we do not verify the content, normalise or reformat it, since the KYC responsibility for your end customers remains with you.</aside>
 
 ## Create an end customer
 
