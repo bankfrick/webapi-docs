@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "Bank Frick VBAN API",
-    "version": "0.11.0"
+    "version": "0.11.1"
   },
   "servers": [
     {
@@ -662,6 +662,7 @@
     },
     "/named-virtual-ibans/activations/approvals": {
       "put": {
+        "description": "Approving a Named VBAN also approves its link to the end customer, so the signed request names both. A request naming a different end customer is rejected and records no approval.",
         "operationId": "approveNamedVirtualIbanActivation",
         "parameters": [
           {
@@ -747,6 +748,7 @@
     },
     "/named-virtual-ibans/deactivations": {
       "put": {
+        "description": "The signed request names the end customer as well as the VBAN, so the signature covers the link being deactivated. A request naming a different end customer is rejected.",
         "operationId": "deactivateNamedVirtualIban",
         "parameters": [
           {
@@ -832,6 +834,7 @@
     },
     "/named-virtual-ibans/deactivations/approvals": {
       "put": {
+        "description": "The signed request names the end customer as well as the VBAN, so the signature covers the link being deactivated. A request naming a different end customer is rejected and records no approval.",
         "operationId": "approveNamedVirtualIbanDeactivation",
         "parameters": [
           {
@@ -1002,6 +1005,7 @@
     },
     "/named-virtual-ibans/upgrades/approvals": {
       "put": {
+        "description": "The signed request names the end customer of the pending upgrade. A new upgrade request naming a different end customer replaces the pending one, so an approval naming the replaced end customer is rejected instead of counting towards the new one.",
         "operationId": "approveVirtualIbanUpgrade",
         "parameters": [
           {
