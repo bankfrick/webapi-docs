@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Document xmlns="http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.six-interbank-clearing.com/de/pain.001.001.03.ch.02.xsd  pain.001.001.03.ch.02.xsd">
+<Document xmlns="urn:iso:std:iso:20022:tech:xsd:pain.001.001.09" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <CstmrCdtTrfInitn>
     <GrpHdr>
       <!-- NOTE: Change the last number to reupload the file -->
       <MsgId>QR-1001</MsgId>
-      <CreDtTm>2026-01-12T09:29:05</CreDtTm>
+      <CreDtTm>2026-10-20T16:00:00.000+02:00</CreDtTm>
       <NbOfTxs>1</NbOfTxs>
       <CtrlSum>100.00</CtrlSum>
       <InitgPty>
@@ -16,7 +16,9 @@
       <PmtMtd>TRF</PmtMtd>
       <BtchBookg>true</BtchBookg>
       <!-- Must be today or a future date -->
-      <ReqdExctnDt>2026-01-12</ReqdExctnDt>
+      <ReqdExctnDt>
+        <Dt>2027-01-04</Dt>
+      </ReqdExctnDt>
       <Dbtr>
         <Nm>Your Company</Nm>
       </Dbtr>
@@ -29,13 +31,13 @@
       <DbtrAgt>
         <FinInstnId>
           <!-- NOTE: Always the same Bank Frick BIC -->
-          <BIC>BFRILI22</BIC>
+          <BICFI>BFRILI22</BICFI>
         </FinInstnId>
       </DbtrAgt>
       <CdtTrfTxInf>
         <PmtId>
-          <InstrId>Your unique ID_1</InstrId>
-          <EndToEndId>Your EndtoEndId_1</EndToEndId>
+          <InstrId>Your unique ID-1</InstrId>
+          <EndToEndId>Your EndtoEndId-1</EndToEndId>
         </PmtId>
         <Amt>
           <InstdAmt Ccy="CHF">100.00</InstdAmt>
