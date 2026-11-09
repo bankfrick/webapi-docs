@@ -1425,7 +1425,7 @@ Debitor or creditor account information of the transaction.
 
 The transactions beneficiary account information.
 
-<aside class="notice">For external payments (all [types](#data-types-type) except <code>INTERNAL</code>, <code>BANK_INTERNAL</code> and <code>QR_BILL</code>), the creditor <code>name</code> is mandatory. The fields <code>address</code>, <code>postalcode</code>, <code>city</code> and <code>country</code> should be provided; they will become mandatory soon, independent of currency, payment type and whether IBAN or account number is used.
+<aside class="notice">For external payments (all [types](#data-types-type) except <code>INTERNAL</code>, <code>BANK_INTERNAL</code> and <code>QR_BILL</code>), the creditor address fields <code>name</code>, <code>address</code>, <code>postalcode</code>, <code>city</code> and <code>country</code> are mandatory — independent of currency, payment type and whether IBAN or account number is used.
 
 The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code> are optional. The field <code>address</code> contains the street name only (without building number). The field <code>country</code> must be provided as <strong>ISO 3166-1 alpha-2</strong> country code (e.g. <code>DE</code> for Germany).</aside>
 
@@ -1438,13 +1438,13 @@ The fields <code>buildingNumber</code>, <code>floor</code> and <code>room</code>
 | iban |	string |	max size: 34, min size: 0	| The iban of the recipient account |
 | vban |	string |	max size: 21, min size: 0	| The vban of the credited account; response-only. Not used on create. |
 | name |	string |	required, max size: 35, min size: 0   |	The name of the recipient |
-| address |	string |	should be provided for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), will become mandatory soon, max size: 70, min size: 0  | Street name of the recipient (without building number) |
+| address |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 70, min size: 0  | Street name of the recipient (without building number) |
 | buildingNumber |	string |	max size: 16, min size: 0  | Building number of the recipient |
 | floor |	string |	max size: 20, min size: 0  | Floor of the recipient |
 | room |	string |	max size: 20, min size: 0  | Room of the recipient |
-| postalcode |	string |	should be provided for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), will become mandatory soon, max size: 11, min size: 0   |	Postal code of the recipient address |
-| city |	string |	should be provided for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), will become mandatory soon, max size: 70, min size: 0  |	City of the recipient |
-| country |	string |	should be provided for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), will become mandatory soon, max size: 70, min size: 0  |	Country of the recipient as ISO 3166-1 alpha-2 country code (e.g. <code>DE</code>) |
+| postalcode |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 11, min size: 0   |	Postal code of the recipient address |
+| city |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 70, min size: 0  |	City of the recipient |
+| country |	string |	required for external payments (not INTERNAL, BANK_INTERNAL, QR_BILL), max size: 70, min size: 0  |	Country of the recipient as ISO 3166-1 alpha-2 country code (e.g. <code>DE</code>) |
 | bic |	string |	max size: 11, min size: 0 |	The bic of the recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | creditInstitution	| string |	max size: 50, min size: 0 |	The recipient credit institution (only [type](#data-types-type) = FOREIGN) |
 | qrReference	| string |	max size: 27, min size: 0 |	 The qr bill reference number in case of [type](#data-types-type) = QR_BILL) |
