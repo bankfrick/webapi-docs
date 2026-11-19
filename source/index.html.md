@@ -260,6 +260,75 @@ The outgoing payment produces two notifications:
 | 0012345/001.000.840 | 15138861 | 9022207 | WeUaYDdaeR | amount going out > 0.00 CHF |
 | 0012345/001.000.840 | 15138861 | 9022207 | WeUaYDdaeR | executed orders |
 
+**Example: not executed orders**
+
+The `not executed orders` notification has the same structure for payments initiated in the portal and via the API. `customId` is only present if the payment was created via the API with a `customId`. The notification contains no `transactionNr`, because the payment was not booked.
+
+Portal-initiated payment that was rejected:
+
+> Example
+
+```json
+{
+  "name" : "Example rule",
+  "date" : "2026-11-11T15:37:46.716873600",
+  "env" : "olbtest.bankfrick.li",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "0012345/001.000.840",
+  "iban" : "LI03088110012345K000U",
+  "orderId" : "9044160",
+  "events" : [ "not executed orders" ]
+}
+```
+
+API-initiated payment with a `customId` that was rejected:
+
+```json
+{
+  "name" : "Example rule",
+  "date" : "2026-11-11T15:41:12.204518300",
+  "env" : "olbtest.bankfrick.li",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "0012345/001.000.840",
+  "iban" : "LI03088110012345K000U",
+  "orderId" : "9044161",
+  "customId" : "example-reference",
+  "events" : [ "not executed orders" ]
+}
+```
+
+**Example: several booking entries with the same transactionNr**
+
+One booking can contain several booking entries, for example debit interest and a commission. These entries share the same `transactionNr`. Each entry that matches the rule triggers its own notification, so several notifications can contain the same `transactionNr`. The payload does not contain the `transactionCode` or the amount of the entry.
+
+The payloads below are shortened to the relevant fields:
+
+> Example
+
+```json
+{
+  "name" : "Example rule",
+  "date" : "2026-05-31T13:02:07",
+  "env" : "olbtest.bankfrick.li",
+  "transactionNr" : "15138870",
+  "events" : [ "amount going out > 0.01 EUR" ]
+}
+```
+
+```json
+{
+  "name" : "Example rule",
+  "date" : "2026-05-31T13:02:08",
+  "env" : "olbtest.bankfrick.li",
+  "transactionNr" : "15138870",
+  "events" : [ "amount going out > 0.01 EUR" ]
+}
+```
+
+Do not deduplicate notifications or booking entries only by `transactionNr`. To get the details of each booking entry, use [GET /v2/transactions](#transactions-get) with the `transactionNr` and `status=BOOKED`.
+
 **Properties**
 
 | name | data type | constraints | description |
@@ -271,7 +340,7 @@ The outgoing payment produces two notifications:
 | customer | string | required | Customer number and name the rule applies to |
 | account | string | required | The account the event relates to, in the format `<customer number>/<account number>`. `"All"` for a `creating or changing the rule` notification on a rule that applies to all accounts |
 | iban | string | | The IBAN of the account the event relates to. Only present for transaction-related events |
-| transactionNr | string | | Unique transaction number assigned by the core banking system. Only present for transaction-related events |
+| transactionNr | string | | Transaction number assigned by the core banking system. Several booking entries of one booking can share the same number. Only present for booked transaction-related events |
 | orderId | string | | The id of the underlying payment order. Only present for transaction-related events |
 | customId | string | | The custom id given to the payment order by the client, if any. Only present for transaction-related events |
 | events | array of string | required | The event(s) that triggered this notification. For a `creating or changing the rule` notification this lists every event configured on the rule; for a transaction-related notification exactly one matching event is listed |
