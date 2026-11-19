@@ -225,6 +225,41 @@ If a combination of filter parameters are applied, only orders that match all of
 | toDate | query | (optional) Ending date of the timespan for which to retrieve the data. The date should be provided in ISO 8601 format: YYYY-MM-DD.
 | type | query | (optional) Filter for transaction type, expected one of (INTERNAL, BANK_INTERNAL, SEPA, SEPA_INSTANT, FOREIGN, QR_BILL). Only relevant for transactions that were created in the context of online banking. **SEPA_INSTANT** enables near real-time SEPA transfers.
 
+**Several booking entries with the same transactionNr**
+
+One booking can contain several booking entries, for example debit interest and a commission. These entries share the same `transactionNr`. `GET /v2/transactions?transactionNr=...&status=BOOKED` returns each booking entry as a separate object with its own `transactionCode`, `amount` and `totalAmount`. The API does not combine the entries into one object.
+
+> Example: several booking entries with the same transactionNr (shortened)
+
+```json
+{
+  "moreResults" : false,
+  "resultSetSize" : 2,
+  "transactions" : [
+    {
+      "transactionNr": "15138870",
+      "transactionCode": "924 - Debit interest",
+      "state": "BOOKED",
+      "amount": -10.00,
+      "totalAmount": -10.00,
+      "currency": "EUR",
+      "direction": "outgoing"
+    },
+    {
+      "transactionNr": "15138870",
+      "transactionCode": "921 - Commission",
+      "state": "BOOKED",
+      "amount": -2.00,
+      "totalAmount": -2.00,
+      "currency": "EUR",
+      "direction": "outgoing"
+    }
+  ]
+}
+```
+
+Do not deduplicate booking entries only by `transactionNr`.
+
 **Response Codes**
 
 | code | condition | type |
