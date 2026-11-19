@@ -277,7 +277,7 @@ Portal-initiated payment that was rejected:
   "customer" : "0012345 Max Muster",
   "account" : "0012345/001.000.840",
   "iban" : "LI03088110012345K000U",
-  "orderId" : "9044160",
+  "orderId" : "9022210",
   "events" : [ "not executed orders" ]
 }
 ```
@@ -293,7 +293,7 @@ API-initiated payment with a `customId` that was rejected:
   "customer" : "0012345 Max Muster",
   "account" : "0012345/001.000.840",
   "iban" : "LI03088110012345K000U",
-  "orderId" : "9044161",
+  "orderId" : "9022211",
   "customId" : "example-reference",
   "events" : [ "not executed orders" ]
 }
@@ -315,7 +315,7 @@ One booking can contain several booking entries, for example debit interest and 
   "account" : "0012345/001.000.978",
   "iban" : "LI47088110012345K000E",
   "transactionNr" : "15138870",
-  "events" : [ "amount going out > 0.01 EUR" ]
+  "events" : [ "amount going out > 0.00 CHF" ]
 }
 ```
 
@@ -329,7 +329,7 @@ One booking can contain several booking entries, for example debit interest and 
   "account" : "0012345/001.000.978",
   "iban" : "LI47088110012345K000E",
   "transactionNr" : "15138870",
-  "events" : [ "amount going out > 0.01 EUR" ]
+  "events" : [ "amount going out > 0.00 CHF" ]
 }
 ```
 
@@ -347,6 +347,6 @@ Do not deduplicate notifications or booking entries only by `transactionNr`. To 
 | account | string | required | The account the event relates to, in the format `<customer number>/<account number>`. `"All"` for a `creating or changing the rule` notification on a rule that applies to all accounts |
 | iban | string | | The IBAN of the account the event relates to. Only present for transaction-related events |
 | transactionNr | string | | Transaction number assigned by the core banking system. Several booking entries of one booking can share the same number. Only present for booked transaction-related events |
-| orderId | string | | The id of the underlying payment order. Only present for transaction-related events |
-| customId | string | | The custom id given to the payment order by the client, if any. Only present for transaction-related events |
+| orderId | string | | The id of the underlying payment order. Only present if the event relates to a payment order |
+| customId | string | | The custom id given to the payment order by the client, if any. Only present if the event relates to a payment order |
 | events | array of string | required | The event(s) that triggered this notification. For a `creating or changing the rule` notification this lists every event configured on the rule; for a transaction-related notification exactly one matching event is listed |
