@@ -303,15 +303,17 @@ API-initiated payment with a `customId` that was rejected:
 
 One booking can contain several booking entries, for example debit interest and a commission. These entries share the same `transactionNr`. Each entry that matches the rule triggers its own notification, so several notifications can contain the same `transactionNr`. The payload does not contain the `transactionCode` or the amount of the entry.
 
-The payloads below are shortened to the relevant fields:
-
 > Example
 
 ```json
 {
   "name" : "Example rule",
-  "date" : "2026-05-31T13:02:07",
+  "date" : "2026-05-31T13:02:07.836704600",
   "env" : "olbtest.bankfrick.li",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "0012345/001.000.978",
+  "iban" : "LI47088110012345K000E",
   "transactionNr" : "15138870",
   "events" : [ "amount going out > 0.01 EUR" ]
 }
@@ -320,8 +322,12 @@ The payloads below are shortened to the relevant fields:
 ```json
 {
   "name" : "Example rule",
-  "date" : "2026-05-31T13:02:08",
+  "date" : "2026-05-31T13:02:08.503161800",
   "env" : "olbtest.bankfrick.li",
+  "contact" : "13579 Max Muster",
+  "customer" : "0012345 Max Muster",
+  "account" : "0012345/001.000.978",
+  "iban" : "LI47088110012345K000E",
   "transactionNr" : "15138870",
   "events" : [ "amount going out > 0.01 EUR" ]
 }
